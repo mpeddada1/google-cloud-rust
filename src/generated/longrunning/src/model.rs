@@ -371,6 +371,14 @@ impl WaitOperationRequest {
 
 /// A message representing the message types used by a long-running operation.
 /// Example:
+/// ```norust
+/// rpc Export(ExportRequest) returns (google.longrunning.Operation) {
+///   option (google.longrunning.operation_info) = {
+///     response_type: "ExportResponse"
+///     metadata_type: "ExportMetadata"
+///   };
+/// }
+/// ```
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]

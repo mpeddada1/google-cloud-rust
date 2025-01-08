@@ -83,6 +83,9 @@ pub struct Location {
     pub display_name: Option<String>,
 
     /// Cross-service attributes for the location. For example
+    /// ```norust
+    /// {"cloud.googleapis.com/region": "us-east1"}
+    /// ```
     #[serde(skip_serializing_if = "std::collections::HashMap::is_empty")]
     pub labels: std::collections::HashMap<String, String>,
 
@@ -991,6 +994,11 @@ impl ReplicaStatus {
 /// A generic empty message that you can re-use to avoid defining duplicated
 /// empty messages in your APIs. A typical example is to use it as the request
 /// or the response type of an API method. For instance:
+/// ```norust
+/// service Foo {
+///   rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);
+/// }
+/// ```
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -1448,53 +1456,7 @@ impl SetIamPolicyRequest {
 /// IAM documentation
 /// .
 /// JSON example:
-/// ```norust
-///     {
-///       "bindings": [
-///         {
-///           "role": "roles/resourcemanager.organizationAdmin",
-///           "members": [
-///             "user:mike@example.com",
-///             "group:admins@example.com",
-///             "domain:google.com",
-///             "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-///           ]
-///         },
-///         {
-///           "role": "roles/resourcemanager.organizationViewer",
-///           "members": [
-///             "user:eve@example.com"
-///           ],
-///           "condition": {
-///             "title": "expirable access",
-///             "description": "Does not grant access after Sep 2020",
-///             "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')",
-///           }
-///         }
-///       ],
-///       "etag": "BwWWja0YfJA=",
-///       "version": 3
-///     }
-/// ```
 /// YAML example:
-/// ```norust
-///     bindings:
-///     - members:
-///       - user:mike@example.com
-///       - group:admins@example.com
-///       - domain:google.com
-///       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-///       role: roles/resourcemanager.organizationAdmin
-///     - members:
-///       - user:eve@example.com
-///       role: roles/resourcemanager.organizationViewer
-///       condition:
-///         title: expirable access
-///         description: Does not grant access after Sep 2020
-///         expression: request.time < timestamp('2020-10-01T00:00:00.000Z')
-///     etag: BwWWja0YfJA=
-///     version: 3
-/// ```
 /// For a description of IAM and its features, see the
 /// IAM documentation
 /// .
@@ -1818,9 +1780,29 @@ impl Binding {
 /// syntax. CEL is a C-like expression language. The syntax and semantics of CEL
 /// are documented at https://github.com/google/cel-spec.
 /// Example (Comparison):
+/// ```norust
+/// title: "Summary size limit"
+/// description: "Determines if a summary is less than 100 chars"
+/// expression: "document.summary.size() < 100"
+/// ```
 /// Example (Equality):
+/// ```norust
+/// title: "Requestor is owner"
+/// description: "Determines if requestor is the document owner"
+/// expression: "document.owner == request.auth.claims.email"
+/// ```
 /// Example (Logic):
+/// ```norust
+/// title: "Public documents"
+/// description: "Determine whether the document should be publicly visible"
+/// expression: "document.type != 'private' && document.type != 'internal'"
+/// ```
 /// Example (Data Manipulation):
+/// ```norust
+/// title: "Notification string"
+/// description: "Create a notification string with a timestamp."
+/// expression: "'New message received at ' + string(document.create_time)"
+/// ```
 /// The exact variables and functions that may be referenced within an expression
 /// are determined by the service that evaluates it. See the service
 /// documentation for additional information.
@@ -1890,6 +1872,43 @@ impl Expr {
 /// members in each
 /// AuditLogConfig are exempted.
 /// Example Policy with multiple AuditConfigs:
+/// ```norust
+/// {
+///   "audit_configs": [
+///     {
+///       "service": "allServices",
+///       "audit_log_configs": [
+///         {
+///           "log_type": "DATA_READ",
+///           "exempted_members": [
+///             "user:jose@example.com"
+///           ]
+///         },
+///         {
+///           "log_type": "DATA_WRITE"
+///         },
+///         {
+///           "log_type": "ADMIN_READ"
+///         }
+///       ]
+///     },
+///     {
+///       "service": "sampleservice.googleapis.com",
+///       "audit_log_configs": [
+///         {
+///           "log_type": "DATA_READ"
+///         },
+///         {
+///           "log_type": "DATA_WRITE",
+///           "exempted_members": [
+///             "user:aliya@example.com"
+///           ]
+///         }
+///       ]
+///     }
+///   ]
+/// }
+/// ```
 /// For sampleservice, this policy enables DATA_
 /// READ, DATA_
 /// WRITE and ADMIN_
@@ -1941,6 +1960,21 @@ impl AuditConfig {
 
 /// Provides the configuration for logging a type of permissions.
 /// Example:
+/// ```norust
+/// {
+///   "audit_log_configs": [
+///     {
+///       "log_type": "DATA_READ",
+///       "exempted_members": [
+///         "user:jose@example.com"
+///       ]
+///     },
+///     {
+///       "log_type": "DATA_WRITE"
+///     }
+///   ]
+/// }
+/// ```
 /// This enables 'DATA_
 /// READ' and 'DATA_
 /// WRITE' logging, while exempting

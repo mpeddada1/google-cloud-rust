@@ -232,54 +232,7 @@ impl GetPolicyOptions {
 /// documentation
 /// .
 /// JSON example:
-/// ```norust
-///     {
-///       "bindings": [
-///         {
-///           "role": "roles/resourcemanager.organizationAdmin",
-///           "members": [
-///             "user:mike@example.com",
-///             "group:admins@example.com",
-///             "domain:google.com",
-///             "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-///           ]
-///         },
-///         {
-///           "role": "roles/resourcemanager.organizationViewer",
-///           "members": [
-///             "user:eve@example.com"
-///           ],
-///           "condition": {
-///             "title": "expirable access",
-///             "description": "Does not grant access after Sep 2020",
-///             "expression": "request.time <
-///             timestamp('2020-10-01T00:00:00.000Z')",
-///           }
-///         }
-///       ],
-///       "etag": "BwWWja0YfJA=",
-///       "version": 3
-///     }
-/// ```
 /// YAML example:
-/// ```norust
-///     bindings:
-///     - members:
-///       - user:mike@example.com
-///       - group:admins@example.com
-///       - domain:google.com
-///       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-///       role: roles/resourcemanager.organizationAdmin
-///     - members:
-///       - user:eve@example.com
-///       role: roles/resourcemanager.organizationViewer
-///       condition:
-///         title: expirable access
-///         description: Does not grant access after Sep 2020
-///         expression: request.time < timestamp('2020-10-01T00:00:00.000Z')
-///     etag: BwWWja0YfJA=
-///     version: 3
-/// ```
 /// For a description of IAM and its features, see the
 /// IAM documentation
 /// .
@@ -566,6 +519,43 @@ impl Binding {
 /// members in each
 /// AuditLogConfig are exempted.
 /// Example Policy with multiple AuditConfigs:
+/// ```norust
+/// {
+///   "audit_configs": [
+///     {
+///       "service": "allServices",
+///       "audit_log_configs": [
+///         {
+///           "log_type": "DATA_READ",
+///           "exempted_members": [
+///             "user:jose@example.com"
+///           ]
+///         },
+///         {
+///           "log_type": "DATA_WRITE"
+///         },
+///         {
+///           "log_type": "ADMIN_READ"
+///         }
+///       ]
+///     },
+///     {
+///       "service": "sampleservice.googleapis.com",
+///       "audit_log_configs": [
+///         {
+///           "log_type": "DATA_READ"
+///         },
+///         {
+///           "log_type": "DATA_WRITE",
+///           "exempted_members": [
+///             "user:aliya@example.com"
+///           ]
+///         }
+///       ]
+///     }
+///   ]
+/// }
+/// ```
 /// For sampleservice, this policy enables DATA_
 /// READ, DATA_
 /// WRITE and ADMIN_
@@ -617,6 +607,21 @@ impl AuditConfig {
 
 /// Provides the configuration for logging a type of permissions.
 /// Example:
+/// ```norust
+/// {
+///   "audit_log_configs": [
+///     {
+///       "log_type": "DATA_READ",
+///       "exempted_members": [
+///         "user:jose@example.com"
+///       ]
+///     },
+///     {
+///       "log_type": "DATA_WRITE"
+///     }
+///   ]
+/// }
+/// ```
 /// This enables 'DATA_
 /// READ' and 'DATA_
 /// WRITE' logging, while exempting
