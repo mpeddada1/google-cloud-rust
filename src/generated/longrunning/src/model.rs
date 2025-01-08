@@ -26,7 +26,10 @@
 pub struct Operation {
     /// The server-assigned name, which is only unique within the same service that
     /// originally returns it. If you use the default HTTP mapping, the
-    /// `name` should be a resource name ending with `operations/{unique_id}`.
+    /// name
+    ///  should be a resource name ending with
+    /// operations/{unique_id}
+    /// .
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
 
@@ -37,14 +40,42 @@ pub struct Operation {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub metadata: Option<wkt::Any>,
 
-    /// If the value is `false`, it means the operation is still in progress.
-    /// If `true`, the operation is completed, and either `error` or `response` is
+    /// If the value is
+    /// false
+    /// , it means the operation is still in progress.
+    /// If
+    /// true
+    /// , the operation is completed, and either
+    /// error
+    ///  or
+    /// response
+    ///  is
     /// available.
     pub done: bool,
 
-    /// The operation result, which can be either an `error` or a valid `response`.
-    /// If `done` == `false`, neither `error` nor `response` is set.
-    /// If `done` == `true`, exactly one of `error` or `response` can be set.
+    /// The operation result, which can be either an
+    /// error
+    ///  or a valid
+    /// response
+    /// .
+    /// If
+    /// done
+    ///  ==
+    /// false
+    /// , neither
+    /// error
+    ///  nor
+    /// response
+    ///  is set.
+    /// If
+    /// done
+    ///  ==
+    /// true
+    /// , exactly one of
+    /// error
+    ///  or
+    /// response
+    ///  can be set.
     /// Some services might not provide the result.
     #[serde(flatten)]
     pub result: Option<crate::model::operation::Result>,
@@ -79,9 +110,29 @@ impl Operation {
 /// Defines additional types related to Operation
 pub mod operation {
 
-    /// The operation result, which can be either an `error` or a valid `response`.
-    /// If `done` == `false`, neither `error` nor `response` is set.
-    /// If `done` == `true`, exactly one of `error` or `response` can be set.
+    /// The operation result, which can be either an
+    /// error
+    ///  or a valid
+    /// response
+    /// .
+    /// If
+    /// done
+    ///  ==
+    /// false
+    /// , neither
+    /// error
+    ///  nor
+    /// response
+    ///  is set.
+    /// If
+    /// done
+    ///  ==
+    /// true
+    /// , exactly one of
+    /// error
+    ///  or
+    /// response
+    ///  can be set.
     /// Some services might not provide the result.
     #[derive(Clone, Debug, PartialEq, serde::Deserialize, serde::Serialize)]
     #[serde(rename_all = "camelCase")]
@@ -90,21 +141,37 @@ pub mod operation {
         /// The error result of the operation in case of failure or cancellation.
         Error(rpc::model::Status),
         /// The normal, successful response of the operation.  If the original
-        /// method returns no data on success, such as `Delete`, the response is
-        /// `google.protobuf.Empty`.  If the original method is standard
-        /// `Get`/`Create`/`Update`, the response should be the resource.  For other
-        /// methods, the response should have the type `XxxResponse`, where `Xxx`
+        /// method returns no data on success, such as
+        /// Delete
+        /// , the response is
+        /// google.protobuf.Empty
+        /// .  If the original method is standard
+        /// Get
+        /// /
+        /// Create
+        /// /
+        /// Update
+        /// , the response should be the resource.  For other
+        /// methods, the response should have the type
+        /// XxxResponse
+        /// , where
+        /// Xxx
+        ///
         /// is the original method name.  For example, if the original method name
-        /// is `TakeSnapshot()`, the inferred response type is
-        /// `TakeSnapshotResponse`.
+        /// is
+        /// TakeSnapshot()
+        /// , the inferred response type is
+        /// TakeSnapshotResponse
+        /// .
         Response(wkt::Any),
     }
 }
 
 /// The request message for
-/// [Operations.GetOperation][google.longrunning.Operations.GetOperation].
-///
-/// [google.longrunning.Operations.GetOperation]: crate::traits::Operations::get_operation
+/// [
+/// Operations.GetOperation][
+/// google.longrunning.Operations.GetOperation
+/// ].
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -124,9 +191,10 @@ impl GetOperationRequest {
 }
 
 /// The request message for
-/// [Operations.ListOperations][google.longrunning.Operations.ListOperations].
-///
-/// [google.longrunning.Operations.ListOperations]: crate::traits::Operations::list_operations
+/// [
+/// Operations.ListOperations][
+/// google.longrunning.Operations.ListOperations
+/// ].
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -175,9 +243,10 @@ impl ListOperationsRequest {
 }
 
 /// The response message for
-/// [Operations.ListOperations][google.longrunning.Operations.ListOperations].
-///
-/// [google.longrunning.Operations.ListOperations]: crate::traits::Operations::list_operations
+/// [
+/// Operations.ListOperations][
+/// google.longrunning.Operations.ListOperations
+/// ].
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -220,9 +289,10 @@ impl gax::paginator::PageableResponse for ListOperationsResponse {
 }
 
 /// The request message for
-/// [Operations.CancelOperation][google.longrunning.Operations.CancelOperation].
-///
-/// [google.longrunning.Operations.CancelOperation]: crate::traits::Operations::cancel_operation
+/// [
+/// Operations.CancelOperation][
+/// google.longrunning.Operations.CancelOperation
+/// ].
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -242,9 +312,10 @@ impl CancelOperationRequest {
 }
 
 /// The request message for
-/// [Operations.DeleteOperation][google.longrunning.Operations.DeleteOperation].
-///
-/// [google.longrunning.Operations.DeleteOperation]: crate::traits::Operations::delete_operation
+/// [
+/// Operations.DeleteOperation][
+/// google.longrunning.Operations.DeleteOperation
+/// ].
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -264,8 +335,10 @@ impl DeleteOperationRequest {
 }
 
 /// The request message for
-/// [Operations.WaitOperation][google.longrunning.Operations.WaitOperation].
-///
+/// [
+/// Operations.WaitOperation][
+/// google.longrunning.Operations.WaitOperation
+/// ].
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -297,17 +370,7 @@ impl WaitOperationRequest {
 }
 
 /// A message representing the message types used by a long-running operation.
-///
 /// Example:
-///
-/// ```norust
-/// rpc Export(ExportRequest) returns (google.longrunning.Operation) {
-///   option (google.longrunning.operation_info) = {
-///     response_type: "ExportResponse"
-///     metadata_type: "ExportMetadata"
-///   };
-/// }
-/// ```
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -316,20 +379,20 @@ pub struct OperationInfo {
     /// Required. The message name of the primary return type for this
     /// long-running operation.
     /// This type will be used to deserialize the LRO's response.
-    ///
     /// If the response is in a different package from the rpc, a fully-qualified
-    /// message name must be used (e.g. `google.protobuf.Struct`).
-    ///
+    /// message name must be used (e.g.
+    /// google.protobuf.Struct
+    /// ).
     /// Note: Altering this value constitutes a breaking change.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub response_type: String,
 
     /// Required. The message name of the metadata type for this long-running
     /// operation.
-    ///
     /// If the response is in a different package from the rpc, a fully-qualified
-    /// message name must be used (e.g. `google.protobuf.Struct`).
-    ///
+    /// message name must be used (e.g.
+    /// google.protobuf.Struct
+    /// ).
     /// Note: Altering this value constitutes a breaking change.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub metadata_type: String,

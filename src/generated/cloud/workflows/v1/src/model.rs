@@ -39,17 +39,20 @@ pub struct Workflow {
     /// Output only. The revision of the workflow.
     /// A new revision of a workflow is created as a result of updating the
     /// following properties of a workflow:
-    ///
-    /// - [Service account][google.cloud.workflows.v1.Workflow.service_account]
-    /// - [Workflow code to be
-    /// executed][google.cloud.workflows.v1.Workflow.source_contents]
-    ///
+    /// [
+    /// Service account][
+    /// google.cloud.workflows.v1.Workflow.service_
+    /// account
+    /// ]
+    /// [
+    /// Workflow code to be
+    /// executed][
+    /// google.cloud.workflows.v1.Workflow.source_
+    /// contents
+    /// ]
     /// The format is "000001-a4d", where the first six characters define
     /// the zero-padded revision ordinal number. They are followed by a hyphen and
     /// three hexadecimal random characters.
-    ///
-    /// [google.cloud.workflows.v1.Workflow.service_account]: crate::model::Workflow::service_account
-    /// [google.cloud.workflows.v1.Workflow.source_contents]: crate::model::Workflow::source_code
     #[serde(skip_serializing_if = "String::is_empty")]
     pub revision_id: String,
 
@@ -78,11 +81,18 @@ pub struct Workflow {
     /// This service account represents the identity of the workflow and determines
     /// what permissions the workflow has.
     /// Format: projects/{project}/serviceAccounts/{account} or {account}
-    ///
-    /// Using `-` as a wildcard for the `{project}` or not providing one at all
-    /// will infer the project from the account. The `{account}` value can be the
-    /// `email` address or the `unique_id` of the service account.
-    ///
+    /// Using
+    /// -
+    ///  as a wildcard for the
+    /// {project}
+    ///  or not providing one at all
+    /// will infer the project from the account. The
+    /// {account}
+    ///  value can be the
+    /// email
+    ///  address or the
+    /// unique_id
+    ///  of the service account.
     /// If not provided, workflow will use the project's default service account.
     /// Modifying this field for an existing workflow results in a new workflow
     /// revision.
@@ -91,13 +101,14 @@ pub struct Workflow {
 
     /// Optional. The resource name of a KMS crypto key used to encrypt or decrypt
     /// the data associated with the workflow.
-    ///
     /// Format:
     /// projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{cryptoKey}
-    ///
-    /// Using `-` as a wildcard for the `{project}` or not providing one at all
+    /// Using
+    /// -
+    ///  as a wildcard for the
+    /// {project}
+    ///  or not providing one at all
     /// will infer the project from the account.
-    ///
     /// If not provided, data associated with the workflow will not be
     /// CMEK-encrypted.
     #[serde(skip_serializing_if = "String::is_empty")]
@@ -319,7 +330,9 @@ pub mod workflow {
         /// The workflow has been deployed successfully and is serving.
         pub const ACTIVE: &str = "ACTIVE";
 
-        /// Workflow data is unavailable. See the `state_error` field.
+        /// Workflow data is unavailable. See the
+        /// state_error
+        ///  field.
         pub const UNAVAILABLE: &str = "UNAVAILABLE";
     }
 
@@ -371,10 +384,11 @@ pub mod workflow {
 }
 
 /// Request for the
-/// [ListWorkflows][google.cloud.workflows.v1.Workflows.ListWorkflows]
+/// [
+/// ListWorkflows][
+/// google.cloud.workflows.v1.Workflows.ListWorkflows
+/// ]
 /// method.
-///
-/// [google.cloud.workflows.v1.Workflows.ListWorkflows]: crate::traits::Workflows::list_workflows
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -391,10 +405,13 @@ pub struct ListWorkflowsRequest {
     /// value is 1000 and values greater than 1000 are coerced down to 1000.
     pub page_size: i32,
 
-    /// A page token, received from a previous `ListWorkflows` call.
+    /// A page token, received from a previous
+    /// ListWorkflows
+    ///  call.
     /// Provide this to retrieve the subsequent page.
-    ///
-    /// When paginating, all other parameters provided to `ListWorkflows` must
+    /// When paginating, all other parameters provided to
+    /// ListWorkflows
+    ///  must
     /// match the call that provided the page token.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub page_token: String,
@@ -444,10 +461,11 @@ impl ListWorkflowsRequest {
 }
 
 /// Response for the
-/// [ListWorkflows][google.cloud.workflows.v1.Workflows.ListWorkflows]
+/// [
+/// ListWorkflows][
+/// google.cloud.workflows.v1.Workflows.ListWorkflows
+/// ]
 /// method.
-///
-/// [google.cloud.workflows.v1.Workflows.ListWorkflows]: crate::traits::Workflows::list_workflows
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -457,7 +475,9 @@ pub struct ListWorkflowsResponse {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub workflows: Vec<crate::model::Workflow>,
 
-    /// A token, which can be sent as `page_token` to retrieve the next page.
+    /// A token, which can be sent as
+    /// page_token
+    ///  to retrieve the next page.
     /// If this field is omitted, there are no subsequent pages.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub next_page_token: String,
@@ -501,9 +521,10 @@ impl gax::paginator::PageableResponse for ListWorkflowsResponse {
 }
 
 /// Request for the
-/// [GetWorkflow][google.cloud.workflows.v1.Workflows.GetWorkflow] method.
-///
-/// [google.cloud.workflows.v1.Workflows.GetWorkflow]: crate::traits::Workflows::get_workflow
+/// [
+/// GetWorkflow][
+/// google.cloud.workflows.v1.Workflows.GetWorkflow
+/// ] method.
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -514,7 +535,8 @@ pub struct GetWorkflowRequest {
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
 
-    /// Optional. The revision of the workflow to retrieve. If the revision_id is
+    /// Optional. The revision of the workflow to retrieve. If the revision_
+    /// id is
     /// empty, the latest revision is retrieved.
     /// The format is "000001-a4d", where the first six characters define
     /// the zero-padded decimal revision number. They are followed by a hyphen and
@@ -538,10 +560,11 @@ impl GetWorkflowRequest {
 }
 
 /// Request for the
-/// [CreateWorkflow][google.cloud.workflows.v1.Workflows.CreateWorkflow]
+/// [
+/// CreateWorkflow][
+/// google.cloud.workflows.v1.Workflows.CreateWorkflow
+/// ]
 /// method.
-///
-/// [google.cloud.workflows.v1.Workflows.CreateWorkflow]: crate::traits::Workflows::create_workflow
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -558,12 +581,11 @@ pub struct CreateWorkflowRequest {
 
     /// Required. The ID of the workflow to be created. It has to fulfill the
     /// following requirements:
-    ///
-    /// * Must contain only letters, numbers, underscores and hyphens.
-    /// * Must start with a letter.
-    /// * Must be between 1-64 characters.
-    /// * Must end with a number or a letter.
-    /// * Must be unique within the customer project and location.
+    /// Must contain only letters, numbers, underscores and hyphens.
+    /// Must start with a letter.
+    /// Must be between 1-64 characters.
+    /// Must end with a number or a letter.
+    /// Must be unique within the customer project and location.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub workflow_id: String,
 }
@@ -589,10 +611,11 @@ impl CreateWorkflowRequest {
 }
 
 /// Request for the
-/// [DeleteWorkflow][google.cloud.workflows.v1.Workflows.DeleteWorkflow]
+/// [
+/// DeleteWorkflow][
+/// google.cloud.workflows.v1.Workflows.DeleteWorkflow
+/// ]
 /// method.
-///
-/// [google.cloud.workflows.v1.Workflows.DeleteWorkflow]: crate::traits::Workflows::delete_workflow
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -613,10 +636,11 @@ impl DeleteWorkflowRequest {
 }
 
 /// Request for the
-/// [UpdateWorkflow][google.cloud.workflows.v1.Workflows.UpdateWorkflow]
+/// [
+/// UpdateWorkflow][
+/// google.cloud.workflows.v1.Workflows.UpdateWorkflow
+/// ]
 /// method.
-///
-/// [google.cloud.workflows.v1.Workflows.UpdateWorkflow]: crate::traits::Workflows::update_workflow
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]

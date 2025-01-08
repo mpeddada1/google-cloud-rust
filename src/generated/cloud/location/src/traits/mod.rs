@@ -20,9 +20,10 @@ pub(crate) mod dyntraits;
 
 /// An abstract interface that provides location-related information for
 /// a service. Service-specific metadata is provided through the
-/// [Location.metadata][google.cloud.location.Location.metadata] field.
-///
-/// [google.cloud.location.Location.metadata]: crate::model::Location::metadata
+/// [
+/// Location.metadata][
+/// google.cloud.location.Location.metadata
+/// ] field.
 ///
 /// # Mocking
 ///

@@ -28,6 +28,10 @@ import (
 
 	"github.com/googleapis/google-cloud-rust/generator/internal/api"
 	"github.com/iancoleman/strcase"
+	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark/ast"
+	"github.com/yuin/goldmark/parser"
+	"github.com/yuin/goldmark/text"
 )
 
 //go:embed templates/rust
@@ -763,114 +767,156 @@ func (*RustCodec) ToCamel(symbol string) string {
 //
 // [spec]: https://spec.commonmark.org/0.13/#block-quotes
 func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState) []string {
-	inBlockquote := false
-	blockquotePrefix := ""
-
-	links := map[string]bool{}
+	// inBlockquote := false
+	// blockquotePrefix := ""
+	// links := map[string]bool{}
 	var results []string
-	for _, line := range strings.Split(documentation, "\n") {
-		if inBlockquote {
-			switch {
-			case line == "```":
-				inBlockquote = false
-				results = append(results, "```")
-			case strings.HasPrefix(line, blockquotePrefix):
-				results = append(results, strings.TrimPrefix(line, blockquotePrefix))
-			default:
-				inBlockquote = false
-				results = append(results, "```")
-				results = append(results, line)
-			}
-		} else {
-			for _, match := range commentLinkRegex.FindAllString(line, -1) {
-				match = strings.TrimSuffix(strings.TrimPrefix(match, "]["), "]")
-				links[match] = true
-			}
-			switch {
-			case line == "```":
+	md := goldmark.New(
+		goldmark.WithParserOptions(
+			parser.WithAutoHeadingID(),
+		),
+		goldmark.WithExtensions(),
+	)
+	documentationBytes := []byte(documentation)
+	doc := md.Parser().Parse(text.NewReader(documentationBytes))
+	ast.Walk(doc, func(node ast.Node, entering bool) (ast.WalkStatus, error) {
+
+		switch node.Kind() {
+		case ast.KindFencedCodeBlock:
+			if entering {
+				fencedCode := node.(*ast.FencedCodeBlock)
 				results = append(results, "```norust")
-				inBlockquote = true
-			case strings.HasPrefix(line, "    "):
-				inBlockquote = true
-				blockquotePrefix = "    "
-				results = append(results, "```norust")
-				results = append(results, strings.TrimPrefix(line, blockquotePrefix))
-			case strings.HasPrefix(line, "   > "):
-				inBlockquote = true
-				blockquotePrefix = "   > "
-				results = append(results, "```norust")
-				results = append(results, strings.TrimPrefix(line, blockquotePrefix))
-			case strings.HasPrefix(line, "> "):
-				inBlockquote = true
-				blockquotePrefix = "> "
-				results = append(results, "```norust")
-				results = append(results, strings.TrimPrefix(line, blockquotePrefix))
-			default:
-				var sb strings.Builder
-				lastMatch := 0
-				for _, pair := range commentUrlRegex.FindAllStringIndex(line, -1) {
-					sb.WriteString(line[lastMatch:pair[0]])
-					lastMatch = pair[1]
-					prior := ""
-					if pair[0] != 0 {
-						prior = line[pair[0]-1 : pair[0]]
-					}
-					next := ""
-					if pair[1] != len(line) {
-						next = line[pair[1] : pair[1]+1]
-					}
-					match := line[pair[0]:pair[1]]
-					switch {
-					case strings.HasSuffix(line[0:pair[0]], "]: "):
-						// Looks like a markdown link definition [1], no
-						// replacement needed.
-						// [1]: https://spec.commonmark.org/0.31.2/#link-reference-definitions
-						sb.WriteString(match)
-					case strings.HasSuffix(line[0:pair[0]], "](") && next == ")":
-						// This looks like a link destination [1], no
-						// replacement needed.
-						// [1]: https://spec.commonmark.org/0.31.2/#links
-						sb.WriteString(match)
-					case prior == "<" && next == ">":
-						// URLs already surrounded by `<...>` need no replacement
-						sb.WriteString(match)
-					case strings.HasSuffix(match, ".") && pair[1] == len(line):
-						// Many comments end with a URL and then a period. In
-						// most cases (all cases I could find), the period is punctuation,
-						// and not part of the URL.
-						sb.WriteString(fmt.Sprintf("<%s>.", strings.TrimSuffix(match, ".")))
-					default:
-						sb.WriteString(fmt.Sprintf("<%s>", match))
-					}
+				for i := 0; i < fencedCode.Lines().Len(); i++ {
+					line := fencedCode.Lines().At(i)
+
+					results = append(results, string(line.Value(documentationBytes)))
 				}
-				sb.WriteString(line[lastMatch:])
-				line = sb.String()
-				results = append(results, line)
+			} else {
+				results = append(results, "```")
+			}
+		case ast.KindText:
+			if textNode, ok := node.(*ast.Text); ok && entering {
+				textContent := string(textNode.Segment.Value(documentationBytes))
+				lines := strings.Split(textContent, "\n ")
+
+				for _, line := range lines {
+					results = append(results, line)
+					// TODO(mpeddada): Include logic for processing links.
+
+				}
 			}
 		}
-	}
-	if inBlockquote {
-		results = append(results, "```")
-	}
+		return ast.WalkContinue, nil
+	})
 	for i, line := range results {
 		results[i] = strings.TrimRightFunc(fmt.Sprintf("/// %s", line), unicode.IsSpace)
 	}
-	if len(links) != 0 {
-		results = append(results, "///")
-	}
-	// Sort the links to get stable results.
-	var sortedLinks []string
-	for link := range links {
-		sortedLinks = append(sortedLinks, link)
-	}
-	sort.Strings(sortedLinks)
-	for _, link := range sortedLinks {
-		rusty := c.rustdocLink(link, state)
-		if rusty == "" {
-			continue
-		}
-		results = append(results, fmt.Sprintf("/// [%s]: %s", link, rusty))
-	}
+
+	// for _, line := range strings.Split(documentation, "\n") {
+	// 	if inBlockquote {
+	// 		switch {
+	// 		case line == "```":
+	// 			inBlockquote = false
+	// 			results = append(results, "```")
+	// 		case strings.HasPrefix(line, blockquotePrefix):
+	// 			results = append(results, strings.TrimPrefix(line, blockquotePrefix))
+	// 		default:
+	// 			inBlockquote = false
+	// 			results = append(results, "```")
+	// 			results = append(results, line)
+	// 		}
+	// 	} else {
+	// 		for _, match := range commentLinkRegex.FindAllString(line, -1) {
+	// 			match = strings.TrimSuffix(strings.TrimPrefix(match, "]["), "]")
+	// 			links[match] = true
+	// 		}
+	// 		switch {
+	// 		case line == "```":
+	// 			results = append(results, "```norust")
+	// 			inBlockquote = true
+	// 		case strings.HasPrefix(line, "    "):
+	// 			inBlockquote = true
+	// 			blockquotePrefix = "    "
+	// 			results = append(results, "```norust")
+	// 			results = append(results, strings.TrimPrefix(line, blockquotePrefix))
+	// 		case strings.HasPrefix(line, "   > "):
+	// 			inBlockquote = true
+	// 			blockquotePrefix = "   > "
+	// 			results = append(results, "```norust")
+	// 			results = append(results, strings.TrimPrefix(line, blockquotePrefix))
+	// 		case strings.HasPrefix(line, "> "):
+	// 			inBlockquote = true
+	// 			blockquotePrefix = "> "
+	// 			results = append(results, "```norust")
+	// 			results = append(results, strings.TrimPrefix(line, blockquotePrefix))
+	// 		default:
+	// 			var sb strings.Builder
+	// 			lastMatch := 0
+	// 			for _, pair := range commentUrlRegex.FindAllStringIndex(line, -1) {
+	// 				sb.WriteString(line[lastMatch:pair[0]])
+	// 				lastMatch = pair[1]
+	// 				prior := ""
+	// 				if pair[0] != 0 {
+	// 					prior = line[pair[0]-1 : pair[0]]
+	// 				}
+	// 				next := ""
+	// 				if pair[1] != len(line) {
+	// 					next = line[pair[1] : pair[1]+1]
+	// 				}
+	// 				match := line[pair[0]:pair[1]]
+	// 				switch {
+	// 				case strings.HasSuffix(line[0:pair[0]], "]: "):
+	// 					// Looks like a markdown link definition [1], no
+	// 					// replacement needed.
+	// 					// [1]: https://spec.commonmark.org/0.31.2/#link-reference-definitions
+	// 					sb.WriteString(match)
+	// 				case strings.HasSuffix(line[0:pair[0]], "](") && next == ")":
+	// 					// This looks like a link destination [1], no
+	// 					// replacement needed.
+	// 					// [1]: https://spec.commonmark.org/0.31.2/#links
+	// 					sb.WriteString(match)
+	// 				case prior == "<" && next == ">":
+	// 					// URLs already surrounded by `<...>` need no replacement
+	// 					sb.WriteString(match)
+	// 				case strings.HasSuffix(match, ".") && pair[1] == len(line):
+	// 					// Many comments end with a URL and then a period. In
+	// 					// most cases (all cases I could find), the period is punctuation,
+	// 					// and not part of the URL.
+	// 					sb.WriteString(fmt.Sprintf("<%s>.", strings.TrimSuffix(match, ".")))
+	// 				default:
+	// 					sb.WriteString(fmt.Sprintf("<%s>", match))
+	// 				}
+	// 			}
+	// 			sb.WriteString(line[lastMatch:])
+	// 			line = sb.String()
+	// 			results = append(results, line)
+	// 		}
+	// 	}
+	// }
+	// if inBlockquote {
+	// 	results = append(results, "```")
+	// }
+
+	// for i, line := range results {
+	// 	results[i] = strings.TrimRightFunc(fmt.Sprintf("/// %s", line), unicode.IsSpace)
+	// }
+
+	// if len(links) != 0 {
+	// 	results = append(results, "///")
+	// }
+	// // Sort the links to get stable results.
+	// var sortedLinks []string
+	// for link := range links {
+	// 	sortedLinks = append(sortedLinks, link)
+	// }
+	// sort.Strings(sortedLinks)
+	// for _, link := range sortedLinks {
+	// 	rusty := c.rustdocLink(link, state)
+	// 	if rusty == "" {
+	// 		continue
+	// 	}
+	// 	results = append(results, fmt.Sprintf("/// [%s]: %s", link, rusty))
+	// }
 	return results
 }
 

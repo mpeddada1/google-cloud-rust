@@ -28,14 +28,10 @@ use std::sync::Arc;
 /// internally.
 ///
 /// API Overview
-///
 /// Manages Identity and Access Management (IAM) policies.
-///
 /// Any implementation of an API that offers access control features
 /// implements the google.iam.v1.IAMPolicy interface.
-///
-/// ## Data model
-///
+/// Data model
 /// Access control is applied when a principal (user or service account), takes
 /// some action on a resource exposed by a service. Resources, identified by
 /// URI-like names, are the unit of access control specification. Service
@@ -44,11 +40,8 @@ use std::sync::Arc;
 /// For example one database service may allow access control to be
 /// specified only at the Table level, whereas another might allow access control
 /// to also be specified at the Column level.
-///
-/// ## Policy Structure
-///
+/// Policy Structure
 /// See google.iam.v1.Policy
-///
 /// This is intentionally not a CRUD style API because access control policies
 /// are created and deleted implicitly with the resources to which they are
 /// attached.
@@ -107,8 +100,13 @@ impl IAMPolicy {
 
     /// Sets the access control policy on the specified resource. Replaces
     /// any existing policy.
+    /// Can return
+    /// NOT_FOUND
+    /// ,
+    /// INVALID_ARGUMENT
+    /// , and
+    /// PERMISSION_DENIED
     ///
-    /// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
     /// errors.
     pub fn set_iam_policy(&self, resource: impl Into<String>) -> crate::builders::SetIamPolicy {
         crate::builders::SetIamPolicy::new(self.inner.clone()).set_resource(resource.into())
@@ -122,8 +120,9 @@ impl IAMPolicy {
 
     /// Returns permissions that a caller has on the specified resource. If the
     /// resource does not exist, this will return an empty set of
-    /// permissions, not a `NOT_FOUND` error.
-    ///
+    /// permissions, not a
+    /// NOT_FOUND
+    ///  error.
     /// Note: This operation is designed to be used for building
     /// permission-aware UIs and command-line tools, not for authorization
     /// checking. This operation may "fail open" without warning.

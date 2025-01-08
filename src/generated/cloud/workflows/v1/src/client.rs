@@ -96,8 +96,12 @@ impl Workflows {
 
     /// Creates a new workflow. If a workflow with the specified name already
     /// exists in the specified project and location, the long running operation
-    /// returns a [ALREADY_EXISTS][google.rpc.Code.ALREADY_EXISTS] error.
-    ///
+    /// returns a [
+    /// ALREADY_
+    /// EXISTS][
+    /// google.rpc.Code.ALREADY_
+    /// EXISTS
+    /// ] error.
     ///
     /// # Long running operations
     ///
