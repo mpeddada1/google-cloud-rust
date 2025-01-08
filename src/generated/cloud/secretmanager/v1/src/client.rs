@@ -28,6 +28,7 @@ use std::sync::Arc;
 /// internally.
 ///
 /// Secret Manager Service
+///
 /// Manages secrets and operations using those secrets. Implements a REST
 /// model with the following objects:
 #[derive(Clone, Debug)]
@@ -134,6 +135,7 @@ impl SecretManagerService {
 
     /// Gets metadata for a
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+    ///
     /// `projects/*/secrets/*/versions/latest` is an alias to the most recently
     /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
     pub fn get_secret_version(&self, name: impl Into<String>) -> crate::builders::GetSecretVersion {
@@ -142,6 +144,7 @@ impl SecretManagerService {
 
     /// Accesses a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
     /// This call returns the secret data.
+    ///
     /// `projects/*/secrets/*/versions/latest` is an alias to the most recently
     /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
     pub fn access_secret_version(
@@ -152,6 +155,7 @@ impl SecretManagerService {
     }
 
     /// Disables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+    ///
     /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
     /// [DISABLED][google.cloud.secretmanager.v1.SecretVersion.State.DISABLED].
@@ -163,6 +167,7 @@ impl SecretManagerService {
     }
 
     /// Enables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+    ///
     /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
     /// [ENABLED][google.cloud.secretmanager.v1.SecretVersion.State.ENABLED].
@@ -174,6 +179,7 @@ impl SecretManagerService {
     }
 
     /// Destroys a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+    ///
     /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
     /// [DESTROYED][google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]
@@ -187,6 +193,7 @@ impl SecretManagerService {
 
     /// Sets the access control policy on the specified secret. Replaces any
     /// existing policy.
+    ///
     /// Permissions on
     /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] are enforced
     /// according to the policy set on the associated
@@ -204,6 +211,7 @@ impl SecretManagerService {
     /// Returns permissions that a caller has for the specified secret.
     /// If the secret does not exist, this call returns an empty set of
     /// permissions, not a NOT_FOUND error.
+    ///
     /// Note: This operation is designed to be used for building permission-aware
     /// UIs and command-line tools, not for authorization checking. This operation
     /// may "fail open" without warning.

@@ -817,53 +817,20 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 		case ast.KindParagraph:
 			if entering {
 				lines := node.Lines()
-				isCodeBlock := false
-				if lines.Len() > 0 {
-
-					for i := 0; i < lines.Len(); i++ {
-						line := lines.At(i)
-						lineString := string(line.Value(documentationBytes))
-						results = append(results, string(line.Value(documentationBytes)))
-						indent := 0
-						for _, j := range lineString {
-							if unicode.IsSpace(j) {
-								indent++
-							} else {
-								break
-							}
-						}
-						if indent > 2 {
-							isCodeBlock = true
-						}
-
-					}
-					if isCodeBlock {
-						results = append(results, "```norust\n")
-						for i := 0; i < lines.Len(); i++ {
-							line := lines.At(i)
-							results = append(results, string(line.Value(documentationBytes)))
-						}
-						results = append(results, "```\n")
-						return ast.WalkSkipChildren, nil
-					}
-					// results = append(results, "```\n")
-					return ast.WalkSkipChildren, nil
+				for i := 0; i < lines.Len(); i++ {
+					line := lines.At(i)
+					results = append(results, string(line.Value(documentationBytes)))
 				}
+				results = append(results, "\n")
+				return ast.WalkSkipChildren, nil
+
 			}
-			// case ast.KindText:
-			// 	if textNode, ok := node.(*ast.Text); ok && entering {
-			// 		textContent := string(textNode.Segment.Value(documentationBytes))
-			// 		lines := strings.Split(textContent, "\n")
-
-			// 		for _, line := range lines {
-			// 			results = append(results, line)
-			// 			// TODO(mpeddada): Include logic for processing links.
-
-			// 		}
-			// 	}
 		}
 		return ast.WalkContinue, nil
 	})
+	if len(results) > 0 && results[len(results)-1] == "\n" {
+		results = results[:len(results)-1] // Remove the last newline
+	}
 	for i, line := range results {
 		results[i] = strings.TrimRightFunc(fmt.Sprintf("/// %s", line), unicode.IsSpace)
 	}

@@ -28,6 +28,7 @@ use std::sync::Arc;
 /// internally.
 ///
 /// Manages long-running operations with an API service.
+///
 /// When an API method normally takes long time to complete, it can be designed
 /// to return [Operation][google.longrunning.Operation] to the client, and the
 /// client can use this interface to receive the real response asynchronously by

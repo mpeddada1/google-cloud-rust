@@ -24,15 +24,19 @@
 /// can also be trivially provided to UIColor's `+colorWithRed:green:blue:alpha`
 /// method in iOS; and, with just a little work, it can be easily formatted into
 /// a CSS `rgba()` string in JavaScript.
+///
 /// This reference page doesn't carry information about the absolute color
 /// space
 /// that should be used to interpret the RGB value (e.g. sRGB, Adobe RGB,
 /// DCI-P3, BT.2020, etc.). By default, applications should assume the sRGB color
 /// space.
+///
 /// When color equality needs to be decided, implementations, unless
 /// documented otherwise, treat two colors as equal if all their red,
 /// green, blue, and alpha values each differ by at most 1e-5.
+///
 /// Example (Java):
+///
 /// ```norust
 ///  import com.google.type.Color;
 ///
@@ -73,6 +77,7 @@
 ///  // ...
 /// ```
 /// Example (iOS / Obj-C):
+///
 /// ```norust
 ///  // ...
 ///  static UIColor* fromProto(Color* protocolor) {
@@ -105,6 +110,7 @@
 /// // ...
 /// ```
 /// Example (JavaScript):
+///
 /// ```norust
 /// // ...
 ///
@@ -155,7 +161,9 @@ pub struct Color {
 
     /// The fraction of this color that should be applied to the pixel. That is,
     /// the final pixel color is defined by the equation:
+    ///
     /// `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
+    ///
     /// This means that a value of 1.0 corresponds to a solid color, whereas
     /// a value of 0.0 corresponds to a completely transparent color. This
     /// uses a wrapper message rather than a simple float scalar so that it is
@@ -196,6 +204,7 @@ impl Color {
 /// day and time zone are either specified elsewhere or are insignificant. The
 /// date is relative to the Gregorian Calendar. This can represent one of the
 /// following:
+///
 /// Related types are [google.type.TimeOfDay][google.type.TimeOfDay] and
 /// `google.protobuf.Timestamp`.
 #[serde_with::serde_as]
@@ -238,15 +247,20 @@ impl Date {
 }
 
 /// Represents civil time (or occasionally physical time).
+///
 /// This type can represent a civil time in one of a few possible ways:
+///
 /// The date is relative to the Proleptic Gregorian Calendar.
+///
 /// If year is 0, the DateTime is considered not to have a specific year. month
 /// and day must have valid, non-zero values.
+///
 /// This type may also be used to represent a physical time if all the date and
 /// time fields are set and either case of the `time_offset` oneof is set.
 /// Consider using `Timestamp` message for physical time instead. If your use
 /// case also would like to store the user's timezone, that can be done in
 /// another field.
+///
 /// This type is more flexible than some applications may want. Make sure to
 /// document and validate your application's limitations.
 #[serde_with::serde_as]
@@ -403,27 +417,35 @@ impl TimeZone {
 #[non_exhaustive]
 pub struct Decimal {
     /// The decimal value, as a string.
+    ///
     /// The string representation consists of an optional sign, `+` (`U+002B`)
     /// or `-` (`U+002D`), followed by a sequence of zero or more decimal digits
     /// ("the integer"), optionally followed by a fraction, optionally followed
     /// by an exponent.
+    ///
     /// The fraction consists of a decimal point followed by zero or more decimal
     /// digits. The string must contain at least one digit in either the integer
     /// or the fraction. The number formed by the sign, the integer and the
     /// fraction is referred to as the significand.
+    ///
     /// The exponent consists of the character `e` (`U+0065`) or `E` (`U+0045`)
     /// followed by one or more decimal digits.
+    ///
     /// Services **should** normalize decimal values before storing them by:
+    ///
     /// Services **may** perform additional normalization based on its own needs
     /// and the internal decimal implementation selected, such as shifting the
     /// decimal point and exponent value together (example: `2.5e-1` <-> `0.25`).
     /// Additionally, services **may** preserve trailing zeroes in the fraction
     /// to indicate increased precision, but are not required to do so.
+    ///
     /// Note that only the `.` character is supported to divide the integer
     /// and the fraction; `,` **should not** be supported regardless of locale.
     /// Additionally, thousand separators **should not** be supported. If a
     /// service does support them, values **must** be normalized.
+    ///
     /// The ENBF grammar is:
+    ///
     /// ```norust
     /// DecimalString =
     ///   [Sign] Significand [Exponent];
@@ -441,11 +463,13 @@ pub struct Decimal {
     /// maximum supported precision (total number of digits), and, if applicable,
     /// the scale (number of digits after the decimal point), as well as how it
     /// behaves when receiving out-of-bounds values.
+    ///
     /// Services **may** choose to accept values passed as input even when the
     /// value has a higher precision or scale than the service supports, and
     /// **should** round the value to fit the supported scale. Alternatively, the
     /// service **may** error with `400 Bad Request` (`INVALID_ARGUMENT` in gRPC)
     /// if precision would be lost.
+    ///
     /// Services **should** error with `400 Bad Request` (`INVALID_ARGUMENT` in
     /// gRPC) if the service receives a value outside of the supported range.
     #[serde(skip_serializing_if = "String::is_empty")]
@@ -463,25 +487,30 @@ impl Decimal {
 /// Represents a textual expression in the Common Expression Language (CEL)
 /// syntax. CEL is a C-like expression language. The syntax and semantics of CEL
 /// are documented at https://github.com/google/cel-spec.
+///
 /// Example (Comparison):
+///
 /// ```norust
 /// title: "Summary size limit"
 /// description: "Determines if a summary is less than 100 chars"
 /// expression: "document.summary.size() < 100"
 /// ```
 /// Example (Equality):
+///
 /// ```norust
 /// title: "Requestor is owner"
 /// description: "Determines if requestor is the document owner"
 /// expression: "document.owner == request.auth.claims.email"
 /// ```
 /// Example (Logic):
+///
 /// ```norust
 /// title: "Public documents"
 /// description: "Determine whether the document should be publicly visible"
 /// expression: "document.type != 'private' && document.type != 'internal'"
 /// ```
 /// Example (Data Manipulation):
+///
 /// ```norust
 /// title: "Notification string"
 /// description: "Create a notification string with a timestamp."
@@ -575,6 +604,7 @@ impl Fraction {
 
 /// Represents a time interval, encoded as a Timestamp start (inclusive) and a
 /// Timestamp end (exclusive).
+///
 /// The start must be less than or equal to the end.
 /// When the start equals the end, the interval is empty (matches no time).
 /// When both start and end are unspecified, the interval matches any time.
@@ -584,12 +614,14 @@ impl Fraction {
 #[non_exhaustive]
 pub struct Interval {
     /// Optional. Inclusive start of the interval.
+    ///
     /// If specified, a Timestamp matching this interval will have to be the same
     /// or after the start.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub start_time: Option<wkt::Timestamp>,
 
     /// Optional. Exclusive end of the interval.
+    ///
     /// If specified, a Timestamp matching this interval will have to be before the
     /// end.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -652,6 +684,7 @@ pub struct LocalizedText {
     pub text: String,
 
     /// The text's BCP-47 language code, such as "en-US" or "sr-Latn".
+    ///
     /// For more information, see
     /// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
     #[serde(skip_serializing_if = "String::is_empty")]
@@ -717,15 +750,22 @@ impl Money {
 }
 
 /// An object representing a phone number, suitable as an API wire format.
+///
 /// This representation:
+///
 /// should not be used for locale-specific formatting of a phone number, such
 /// as "+1 (650) 253-0000 ext. 123"
+///
 /// is not designed for efficient storage
+///
 /// may not be suitable for dialing - specialized libraries (see references)
 /// should be used to parse the number for that purpose
+///
 /// To do something meaningful with this number, such as format it for various
 /// use-cases, convert it to an `i18n.phonenumbers.PhoneNumber` object first.
+///
 /// For instance, in Java this would be:
+///
 /// com.google.type.PhoneNumber wireProto =
 /// com.google.type.PhoneNumber.newBuilder().build();
 /// com.google.i18n.phonenumbers.Phonenumber.PhoneNumber phoneNumber =
@@ -733,6 +773,7 @@ impl Money {
 /// if (!wireProto.getExtension().isEmpty()) {
 /// phoneNumber.setExtension(wireProto.getExtension());
 /// }
+///
 /// Reference(s):
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
@@ -743,6 +784,7 @@ pub struct PhoneNumber {
     /// recommendations, except for being defined as a series of numbers with a
     /// maximum length of 40 digits. Other than digits, some other dialing
     /// characters such as ',' (indicating a wait) or '#' may be stored here.
+    ///
     /// Note that no regions currently use extensions with short codes, so this
     /// field is normally only set in conjunction with an E.164 number. It is held
     /// separately from the E.164 number to allow for short code extensions in the
@@ -778,6 +820,7 @@ pub mod phone_number {
     /// typically much shorter than regular phone numbers and can be used to
     /// address messages in MMS and SMS systems, as well as for abbreviated dialing
     /// (e.g. "Text 611 to see how many minutes you have remaining on your plan.").
+    ///
     /// Short codes are restricted to a region and are not internationally
     /// dialable, which means the same short code can exist in different regions,
     /// with different usage and pricing, even if those regions share the same
@@ -789,6 +832,7 @@ pub mod phone_number {
     pub struct ShortCode {
         /// Required. The BCP-47 region code of the location where calls to this
         /// short code can be made, such as "US" and "BB".
+        ///
         /// Reference(s):
         #[serde(skip_serializing_if = "String::is_empty")]
         pub region_code: String,
@@ -824,12 +868,15 @@ pub mod phone_number {
         /// phone number that uses a relaxed ITU E.164 format consisting of the
         /// country calling code (1 to 3 digits) and the subscriber number, with no
         /// additional spaces or formatting, e.g.:
+        ///
         /// The ITU E.164 format limits the latter to 12 digits, but in practice not
         /// all countries respect that, so we relax that restriction here.
         /// National-only numbers are not allowed.
+        ///
         /// References:
         E164Number { e164_number: String },
         /// A short code.
+        ///
         /// Reference(s):
         ShortCode(crate::model::phone_number::ShortCode),
     }
@@ -840,9 +887,12 @@ pub mod phone_number {
 /// Box or similar.
 /// It is not intended to model geographical locations (roads, towns,
 /// mountains).
+///
 /// In typical usage an address would be created via user input or from importing
 /// existing data, depending on the type of process.
+///
 /// Advice on address input / editing:
+///
 /// For more guidance on how to use this schema, please see:
 /// https://support.google.com/business/answer/6397478
 #[serde_with::serde_as]
@@ -852,6 +902,7 @@ pub mod phone_number {
 pub struct PostalAddress {
     /// The schema revision of the `PostalAddress`. This must be set to 0, which is
     /// the latest revision.
+    ///
     /// All new revisions **must** be backward compatible with old revisions.
     pub revision: i32,
 
@@ -870,8 +921,10 @@ pub struct PostalAddress {
     /// This can affect formatting in certain countries, but is not critical
     /// to the correctness of the data and will never affect any validation or
     /// other non-formatting related operations.
+    ///
     /// If this value is not known, it should be omitted (rather than specifying a
     /// possibly incorrect default).
+    ///
     /// Examples: "zh-Hant", "ja", "ja-Latn", "en".
     #[serde(skip_serializing_if = "String::is_empty")]
     pub language_code: String,
@@ -914,6 +967,7 @@ pub struct PostalAddress {
     pub sublocality: String,
 
     /// Unstructured address lines describing the lower levels of an address.
+    ///
     /// Because values in address_lines do not have type information and may
     /// sometimes contain multiple values in a single field (e.g.
     /// "Austin, TX"), it is important that the line order is clear. The order of
@@ -922,12 +976,14 @@ pub struct PostalAddress {
     /// used to make it explicit (e.g. "ja" for large-to-small ordering and
     /// "ja-Latn" or "en" for small-to-large). This way, the most specific line of
     /// an address can be selected based on the language.
+    ///
     /// The minimum permitted structural representation of an address consists
     /// of a region_code with all remaining information placed in the
     /// address_lines. It would be possible to format such an address very
     /// approximately without geocoding, but no semantic reasoning could be
     /// made about any of the address components until it was at least
     /// partially resolved.
+    ///
     /// Creating an address only containing a region_code and address_lines, and
     /// then geocoding is the recommended way to handle completely unstructured
     /// addresses (as opposed to guessing which parts of the address should be
@@ -1017,26 +1073,32 @@ impl PostalAddress {
 /// A quaternion is defined as the quotient of two directed lines in a
 /// three-dimensional space or equivalently as the quotient of two Euclidean
 /// vectors (https://en.wikipedia.org/wiki/Quaternion).
+///
 /// Quaternions are often used in calculations involving three-dimensional
 /// rotations (https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation),
 /// as they provide greater mathematical robustness by avoiding the gimbal lock
 /// problems that can be encountered when using Euler angles
 /// (https://en.wikipedia.org/wiki/Gimbal_lock).
+///
 /// Quaternions are generally represented in this form:
+///
 /// ```norust
 /// w + xi + yj + zk
 /// ```
 /// where x, y, z, and w are real numbers, and i, j, and k are three imaginary
 /// numbers.
+///
 /// Our naming choice `(x, y, z, w)` comes from the desire to avoid confusion for
 /// those interested in the geometric properties of the quaternion in the 3D
 /// Cartesian space. Other texts often use alternative names or subscripts, such
 /// as `(a, b, c, d)`, `(1, i, j, k)`, or `(0, 1, 2, 3)`, which are perhaps
 /// better suited for mathematical interpretations.
+///
 /// To avoid any confusion, as well as to maintain compatibility with a large
 /// number of software libraries, the quaternions represented using the protocol
 /// buffer below *must* follow the Hamilton convention, which defines `ij = k`
 /// (i.e. a right-handed algebra), and therefore:
+///
 /// ```norust
 /// i^2 = j^2 = k^2 = ijk = −1
 /// ij = −ji = k
@@ -1045,12 +1107,15 @@ impl PostalAddress {
 /// ```
 /// Please DO NOT use this to represent quaternions that follow the JPL
 /// convention, or any of the other quaternion flavors out there.
+///
 /// Definitions:
+///
 /// A quaternion can be normalized by dividing it by its norm. The resulting
 /// quaternion maintains the same direction, but has a norm of 1, i.e. it moves
 /// on the unit sphere. This is generally necessary for rotation and orientation
 /// quaternions, to avoid rounding errors:
 /// https://en.wikipedia.org/wiki/Rotation_formalisms_in_three_dimensions
+///
 /// Note that `(x, y, z, w)` and `(-x, -y, -z, -w)` represent the same rotation,
 /// but normalization would be even more useful, e.g. for comparison purposes, if
 /// it would produce a unique representation. It is thus recommended that `w` be

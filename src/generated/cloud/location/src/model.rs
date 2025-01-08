@@ -147,6 +147,7 @@ pub struct Location {
     pub display_name: String,
 
     /// Cross-service attributes for the location. For example
+    ///
     /// ```norust
     /// {"cloud.googleapis.com/region": "us-east1"}
     /// ```

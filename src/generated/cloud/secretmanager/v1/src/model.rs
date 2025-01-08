@@ -19,6 +19,7 @@
 
 /// A [Secret][google.cloud.secretmanager.v1.Secret] is a logical secret whose
 /// value and versions can be accessed.
+///
 /// A [Secret][google.cloud.secretmanager.v1.Secret] is made up of zero or more
 /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] that represent
 /// the secret data.
@@ -35,6 +36,7 @@ pub struct Secret {
 
     /// Optional. Immutable. The replication policy of the secret data attached to
     /// the [Secret][google.cloud.secretmanager.v1.Secret].
+    ///
     /// The replication policy cannot be changed after the Secret has been created.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub replication: Option<crate::model::Replication>,
@@ -45,12 +47,15 @@ pub struct Secret {
     pub create_time: Option<wkt::Timestamp>,
 
     /// The labels assigned to this Secret.
+    ///
     /// Label keys must be between 1 and 63 characters long, have a UTF-8 encoding
     /// of maximum 128 bytes, and must conform to the following PCRE regular
     /// expression: `[\p{Ll}\p{Lo}][\p{Ll}\p{Lo}\p{N}_-]{0,62}`
+    ///
     /// Label values must be between 0 and 63 characters long, have a UTF-8
     /// encoding of maximum 128 bytes, and must conform to the following PCRE
     /// regular expression: `[\p{Ll}\p{Lo}\p{N}_-]{0,63}`
+    ///
     /// No more than 64 labels can be assigned to a given resource.
     #[serde(skip_serializing_if = "std::collections::HashMap::is_empty")]
     pub labels: std::collections::HashMap<String, String>,
@@ -72,11 +77,13 @@ pub struct Secret {
     pub rotation: Option<crate::model::Rotation>,
 
     /// Optional. Mapping from version alias to version name.
+    ///
     /// A version alias is a string with a maximum length of 63 characters and can
     /// contain uppercase and lowercase letters, numerals, and the hyphen (`-`)
     /// and underscore ('_') characters. An alias string must start with a
     /// letter and cannot be the string 'latest' or 'NEW'.
     /// No more than 50 aliases can be assigned to a given secret.
+    ///
     /// Version-Alias pairs will be viewable via GetSecret and modifiable via
     /// UpdateSecret. Access by alias is only be supported on
     /// GetSecretVersion and AccessSecretVersion.
@@ -85,18 +92,22 @@ pub struct Secret {
     pub version_aliases: std::collections::HashMap<String, i64>,
 
     /// Optional. Custom metadata about the secret.
+    ///
     /// Annotations are distinct from various forms of labels.
     /// Annotations exist to allow client tools to store their own state
     /// information without requiring a database.
+    ///
     /// Annotation keys must be between 1 and 63 characters long, have a UTF-8
     /// encoding of maximum 128 bytes, begin and end with an alphanumeric character
     /// ([a-z0-9A-Z]), and may have dashes (-), underscores (_), dots (.), and
     /// alphanumerics in between these symbols.
+    ///
     /// The total size of annotation keys and values must be less than 16KiB.
     #[serde(skip_serializing_if = "std::collections::HashMap::is_empty")]
     pub annotations: std::collections::HashMap<String, String>,
 
     /// Optional. Secret Version TTL after destruction request
+    ///
     /// This is a part of the Delayed secret version destroy feature.
     /// For secret with TTL>0, version destruction doesn't happen immediately
     /// on calling destroy instead the version goes to a disabled state and
@@ -107,6 +118,7 @@ pub struct Secret {
     /// Optional. The customer-managed encryption configuration of the Regionalised
     /// Secrets. If no configuration is provided, Google-managed default encryption
     /// is used.
+    ///
     /// Updates to the [Secret][google.cloud.secretmanager.v1.Secret] encryption
     /// configuration only apply to
     /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] added
@@ -121,6 +133,7 @@ pub struct Secret {
     /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] will be
     /// automatically deleted at expiration. Expired secrets are irreversibly
     /// deleted.
+    ///
     /// Expiration is *not* the recommended way to set time-based permissions. [IAM
     /// Conditions](https://cloud.google.com/secret-manager/docs/access-control#conditions)
     /// is recommended for granting time-based permissions because the operation
@@ -226,6 +239,7 @@ pub mod secret {
     /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] will be
     /// automatically deleted at expiration. Expired secrets are irreversibly
     /// deleted.
+    ///
     /// Expiration is *not* the recommended way to set time-based permissions. [IAM
     /// Conditions](https://cloud.google.com/secret-manager/docs/access-control#conditions)
     /// is recommended for granting time-based permissions because the operation
@@ -253,6 +267,7 @@ pub struct SecretVersion {
     /// Output only. The resource name of the
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
     /// `projects/*/secrets/*/versions/*`.
+    ///
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] IDs in a
     /// [Secret][google.cloud.secretmanager.v1.Secret] start at 1 and are
     /// incremented for each subsequent version of the secret.
@@ -457,6 +472,7 @@ pub mod replication {
         /// Optional. The customer-managed encryption configuration of the
         /// [Secret][google.cloud.secretmanager.v1.Secret]. If no configuration is
         /// provided, Google-managed default encryption is used.
+        ///
         /// Updates to the [Secret][google.cloud.secretmanager.v1.Secret] encryption
         /// configuration only apply to
         /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] added
@@ -489,6 +505,7 @@ pub mod replication {
     pub struct UserManaged {
         /// Required. The list of Replicas for this
         /// [Secret][google.cloud.secretmanager.v1.Secret].
+        ///
         /// Cannot be empty.
         #[serde(skip_serializing_if = "Vec::is_empty")]
         pub replicas: Vec<crate::model::replication::user_managed::Replica>,
@@ -523,6 +540,7 @@ pub mod replication {
             /// Optional. The customer-managed encryption configuration of the
             /// [User-Managed Replica][Replication.UserManaged.Replica]. If no
             /// configuration is provided, Google-managed default encryption is used.
+            ///
             /// Updates to the [Secret][google.cloud.secretmanager.v1.Secret]
             /// encryption configuration only apply to
             /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] added
@@ -575,13 +593,16 @@ pub mod replication {
 pub struct CustomerManagedEncryption {
     /// Required. The resource name of the Cloud KMS CryptoKey used to encrypt
     /// secret payloads.
+    ///
     /// For secrets using the
     /// [UserManaged][google.cloud.secretmanager.v1.Replication.UserManaged]
     /// replication policy type, Cloud KMS CryptoKeys must reside in the same
     /// location as the [replica location][Secret.UserManaged.Replica.location].
+    ///
     /// For secrets using the
     /// [Automatic][google.cloud.secretmanager.v1.Replication.Automatic]
     /// replication policy type, Cloud KMS CryptoKeys must reside in `global`.
+    ///
     /// The expected format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub kms_key_name: String,
@@ -627,6 +648,7 @@ pub mod replication_status {
     /// The replication status of a
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] using
     /// automatic replication.
+    ///
     /// Only populated if the parent [Secret][google.cloud.secretmanager.v1.Secret]
     /// has an automatic replication policy.
     #[serde_with::serde_as]
@@ -657,6 +679,7 @@ pub mod replication_status {
     /// The replication status of a
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] using
     /// user-managed replication.
+    ///
     /// Only populated if the parent [Secret][google.cloud.secretmanager.v1.Secret]
     /// has a user-managed replication policy.
     #[serde_with::serde_as]
@@ -734,6 +757,7 @@ pub mod replication_status {
         /// Describes the replication status of a
         /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] with
         /// automatic replication.
+        ///
         /// Only populated if the parent
         /// [Secret][google.cloud.secretmanager.v1.Secret] has an automatic
         /// replication policy.
@@ -741,6 +765,7 @@ pub mod replication_status {
         /// Describes the replication status of a
         /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] with
         /// user-managed replication.
+        ///
         /// Only populated if the parent
         /// [Secret][google.cloud.secretmanager.v1.Secret] has a user-managed
         /// replication policy.
@@ -807,6 +832,7 @@ pub struct Rotation {
     /// [Secret][google.cloud.secretmanager.v1.Secret] is scheduled to rotate.
     /// Cannot be set to less than 300s (5 min) in the future and at most
     /// 3153600000s (100 years).
+    ///
     /// [next_rotation_time][google.cloud.secretmanager.v1.Rotation.next_rotation_time]
     /// MUST  be set if
     /// [rotation_period][google.cloud.secretmanager.v1.Rotation.rotation_period]
@@ -816,6 +842,7 @@ pub struct Rotation {
 
     /// Input only. The Duration between rotation notifications. Must be in seconds
     /// and at least 3600s (1h) and at most 3153600000s (100 years).
+    ///
     /// If
     /// [rotation_period][google.cloud.secretmanager.v1.Rotation.rotation_period]
     /// is set,
@@ -867,6 +894,7 @@ pub struct SecretPayload {
     /// request, the
     /// [SecretManagerService][google.cloud.secretmanager.v1.SecretManagerService]
     /// will generate and store one for you.
+    ///
     /// The CRC32C value is encoded as a Int64 for compatibility, and can be
     /// safely downconverted to uint32 in languages that support this type.
     /// https://cloud.google.com/apis/design/design_patterns#integer_types
@@ -1020,6 +1048,7 @@ pub struct CreateSecretRequest {
     pub parent: String,
 
     /// Required. This must be unique within the project.
+    ///
     /// A secret ID is a string with a maximum length of 255 characters and can
     /// contain uppercase and lowercase letters, numerals, and the hyphen (`-`) and
     /// underscore (`_`) characters.
@@ -1237,6 +1266,7 @@ pub struct GetSecretVersionRequest {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
     /// `projects/*/secrets/*/versions/*` or
     /// `projects/*/locations/*/secrets/*/versions/*`.
+    ///
     /// `projects/*/secrets/*/versions/latest` or
     /// `projects/*/locations/*/secrets/*/versions/latest` is an alias to the most
     /// recently created
@@ -1295,6 +1325,7 @@ pub struct AccessSecretVersionRequest {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
     /// `projects/*/secrets/*/versions/*` or
     /// `projects/*/locations/*/secrets/*/versions/*`.
+    ///
     /// `projects/*/secrets/*/versions/latest` or
     /// `projects/*/locations/*/secrets/*/versions/latest` is an alias to the most
     /// recently created

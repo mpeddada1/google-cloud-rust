@@ -38,6 +38,7 @@ pub struct SetIamPolicyRequest {
     /// OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
     /// the fields in the mask will be modified. If no mask is provided, the
     /// following default mask is used:
+    ///
     /// `paths: "bindings, etag"`
     #[serde(skip_serializing_if = "Option::is_none")]
     pub update_mask: Option<wkt::FieldMask>,
@@ -155,15 +156,19 @@ impl TestIamPermissionsResponse {
 pub struct GetPolicyOptions {
     /// Optional. The maximum policy version that will be used to format the
     /// policy.
+    ///
     /// Valid values are 0, 1, and 3. Requests specifying an invalid value will be
     /// rejected.
+    ///
     /// Requests for policies with any conditional role bindings must specify
     /// version 3. Policies with no conditional role bindings may specify any valid
     /// value or leave the field unset.
+    ///
     /// The policy in the response might use the policy version that you specified,
     /// or it might use a lower policy version. For example, if you specify version
     /// 3, but the policy has no conditional role bindings, the response uses
     /// version 1.
+    ///
     /// To learn which resources support conditions in their IAM policies, see the
     /// [IAM
     /// documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -180,11 +185,13 @@ impl GetPolicyOptions {
 
 /// An Identity and Access Management (IAM) policy, which specifies access
 /// controls for Google Cloud resources.
+///
 /// A `Policy` is a collection of `bindings`. A `binding` binds one or more
 /// `members`, or principals, to a single `role`. Principals can be user
 /// accounts, service accounts, Google groups, and domains (such as G Suite). A
 /// `role` is a named list of permissions; each `role` can be an IAM predefined
 /// role or a user-created custom role.
+///
 /// For some types of Google Cloud resources, a `binding` can also specify a
 /// `condition`, which is a logical expression that allows access to a resource
 /// only if the expression evaluates to `true`. A condition can add constraints
@@ -192,7 +199,9 @@ impl GetPolicyOptions {
 /// resources support conditions in their IAM policies, see the
 /// [IAM
 /// documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
+///
 /// **JSON example:**
+///
 /// ```norust
 ///     {
 ///       "bindings": [
@@ -223,6 +232,7 @@ impl GetPolicyOptions {
 ///     }
 /// ```
 /// **YAML example:**
+///
 /// ```norust
 ///     bindings:
 ///     - members:
@@ -249,16 +259,21 @@ impl GetPolicyOptions {
 #[non_exhaustive]
 pub struct Policy {
     /// Specifies the format of the policy.
+    ///
     /// Valid values are `0`, `1`, and `3`. Requests that specify an invalid value
     /// are rejected.
+    ///
     /// Any operation that affects conditional role bindings must specify version
     /// `3`. This requirement applies to the following operations:
+    ///
     /// **Important:** If you use IAM Conditions, you must include the `etag` field
     /// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
     /// you to overwrite a version `3` policy with a version `1` policy, and all of
     /// the conditions in the version `3` policy are lost.
+    ///
     /// If a policy does not include any conditions, operations on that policy may
     /// specify any valid version or leave the field unset.
+    ///
     /// To learn which resources support conditions in their IAM policies, see the
     /// [IAM
     /// documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -267,6 +282,7 @@ pub struct Policy {
     /// Associates a list of `members`, or principals, with a `role`. Optionally,
     /// may specify a `condition` that determines how and when the `bindings` are
     /// applied. Each of the `bindings` must contain at least one principal.
+    ///
     /// The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
     /// of these principals can be Google groups. Each occurrence of a principal
     /// counts towards these limits. For example, if the `bindings` grant 50
@@ -287,6 +303,7 @@ pub struct Policy {
     /// conditions: An `etag` is returned in the response to `getIamPolicy`, and
     /// systems are expected to put that etag in the request to `setIamPolicy` to
     /// ensure that their change will be applied to the same version of the policy.
+    ///
     /// **Important:** If you use IAM Conditions, you must include the `etag` field
     /// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
     /// you to overwrite a version `3` policy with a version `1` policy, and all of
@@ -335,21 +352,28 @@ pub struct Binding {
 
     /// Specifies the principals requesting access for a Google Cloud resource.
     /// `members` can have the following values:
+    ///
     /// `allUsers`: A special identifier that represents anyone who is
     /// on the internet; with or without a Google account.
+    ///
     /// `allAuthenticatedUsers`: A special identifier that represents anyone
     /// who is authenticated with a Google account or a service account.
+    ///
     /// `user:{emailid}`: An email address that represents a specific Google
     /// account. For example, `alice@example.com` .
+    ///
     /// `serviceAccount:{emailid}`: An email address that represents a service
     /// account. For example, `my-other-app@appspot.gserviceaccount.com`.
+    ///
     /// `group:{emailid}`: An email address that represents a Google group.
     /// For example, `admins@example.com`.
+    ///
     /// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
     /// identifier) representing a user that has been recently deleted. For
     /// example, `alice@example.com?uid=123456789012345678901`. If the user is
     /// recovered, this value reverts to `user:{emailid}` and the recovered user
     /// retains the role in the binding.
+    ///
     /// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
     /// unique identifier) representing a service account that has been recently
     /// deleted. For example,
@@ -357,22 +381,27 @@ pub struct Binding {
     /// If the service account is undeleted, this value reverts to
     /// `serviceAccount:{emailid}` and the undeleted service account retains the
     /// role in the binding.
+    ///
     /// `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
     /// identifier) representing a Google group that has been recently
     /// deleted. For example, `admins@example.com?uid=123456789012345678901`. If
     /// the group is recovered, this value reverts to `group:{emailid}` and the
     /// recovered group retains the role in the binding.
+    ///
     /// `domain:{domain}`: The G Suite domain (primary) that represents all the
     /// users of that domain. For example, `google.com` or `example.com`.
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub members: Vec<String>,
 
     /// The condition that is associated with this binding.
+    ///
     /// If the condition evaluates to `true`, then this binding applies to the
     /// current request.
+    ///
     /// If the condition evaluates to `false`, then this binding does not apply to
     /// the current request. However, a different role binding might grant the same
     /// role to one or more of the principals in this binding.
+    ///
     /// To learn which resources support conditions in their IAM policies, see the
     /// [IAM
     /// documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -404,11 +433,14 @@ impl Binding {
 /// The configuration determines which permission types are logged, and what
 /// identities, if any, are exempted from logging.
 /// An AuditConfig must have one or more AuditLogConfigs.
+///
 /// If there are AuditConfigs for both `allServices` and a specific service,
 /// the union of the two AuditConfigs is used for that service: the log_types
 /// specified in each AuditConfig are enabled, and the exempted_members in each
 /// AuditLogConfig are exempted.
+///
 /// Example Policy with multiple AuditConfigs:
+///
 /// ```norust
 /// {
 ///   "audit_configs": [
@@ -484,6 +516,7 @@ impl AuditConfig {
 
 /// Provides the configuration for logging a type of permissions.
 /// Example:
+///
 /// ```norust
 /// {
 ///   "audit_log_configs": [
@@ -791,6 +824,7 @@ pub struct ResourcePolicyMember {
     /// user-assigned name (https://google.aip.dev/122). If a resource is deleted
     /// and recreated with the same name, the binding will be applicable to the new
     /// resource.
+    ///
     /// Example:
     /// `principal://parametermanager.googleapis.com/projects/12345/name/locations/us-central1-a/parameters/my-parameter`
     #[serde(skip_serializing_if = "String::is_empty")]
@@ -800,6 +834,7 @@ pub struct ResourcePolicyMember {
     /// system-assigned unique identifier (https://google.aip.dev/148#uid). If a
     /// resource is deleted and recreated with the same name, the binding will not
     /// be applicable to the new resource
+    ///
     /// Example:
     /// `principal://parametermanager.googleapis.com/projects/12345/uid/locations/us-central1-a/parameters/a918fed5`
     #[serde(skip_serializing_if = "String::is_empty")]

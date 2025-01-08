@@ -211,6 +211,7 @@ pub trait SecretManagerService: std::fmt::Debug + Send + Sync {
     }
 
     /// Gets metadata for a SecretVersion.
+    ///
     /// `projects/_*_/secrets/_*_/versions/latest` is an alias to the most recently
     /// created SecretVersion.
     fn get_secret_version(
@@ -224,6 +225,7 @@ pub trait SecretManagerService: std::fmt::Debug + Send + Sync {
     }
 
     /// Gets metadata for a SecretVersion.
+    ///
     /// `projects/_*_/secrets/_*_/versions/latest` is an alias to the most recently
     /// created SecretVersion.
     fn get_secret_version_by_project_and_location_and_secret_and_version(
@@ -237,6 +239,7 @@ pub trait SecretManagerService: std::fmt::Debug + Send + Sync {
     }
 
     /// Accesses a SecretVersion. This call returns the secret data.
+    ///
     /// `projects/_*_/secrets/_*_/versions/latest` is an alias to the most recently
     /// created SecretVersion.
     fn access_secret_version(
@@ -251,6 +254,7 @@ pub trait SecretManagerService: std::fmt::Debug + Send + Sync {
     }
 
     /// Accesses a SecretVersion. This call returns the secret data.
+    ///
     /// `projects/_*_/secrets/_*_/versions/latest` is an alias to the most recently
     /// created SecretVersion.
     fn access_secret_version_by_project_and_location_and_secret_and_version(
@@ -265,6 +269,7 @@ pub trait SecretManagerService: std::fmt::Debug + Send + Sync {
     }
 
     /// Disables a SecretVersion.
+    ///
     /// Sets the state of the SecretVersion to
     /// DISABLED.
     fn disable_secret_version(
@@ -278,6 +283,7 @@ pub trait SecretManagerService: std::fmt::Debug + Send + Sync {
     }
 
     /// Disables a SecretVersion.
+    ///
     /// Sets the state of the SecretVersion to
     /// DISABLED.
     fn disable_secret_version_by_project_and_location_and_secret_and_version(
@@ -291,6 +297,7 @@ pub trait SecretManagerService: std::fmt::Debug + Send + Sync {
     }
 
     /// Enables a SecretVersion.
+    ///
     /// Sets the state of the SecretVersion to
     /// ENABLED.
     fn enable_secret_version(
@@ -304,6 +311,7 @@ pub trait SecretManagerService: std::fmt::Debug + Send + Sync {
     }
 
     /// Enables a SecretVersion.
+    ///
     /// Sets the state of the SecretVersion to
     /// ENABLED.
     fn enable_secret_version_by_project_and_location_and_secret_and_version(
@@ -317,6 +325,7 @@ pub trait SecretManagerService: std::fmt::Debug + Send + Sync {
     }
 
     /// Destroys a SecretVersion.
+    ///
     /// Sets the state of the SecretVersion to
     /// DESTROYED and irrevocably destroys the
     /// secret data.
@@ -331,6 +340,7 @@ pub trait SecretManagerService: std::fmt::Debug + Send + Sync {
     }
 
     /// Destroys a SecretVersion.
+    ///
     /// Sets the state of the SecretVersion to
     /// DESTROYED and irrevocably destroys the
     /// secret data.
@@ -346,6 +356,7 @@ pub trait SecretManagerService: std::fmt::Debug + Send + Sync {
 
     /// Sets the access control policy on the specified secret. Replaces any
     /// existing policy.
+    ///
     /// Permissions on SecretVersions are enforced according
     /// to the policy set on the associated Secret.
     fn set_iam_policy(
@@ -360,6 +371,7 @@ pub trait SecretManagerService: std::fmt::Debug + Send + Sync {
 
     /// Sets the access control policy on the specified secret. Replaces any
     /// existing policy.
+    ///
     /// Permissions on SecretVersions are enforced according
     /// to the policy set on the associated Secret.
     fn set_iam_policy_by_project_and_location_and_secret(
@@ -399,6 +411,7 @@ pub trait SecretManagerService: std::fmt::Debug + Send + Sync {
     /// Returns permissions that a caller has for the specified secret.
     /// If the secret does not exist, this call returns an empty set of
     /// permissions, not a NOT_FOUND error.
+    ///
     /// Note: This operation is designed to be used for building permission-aware
     /// UIs and command-line tools, not for authorization checking. This operation
     /// may "fail open" without warning.
@@ -416,6 +429,7 @@ pub trait SecretManagerService: std::fmt::Debug + Send + Sync {
     /// Returns permissions that a caller has for the specified secret.
     /// If the secret does not exist, this call returns an empty set of
     /// permissions, not a NOT_FOUND error.
+    ///
     /// Note: This operation is designed to be used for building permission-aware
     /// UIs and command-line tools, not for authorization checking. This operation
     /// may "fail open" without warning.
