@@ -66,14 +66,11 @@ impl gax::paginator::PageableResponse for ListLocationsResponse {
 #[non_exhaustive]
 pub struct Location {
     /// Resource name for the location, which may vary between implementations.
-    /// For example:
-    /// "projects/example-project/locations/us-east1"
+    /// For example: `"projects/example-project/locations/us-east1"`
     #[serde(skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
 
-    /// The canonical id for this location. For example:
-    /// "us-east1"
-    /// .
+    /// The canonical id for this location. For example: `"us-east1"`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub location_id: Option<String>,
 
@@ -133,15 +130,13 @@ impl Location {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct ListSecretsResponse {
-    /// The list of Secrets sorted in reverse by create_
-    /// time (newest
+    /// The list of Secrets sorted in reverse by create_time (newest
     /// first).
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub secrets: Vec<crate::model::Secret>,
 
     /// A token to retrieve the next page of results. Pass this value in
-    /// ListSecretsRequest.page_
-    /// token to retrieve the next page.
+    /// ListSecretsRequest.page_token to retrieve the next page.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub next_page_token: Option<String>,
 
@@ -193,9 +188,7 @@ impl gax::paginator::PageableResponse for ListSecretsResponse {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct Secret {
-    /// Output only. The resource name of the Secret in the format
-    /// projects/_*_/secrets/*
-    /// .
+    /// Output only. The resource name of the Secret in the format `projects/_*_/secrets/*`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
 
@@ -211,12 +204,10 @@ pub struct Secret {
     /// The labels assigned to this Secret.
     /// Label keys must be between 1 and 63 characters long, have a UTF-8 encoding
     /// of maximum 128 bytes, and must conform to the following PCRE regular
-    /// expression:
-    /// \p{Ll}\p{Lo}{0,62}
+    /// expression: `\p{Ll}\p{Lo}{0,62}`
     /// Label values must be between 0 and 63 characters long, have a UTF-8
     /// encoding of maximum 128 bytes, and must conform to the following PCRE
-    /// regular expression:
-    /// [\p{Ll}\p{Lo}\p{N}_-]{0,63}
+    /// regular expression: `[\p{Ll}\p{Lo}\p{N}_-]{0,63}`
     /// No more than 64 labels can be assigned to a given resource.
     #[serde(skip_serializing_if = "std::collections::HashMap::is_empty")]
     pub labels: std::collections::HashMap<String, String>,
@@ -246,11 +237,8 @@ pub struct Secret {
 
     /// Optional. Mapping from version alias to version name.
     /// A version alias is a string with a maximum length of 63 characters and can
-    /// contain uppercase and lowercase letters, numerals, and the hyphen (
-    /// -
-    /// )
-    /// and underscore ('_
-    /// ') characters. An alias string must start with a
+    /// contain uppercase and lowercase letters, numerals, and the hyphen (`-`)
+    /// and underscore ('_') characters. An alias string must start with a
     /// letter and cannot be the string 'latest' or 'NEW'.
     /// No more than 50 aliases can be assigned to a given secret.
     /// Version-Alias pairs will be viewable via GetSecret and modifiable via
@@ -266,9 +254,7 @@ pub struct Secret {
     /// information without requiring a database.
     /// Annotation keys must be between 1 and 63 characters long, have a UTF-8
     /// encoding of maximum 128 bytes, begin and end with an alphanumeric character
-    /// ([
-    /// a-z0-9A-Z]), and may have dashes (-), underscores (_
-    /// ), dots (.), and
+    /// ([a-z0-9A-Z]), and may have dashes (-), underscores (_), dots (.), and
     /// alphanumerics in between these symbols.
     /// The total size of annotation keys and values must be less than 16KiB.
     #[serde(skip_serializing_if = "std::collections::HashMap::is_empty")]
@@ -453,12 +439,8 @@ pub struct CustomerManagedEncryption {
     /// policy type, Cloud KMS CryptoKeys must reside in the same location as the
     /// replica location.
     /// For secrets using the Automatic replication policy
-    /// type, Cloud KMS CryptoKeys must reside in
-    /// global
-    /// .
-    /// The expected format is
-    /// projects/_*_/locations/_*_/keyRings/_*_/cryptoKeys/*
-    /// .
+    /// type, Cloud KMS CryptoKeys must reside in `global`.
+    /// The expected format is `projects/_*_/locations/_*_/keyRings/_*_/cryptoKeys/*`.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub kms_key_name: String,
 }
@@ -472,8 +454,7 @@ impl CustomerManagedEncryption {
 }
 
 /// A replication policy that replicates the Secret payload into the
-/// locations specified in Secret.replication.user_
-/// managed.replicas
+/// locations specified in Secret.replication.user_managed.replicas
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -500,9 +481,7 @@ impl UserManaged {
 #[non_exhaustive]
 pub struct Replica {
     /// The canonical IDs of the location to replicate data.
-    /// For example:
-    /// "us-east1"
-    /// .
+    /// For example: `"us-east1"`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub location: Option<String>,
 
@@ -543,16 +522,10 @@ impl Replica {
 #[non_exhaustive]
 pub struct Topic {
     /// Required. The resource name of the Pub/Sub topic that will be published to, in the
-    /// following format:
-    /// projects/_*_/topics/*
-    /// . For publication to succeed, the
-    /// Secret Manager service agent must have the
-    /// pubsub.topic.publish
-    ///
+    /// following format: `projects/_*_/topics/*`. For publication to succeed, the
+    /// Secret Manager service agent must have the `pubsub.topic.publish`
     /// permission on the topic. The Pub/Sub Publisher role
-    /// (
-    /// roles/pubsub.publisher
-    /// ) includes this permission.
+    /// (`roles/pubsub.publisher`) includes this permission.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
 }
@@ -565,9 +538,7 @@ impl Topic {
     }
 }
 
-/// The rotation time and period for a Secret. At next_
-/// rotation_
-/// time, Secret
+/// The rotation time and period for a Secret. At next_rotation_time, Secret
 /// Manager will send a Pub/Sub notification to the topics configured on the
 /// Secret. Secret.topics must be set to configure rotation.
 #[serde_with::serde_as]
@@ -578,22 +549,14 @@ pub struct Rotation {
     /// Optional. Timestamp in UTC at which the Secret is scheduled to rotate. Cannot be
     /// set to less than 300s (5 min) in the future and at most 3153600000s (100
     /// years).
-    /// next_
-    /// rotation_
-    /// time MUST  be set if rotation_
-    /// period is set.
+    /// next_rotation_time MUST  be set if rotation_period is set.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub next_rotation_time: Option<wkt::Timestamp>,
 
     /// Input only. The Duration between rotation notifications. Must be in seconds
     /// and at least 3600s (1h) and at most 3153600000s (100 years).
-    /// If rotation_
-    /// period is set, next_
-    /// rotation_
-    /// time must be set.
-    /// next_
-    /// rotation_
-    /// time will be advanced by this period when the service
+    /// If rotation_period is set, next_rotation_time must be set.
+    /// next_rotation_time will be advanced by this period when the service
     /// automatically sends rotation notifications.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub rotation_period: Option<wkt::Duration>,
@@ -623,30 +586,18 @@ pub struct AddSecretVersionRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub payload: Option<crate::model::SecretPayload>,
 
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}:addVersion
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}:addVersion`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}:addVersion
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}:addVersion`.
     #[serde(skip)]
     pub secret: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}:addVersion
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}:addVersion`.
     #[serde(skip)]
     pub location: String,
 }
@@ -697,9 +648,7 @@ pub struct SecretPayload {
     /// SecretManagerService will generate and store one for you.
     /// The CRC32C value is encoded as a Int64 for compatibility, and can be
     /// safely downconverted to uint32 in languages that support this type.
-    /// https://cloud.google.com/apis/design/design_
-    /// patterns#integer_
-    /// types
+    /// https://cloud.google.com/apis/design/design_patterns#integer_types
     #[serde(rename = "dataCrc32c")]
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde_as(as = "Option<serde_with::DisplayFromStr>")]
@@ -727,9 +676,7 @@ impl SecretPayload {
 #[non_exhaustive]
 pub struct SecretVersion {
     /// Output only. The resource name of the SecretVersion in the
-    /// format
-    /// projects/_*_/secrets/_*_/versions/*
-    /// .
+    /// format `projects/_*_/secrets/_*_/versions/*`.
     /// SecretVersion IDs in a Secret start at 1 and
     /// are incremented for each subsequent version of the secret.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -767,9 +714,7 @@ pub struct SecretVersion {
     /// This is a part of the Delayed secret version destroy feature. For a
     /// Secret with a valid version destroy TTL, when a secert version is
     /// destroyed, version is moved to disabled state and it is scheduled for
-    /// destruction Version is destroyed only after the scheduled_
-    /// destroy_
-    /// time.
+    /// destruction Version is destroyed only after the scheduled_destroy_time.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub scheduled_destroy_time: Option<wkt::Timestamp>,
 
@@ -917,8 +862,7 @@ impl AutomaticStatus {
 pub struct CustomerManagedEncryptionStatus {
     /// Required. The resource name of the Cloud KMS CryptoKeyVersion used to encrypt the
     /// secret payload, in the following format:
-    /// projects/_*_/locations/_*_/keyRings/_*_/cryptoKeys/_*_/versions/*
-    /// .
+    /// `projects/_*_/locations/_*_/keyRings/_*_/cryptoKeys/_*_/versions/*`.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub kms_key_version_name: String,
 }
@@ -960,9 +904,7 @@ impl UserManagedStatus {
 #[non_exhaustive]
 pub struct ReplicaStatus {
     /// Output only. The canonical ID of the replica location.
-    /// For example:
-    /// "us-east1"
-    /// .
+    /// For example: `"us-east1"`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub location: Option<String>,
 
@@ -1014,14 +956,12 @@ impl Empty {}
 #[non_exhaustive]
 pub struct ListSecretVersionsResponse {
     /// The list of SecretVersions sorted in reverse by
-    /// create_
-    /// time (newest first).
+    /// create_time (newest first).
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub versions: Vec<crate::model::SecretVersion>,
 
     /// A token to retrieve the next page of results. Pass this value in
-    /// ListSecretVersionsRequest.page_
-    /// token to retrieve the next page.
+    /// ListSecretVersionsRequest.page_token to retrieve the next page.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub next_page_token: Option<String>,
 
@@ -1071,10 +1011,8 @@ impl gax::paginator::PageableResponse for ListSecretVersionsResponse {
 #[non_exhaustive]
 pub struct AccessSecretVersionResponse {
     /// The resource name of the SecretVersion in the format
-    /// projects/_*_/secrets/_*_/versions/*
-    ///  or
-    /// projects/_*_/locations/_*_/secrets/_*_/versions/*
-    /// .
+    /// `projects/_*_/secrets/_*_/versions/*` or
+    /// `projects/_*_/locations/_*_/secrets/_*_/versions/*`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
 
@@ -1109,39 +1047,23 @@ pub struct DisableSecretVersionRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub etag: Option<String>,
 
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}:disable
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}:disable`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}:disable
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}:disable`.
     #[serde(skip)]
     pub secret: String,
 
-    /// The
-    /// {version}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}:disable
-    /// .
+    /// The `{version}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}:disable`.
     #[serde(skip)]
     pub version: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}:disable
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}:disable`.
     #[serde(skip)]
     pub location: String,
 }
@@ -1190,39 +1112,23 @@ pub struct EnableSecretVersionRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub etag: Option<String>,
 
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}:enable
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}:enable`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}:enable
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}:enable`.
     #[serde(skip)]
     pub secret: String,
 
-    /// The
-    /// {version}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}:enable
-    /// .
+    /// The `{version}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}:enable`.
     #[serde(skip)]
     pub version: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}:enable
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}:enable`.
     #[serde(skip)]
     pub location: String,
 }
@@ -1271,39 +1177,23 @@ pub struct DestroySecretVersionRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub etag: Option<String>,
 
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}:destroy
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}:destroy`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}:destroy
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}:destroy`.
     #[serde(skip)]
     pub secret: String,
 
-    /// The
-    /// {version}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}:destroy
-    /// .
+    /// The `{version}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}:destroy`.
     #[serde(skip)]
     pub version: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}:destroy
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}:destroy`.
     #[serde(skip)]
     pub location: String,
 }
@@ -1340,17 +1230,13 @@ impl DestroySecretVersionRequest {
     }
 }
 
-/// Request message for
-/// SetIamPolicy
-///  method.
+/// Request message for `SetIamPolicy` method.
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct SetIamPolicyRequest {
-    /// REQUIRED: The complete policy to be applied to the
-    /// resource
-    /// . The size of
+    /// REQUIRED: The complete policy to be applied to the `resource`. The size of
     /// the policy is limited to a few 10s of KB. An empty policy is a
     /// valid policy but certain Google Cloud services (such as Projects)
     /// might reject them.
@@ -1360,34 +1246,22 @@ pub struct SetIamPolicyRequest {
     /// OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
     /// the fields in the mask will be modified. If no mask is provided, the
     /// following default mask is used:
-    /// paths: "bindings, etag"
+    /// `paths: "bindings, etag"`
     #[serde(skip_serializing_if = "Option::is_none")]
     pub update_mask: Option<wkt::FieldMask>,
 
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}:setIamPolicy
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}:setIamPolicy`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}:setIamPolicy
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}:setIamPolicy`.
     #[serde(skip)]
     pub secret: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}:setIamPolicy
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}:setIamPolicy`.
     #[serde(skip)]
     pub location: String,
 }
@@ -1426,36 +1300,18 @@ impl SetIamPolicyRequest {
 
 /// An Identity and Access Management (IAM) policy, which specifies access
 /// controls for Google Cloud resources.
-/// A
-/// Policy
-///  is a collection of
-/// bindings
-/// . A
-/// binding
-///  binds one or more
-/// members
-/// , or principals, to a single
-/// role
-/// . Principals can be user
+/// A `Policy` is a collection of `bindings`. A `binding` binds one or more
+/// `members`, or principals, to a single `role`. Principals can be user
 /// accounts, service accounts, Google groups, and domains (such as G Suite). A
-/// role
-///  is a named list of permissions; each
-/// role
-///  can be an IAM predefined
+/// `role` is a named list of permissions; each `role` can be an IAM predefined
 /// role or a user-created custom role.
-/// For some types of Google Cloud resources, a
-/// binding
-///  can also specify a
-/// condition
-/// , which is a logical expression that allows access to a resource
-/// only if the expression evaluates to
-/// true
-/// . A condition can add constraints
+/// For some types of Google Cloud resources, a `binding` can also specify a
+/// `condition`, which is a logical expression that allows access to a resource
+/// only if the expression evaluates to `true`. A condition can add constraints
 /// based on attributes of the request, the resource, or both. To learn which
 /// resources support conditions in their IAM policies, see the
-/// IAM documentation
-/// .
-/// JSON example:
+/// [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
+/// **JSON example:**
 /// ```norust
 ///     {
 ///       "bindings": [
@@ -1484,7 +1340,7 @@ impl SetIamPolicyRequest {
 ///       "version": 3
 ///     }
 /// ```
-/// YAML example:
+/// **YAML example:**
 /// ```norust
 ///     bindings:
 ///     - members:
@@ -1504,84 +1360,37 @@ impl SetIamPolicyRequest {
 ///     version: 3
 /// ```
 /// For a description of IAM and its features, see the
-/// IAM documentation
-/// .
+/// [IAM documentation](https://cloud.google.com/iam/docs/).
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct Policy {
     /// Specifies the format of the policy.
-    /// Valid values are
-    /// 0
-    /// ,
-    /// 1
-    /// , and
-    /// 3
-    /// . Requests that specify an invalid value
+    /// Valid values are `0`, `1`, and `3`. Requests that specify an invalid value
     /// are rejected.
     /// Any operation that affects conditional role bindings must specify version
-    /// 3
-    /// . This requirement applies to the following operations:
-    /// Getting a policy that includes a conditional role binding
-    /// Adding a conditional role binding to a policy
-    /// Changing a conditional role binding in a policy
-    /// Removing any role binding, with or without a condition, from a policy
-    /// that includes conditions
-    /// Important:
-    ///  If you use IAM Conditions, you must include the
-    /// etag
-    ///  field
-    /// whenever you call
-    /// setIamPolicy
-    /// . If you omit this field, then IAM allows
-    /// you to overwrite a version
-    /// 3
-    ///  policy with a version
-    /// 1
-    ///  policy, and all of
-    /// the conditions in the version
-    /// 3
-    ///  policy are lost.
+    /// `3`. This requirement applies to the following operations:
+    /// **Important:** If you use IAM Conditions, you must include the `etag` field
+    /// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
+    /// you to overwrite a version `3` policy with a version `1` policy, and all of
+    /// the conditions in the version `3` policy are lost.
     /// If a policy does not include any conditions, operations on that policy may
     /// specify any valid version or leave the field unset.
     /// To learn which resources support conditions in their IAM policies, see the
-    /// IAM documentation
-    /// .
+    /// [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub version: Option<i32>,
 
-    /// Associates a list of
-    /// members
-    /// , or principals, with a
-    /// role
-    /// . Optionally,
-    /// may specify a
-    /// condition
-    ///  that determines how and when the
-    /// bindings
-    ///  are
-    /// applied. Each of the
-    /// bindings
-    ///  must contain at least one principal.
-    /// The
-    /// bindings
-    ///  in a
-    /// Policy
-    ///  can refer to up to 1,500 principals; up to 250
+    /// Associates a list of `members`, or principals, with a `role`. Optionally,
+    /// may specify a `condition` that determines how and when the `bindings` are
+    /// applied. Each of the `bindings` must contain at least one principal.
+    /// The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
     /// of these principals can be Google groups. Each occurrence of a principal
-    /// counts towards these limits. For example, if the
-    /// bindings
-    ///  grant 50
-    /// different roles to
-    /// user:alice@example.com
-    /// , and not to any other
-    /// principal, then you can add another 1,450 principals to the
-    /// bindings
-    ///  in
-    /// the
-    /// Policy
-    /// .
+    /// counts towards these limits. For example, if the `bindings` grant 50
+    /// different roles to `user:alice@example.com`, and not to any other
+    /// principal, then you can add another 1,450 principals to the `bindings` in
+    /// the `Policy`.
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub bindings: Vec<crate::model::Binding>,
 
@@ -1589,37 +1398,17 @@ pub struct Policy {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub audit_configs: Vec<crate::model::AuditConfig>,
 
-    /// etag
-    ///  is used for optimistic concurrency control as a way to help
+    /// `etag` is used for optimistic concurrency control as a way to help
     /// prevent simultaneous updates of a policy from overwriting each other.
-    /// It is strongly suggested that systems make use of the
-    /// etag
-    ///  in the
+    /// It is strongly suggested that systems make use of the `etag` in the
     /// read-modify-write cycle to perform policy updates in order to avoid race
-    /// conditions: An
-    /// etag
-    ///  is returned in the response to
-    /// getIamPolicy
-    /// , and
-    /// systems are expected to put that etag in the request to
-    /// setIamPolicy
-    ///  to
+    /// conditions: An `etag` is returned in the response to `getIamPolicy`, and
+    /// systems are expected to put that etag in the request to `setIamPolicy` to
     /// ensure that their change will be applied to the same version of the policy.
-    /// Important:
-    ///  If you use IAM Conditions, you must include the
-    /// etag
-    ///  field
-    /// whenever you call
-    /// setIamPolicy
-    /// . If you omit this field, then IAM allows
-    /// you to overwrite a version
-    /// 3
-    ///  policy with a version
-    /// 1
-    ///  policy, and all of
-    /// the conditions in the version
-    /// 3
-    ///  policy are lost.
+    /// **Important:** If you use IAM Conditions, you must include the `etag` field
+    /// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
+    /// you to overwrite a version `3` policy with a version `1` policy, and all of
+    /// the conditions in the version `3` policy are lost.
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde_as(as = "Option<serde_with::base64::Base64>")]
     pub etag: Option<bytes::Bytes>,
@@ -1651,153 +1440,91 @@ impl Policy {
     }
 }
 
-/// Associates
-/// members
-/// , or principals, with a
-/// role
-/// .
+/// Associates `members`, or principals, with a `role`.
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct Binding {
-    /// Role that is assigned to the list of
-    /// members
-    /// , or principals.
-    /// For example,
-    /// roles/viewer
-    /// ,
-    /// roles/editor
-    /// , or
-    /// roles/owner
-    /// .
+    /// Role that is assigned to the list of `members`, or principals.
+    /// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
     /// For an overview of the IAM roles and permissions, see the
-    /// IAM documentation
-    /// . For
+    /// [IAM documentation](https://cloud.google.com/iam/docs/roles-overview). For
     /// a list of the available pre-defined roles, see
-    /// here
-    /// .
+    /// [here](https://cloud.google.com/iam/docs/understanding-roles).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub role: Option<String>,
 
     /// Specifies the principals requesting access for a Google Cloud resource.
-    /// members
-    ///  can have the following values:
-    /// allUsers
-    /// : A special identifier that represents anyone who is
+    /// `members` can have the following values:
+    /// `allUsers`: A special identifier that represents anyone who is
     /// on the internet; with or without a Google account.
-    /// allAuthenticatedUsers
-    /// : A special identifier that represents anyone
+    /// `allAuthenticatedUsers`: A special identifier that represents anyone
     /// who is authenticated with a Google account or a service account.
     /// Does not include identities that come from external identity providers
     /// (IdPs) through identity federation.
-    /// user:{emailid}
-    /// : An email address that represents a specific Google
-    /// account. For example,
-    /// alice@example.com
-    ///  .
-    /// serviceAccount:{emailid}
-    /// : An email address that represents a Google
+    /// `user:{emailid}`: An email address that represents a specific Google
+    /// account. For example, `alice@example.com` .
+    /// `serviceAccount:{emailid}`: An email address that represents a Google
     /// service account. For example,
-    /// my-other-app@appspot.gserviceaccount.com
-    /// .
-    /// serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]
-    /// : An
+    /// `my-other-app@appspot.gserviceaccount.com`.
+    /// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An
     /// identifier for a
-    /// Kubernetes service
-    /// account
-    /// .
-    /// For example,
-    /// my-project.svc.id.goog[my-namespace/my-kubernetes-sa]
-    /// .
-    /// group:{emailid}
-    /// : An email address that represents a Google group.
-    /// For example,
-    /// admins@example.com
-    /// .
-    /// domain:{domain}
-    /// : The G Suite domain (primary) that represents all the
-    /// users of that domain. For example,
-    /// google.com
-    ///  or
-    /// example.com
-    /// .
-    /// principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}
-    /// :
+    /// [Kubernetes service
+    /// account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+    /// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+    /// `group:{emailid}`: An email address that represents a Google group.
+    /// For example, `admins@example.com`.
+    /// `domain:{domain}`: The G Suite domain (primary) that represents all the
+    /// users of that domain. For example, `google.com` or `example.com`.
+    /// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`:
     /// A single identity in a workforce identity pool.
-    /// principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/group/{group_id}
-    /// :
+    /// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/group/{group_id}`:
     /// All workforce identities in a group.
-    /// principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/attribute.{attribute_name}/{attribute_value}
-    /// :
+    /// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/attribute.{attribute_name}/{attribute_value}`:
     /// All workforce identities with a specific attribute value.
-    /// principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/*
-    /// :
+    /// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/*`:
     /// All identities in a workforce identity pool.
-    /// principal://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
-    /// :
+    /// `principal://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}`:
     /// A single identity in a workload identity pool.
-    /// principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/group/{group_id}
-    /// :
+    /// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/group/{group_id}`:
     /// A workload identity pool group.
-    /// principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}
-    /// :
+    /// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}`:
     /// All identities in a workload identity pool with a certain attribute.
-    /// principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/*
-    /// :
+    /// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/*`:
     /// All identities in a workload identity pool.
-    /// deleted:user:{emailid}?uid={uniqueid}
-    /// : An email address (plus unique
+    /// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
     /// identifier) representing a user that has been recently deleted. For
-    /// example,
-    /// alice@example.com?uid=123456789012345678901
-    /// . If the user is
-    /// recovered, this value reverts to
-    /// user:{emailid}
-    ///  and the recovered user
+    /// example, `alice@example.com?uid=123456789012345678901`. If the user is
+    /// recovered, this value reverts to `user:{emailid}` and the recovered user
     /// retains the role in the binding.
-    /// deleted:serviceAccount:{emailid}?uid={uniqueid}
-    /// : An email address (plus
+    /// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
     /// unique identifier) representing a service account that has been recently
     /// deleted. For example,
-    /// my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901
-    /// .
+    /// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
     /// If the service account is undeleted, this value reverts to
-    /// serviceAccount:{emailid}
-    ///  and the undeleted service account retains the
+    /// `serviceAccount:{emailid}` and the undeleted service account retains the
     /// role in the binding.
-    /// deleted:group:{emailid}?uid={uniqueid}
-    /// : An email address (plus unique
+    /// `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
     /// identifier) representing a Google group that has been recently
-    /// deleted. For example,
-    /// admins@example.com?uid=123456789012345678901
-    /// . If
-    /// the group is recovered, this value reverts to
-    /// group:{emailid}
-    ///  and the
+    /// deleted. For example, `admins@example.com?uid=123456789012345678901`. If
+    /// the group is recovered, this value reverts to `group:{emailid}` and the
     /// recovered group retains the role in the binding.
-    /// deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}
-    /// :
+    /// `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`:
     /// Deleted single identity in a workforce identity pool. For example,
-    /// deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-pool-id/subject/my-subject-attribute-value
-    /// .
+    /// `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-pool-id/subject/my-subject-attribute-value`.
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub members: Vec<String>,
 
     /// The condition that is associated with this binding.
-    /// If the condition evaluates to
-    /// true
-    /// , then this binding applies to the
+    /// If the condition evaluates to `true`, then this binding applies to the
     /// current request.
-    /// If the condition evaluates to
-    /// false
-    /// , then this binding does not apply to
+    /// If the condition evaluates to `false`, then this binding does not apply to
     /// the current request. However, a different role binding might grant the same
     /// role to one or more of the principals in this binding.
     /// To learn which resources support conditions in their IAM policies, see the
-    /// IAM
-    /// documentation
-    /// .
+    /// [IAM
+    /// documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub condition: Option<crate::model::Expr>,
 }
@@ -1909,13 +1636,9 @@ impl Expr {
 /// The configuration determines which permission types are logged, and what
 /// identities, if any, are exempted from logging.
 /// An AuditConfig must have one or more AuditLogConfigs.
-/// If there are AuditConfigs for both
-/// allServices
-///  and a specific service,
-/// the union of the two AuditConfigs is used for that service: the log_
-/// types
-/// specified in each AuditConfig are enabled, and the exempted_
-/// members in each
+/// If there are AuditConfigs for both `allServices` and a specific service,
+/// the union of the two AuditConfigs is used for that service: the log_types
+/// specified in each AuditConfig are enabled, and the exempted_members in each
 /// AuditLogConfig are exempted.
 /// Example Policy with multiple AuditConfigs:
 /// ```norust
@@ -1955,30 +1678,17 @@ impl Expr {
 ///   ]
 /// }
 /// ```
-/// For sampleservice, this policy enables DATA_
-/// READ, DATA_
-/// WRITE and ADMIN_
-/// READ
-/// logging. It also exempts
-/// jose@example.com
-///  from DATA_
-/// READ logging, and
-/// aliya@example.com
-///  from DATA_
-/// WRITE logging.
+/// For sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ
+/// logging. It also exempts `jose@example.com` from DATA_READ logging, and
+/// `aliya@example.com` from DATA_WRITE logging.
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct AuditConfig {
     /// Specifies a service that will be enabled for audit logging.
-    /// For example,
-    /// storage.googleapis.com
-    /// ,
-    /// cloudsql.googleapis.com
-    /// .
-    /// allServices
-    ///  is a special value that covers all services.
+    /// For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
+    /// `allServices` is a special value that covers all services.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub service: Option<String>,
 
@@ -2021,11 +1731,8 @@ impl AuditConfig {
 ///   ]
 /// }
 /// ```
-/// This enables 'DATA_
-/// READ' and 'DATA_
-/// WRITE' logging, while exempting
-/// jose@example.com from DATA_
-/// READ logging.
+/// This enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting
+/// jose@example.com from DATA_READ logging.
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -2056,52 +1763,31 @@ impl AuditLogConfig {
     }
 }
 
-/// Request message for
-/// TestIamPermissions
-///  method.
+/// Request message for `TestIamPermissions` method.
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct TestIamPermissionsRequest {
-    /// The set of permissions to check for the
-    /// resource
-    /// . Permissions with
-    /// wildcards (such as
-    /// *
-    ///  or
-    /// storage.*
-    /// ) are not allowed. For more
+    /// The set of permissions to check for the `resource`. Permissions with
+    /// wildcards (such as `*` or `storage.*`) are not allowed. For more
     /// information see
-    /// IAM Overview
-    /// .
+    /// [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub permissions: Vec<String>,
 
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}:testIamPermissions
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}:testIamPermissions`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}:testIamPermissions
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}:testIamPermissions`.
     #[serde(skip)]
     pub secret: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}:testIamPermissions
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}:testIamPermissions`.
     #[serde(skip)]
     pub location: String,
 }
@@ -2132,17 +1818,13 @@ impl TestIamPermissionsRequest {
     }
 }
 
-/// Response message for
-/// TestIamPermissions
-///  method.
+/// Response message for `TestIamPermissions` method.
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct TestIamPermissionsResponse {
-    /// A subset of
-    /// TestPermissionsRequest.permissions
-    ///  that the caller is
+    /// A subset of `TestPermissionsRequest.permissions` that the caller is
     /// allowed.
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub permissions: Vec<String>,
@@ -2162,22 +1844,14 @@ impl TestIamPermissionsResponse {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct ListLocationsRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations`.
     #[serde(skip)]
     pub project: String,
 
     /// A filter to narrow down results to a preferred subset.
-    /// The filtering language accepts strings like
-    /// "displayName=tokyo"
-    /// , and
-    /// is documented in more detail in
-    /// AIP-160
-    /// .
+    /// The filtering language accepts strings like `"displayName=tokyo"`, and
+    /// is documented in more detail in [AIP-160](https://google.aip.dev/160).
     #[serde(skip)]
     pub filter: Option<String>,
 
@@ -2186,9 +1860,7 @@ pub struct ListLocationsRequest {
     #[serde(skip)]
     pub page_size: Option<i32>,
 
-    /// A page token received from the
-    /// next_page_token
-    ///  field in the response.
+    /// A page token received from the `next_page_token` field in the response.
     /// Send that page token to receive the subsequent page.
     #[serde(skip)]
     pub page_token: Option<String>,
@@ -2226,21 +1898,13 @@ impl ListLocationsRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct GetLocationRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}`.
     #[serde(skip)]
     pub location: String,
 }
@@ -2265,12 +1929,8 @@ impl GetLocationRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct ListSecretsRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets`.
     #[serde(skip)]
     pub project: String,
 
@@ -2281,16 +1941,13 @@ pub struct ListSecretsRequest {
     pub page_size: Option<i32>,
 
     /// Optional. Pagination token, returned earlier via
-    /// ListSecretsResponse.next_
-    /// page_
-    /// token.
+    /// ListSecretsResponse.next_page_token.
     #[serde(skip)]
     pub page_token: Option<String>,
 
     /// Optional. Filter string, adhering to the rules in
-    /// List-operation
-    /// filtering
-    /// . List
+    /// [List-operation
+    /// filtering](https://cloud.google.com/secret-manager/docs/filtering). List
     /// only secrets matching the filter. If filter is empty, all secrets are
     /// listed.
     #[serde(skip)]
@@ -2333,23 +1990,15 @@ pub struct CreateSecretRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub request_body: Option<crate::model::Secret>,
 
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets`.
     #[serde(skip)]
     pub project: String,
 
     /// Required. This must be unique within the project.
     /// A secret ID is a string with a maximum length of 255 characters and can
-    /// contain uppercase and lowercase letters, numerals, and the hyphen (
-    /// -
-    /// ) and
-    /// underscore (
-    /// _
-    /// ) characters.
+    /// contain uppercase and lowercase letters, numerals, and the hyphen (`-`) and
+    /// underscore (`_`) characters.
     #[serde(skip)]
     pub secret_id: String,
 }
@@ -2380,21 +2029,13 @@ impl CreateSecretRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct ListSecretsByProjectAndLocationRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets`.
     #[serde(skip)]
     pub location: String,
 
@@ -2405,16 +2046,13 @@ pub struct ListSecretsByProjectAndLocationRequest {
     pub page_size: Option<i32>,
 
     /// Optional. Pagination token, returned earlier via
-    /// ListSecretsResponse.next_
-    /// page_
-    /// token.
+    /// ListSecretsResponse.next_page_token.
     #[serde(skip)]
     pub page_token: Option<String>,
 
     /// Optional. Filter string, adhering to the rules in
-    /// List-operation
-    /// filtering
-    /// . List
+    /// [List-operation
+    /// filtering](https://cloud.google.com/secret-manager/docs/filtering). List
     /// only secrets matching the filter. If filter is empty, all secrets are
     /// listed.
     #[serde(skip)]
@@ -2463,32 +2101,20 @@ pub struct CreateSecretByProjectAndLocationRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub request_body: Option<crate::model::Secret>,
 
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets`.
     #[serde(skip)]
     pub location: String,
 
     /// Required. This must be unique within the project.
     /// A secret ID is a string with a maximum length of 255 characters and can
-    /// contain uppercase and lowercase letters, numerals, and the hyphen (
-    /// -
-    /// ) and
-    /// underscore (
-    /// _
-    /// ) characters.
+    /// contain uppercase and lowercase letters, numerals, and the hyphen (`-`) and
+    /// underscore (`_`) characters.
     #[serde(skip)]
     pub secret_id: String,
 }
@@ -2525,21 +2151,13 @@ impl CreateSecretByProjectAndLocationRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct GetSecretRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}`.
     #[serde(skip)]
     pub secret: String,
 }
@@ -2564,21 +2182,13 @@ impl GetSecretRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct DeleteSecretRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}`.
     #[serde(skip)]
     pub secret: String,
 
@@ -2619,21 +2229,13 @@ pub struct UpdateSecretRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub request_body: Option<crate::model::Secret>,
 
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}`.
     #[serde(skip)]
     pub secret: String,
 
@@ -2674,30 +2276,18 @@ impl UpdateSecretRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct GetSecretByProjectAndLocationAndSecretRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}`.
     #[serde(skip)]
     pub location: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}`.
     #[serde(skip)]
     pub secret: String,
 }
@@ -2728,30 +2318,18 @@ impl GetSecretByProjectAndLocationAndSecretRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct DeleteSecretByProjectAndLocationAndSecretRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}`.
     #[serde(skip)]
     pub location: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}`.
     #[serde(skip)]
     pub secret: String,
 
@@ -2798,30 +2376,18 @@ pub struct UpdateSecretByProjectAndLocationAndSecretRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub request_body: Option<crate::model::Secret>,
 
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}`.
     #[serde(skip)]
     pub location: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}`.
     #[serde(skip)]
     pub secret: String,
 
@@ -2868,21 +2434,13 @@ impl UpdateSecretByProjectAndLocationAndSecretRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct ListSecretVersionsRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions`.
     #[serde(skip)]
     pub secret: String,
 
@@ -2893,17 +2451,13 @@ pub struct ListSecretVersionsRequest {
     pub page_size: Option<i32>,
 
     /// Optional. Pagination token, returned earlier via
-    /// ListSecretVersionsResponse.next_
-    /// page_
-    /// token][
-    /// ].
+    /// ListSecretVersionsResponse.next_page_token][].
     #[serde(skip)]
     pub page_token: Option<String>,
 
     /// Optional. Filter string, adhering to the rules in
-    /// List-operation
-    /// filtering
-    /// . List
+    /// [List-operation
+    /// filtering](https://cloud.google.com/secret-manager/docs/filtering). List
     /// only secret versions matching the filter. If filter is empty, all secret
     /// versions are listed.
     #[serde(skip)]
@@ -2948,30 +2502,18 @@ impl ListSecretVersionsRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct ListSecretVersionsByProjectAndLocationAndSecretRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}/versions
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}/versions`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}/versions
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}/versions`.
     #[serde(skip)]
     pub location: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}/versions
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}/versions`.
     #[serde(skip)]
     pub secret: String,
 
@@ -2982,17 +2524,13 @@ pub struct ListSecretVersionsByProjectAndLocationAndSecretRequest {
     pub page_size: Option<i32>,
 
     /// Optional. Pagination token, returned earlier via
-    /// ListSecretVersionsResponse.next_
-    /// page_
-    /// token][
-    /// ].
+    /// ListSecretVersionsResponse.next_page_token][].
     #[serde(skip)]
     pub page_token: Option<String>,
 
     /// Optional. Filter string, adhering to the rules in
-    /// List-operation
-    /// filtering
-    /// . List
+    /// [List-operation
+    /// filtering](https://cloud.google.com/secret-manager/docs/filtering). List
     /// only secret versions matching the filter. If filter is empty, all secret
     /// versions are listed.
     #[serde(skip)]
@@ -3043,30 +2581,18 @@ impl ListSecretVersionsByProjectAndLocationAndSecretRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct GetSecretVersionRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}`.
     #[serde(skip)]
     pub secret: String,
 
-    /// The
-    /// {version}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}
-    /// .
+    /// The `{version}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}`.
     #[serde(skip)]
     pub version: String,
 }
@@ -3097,39 +2623,23 @@ impl GetSecretVersionRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct GetSecretVersionByProjectAndLocationAndSecretAndVersionRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}`.
     #[serde(skip)]
     pub location: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}`.
     #[serde(skip)]
     pub secret: String,
 
-    /// The
-    /// {version}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}
-    /// .
+    /// The `{version}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}`.
     #[serde(skip)]
     pub version: String,
 }
@@ -3166,30 +2676,18 @@ impl GetSecretVersionByProjectAndLocationAndSecretAndVersionRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct AccessSecretVersionRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}:access
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}:access`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}:access
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}:access`.
     #[serde(skip)]
     pub secret: String,
 
-    /// The
-    /// {version}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}/versions/{version}:access
-    /// .
+    /// The `{version}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}/versions/{version}:access`.
     #[serde(skip)]
     pub version: String,
 }
@@ -3220,39 +2718,23 @@ impl AccessSecretVersionRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct AccessSecretVersionByProjectAndLocationAndSecretAndVersionRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}:access
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}:access`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}:access
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}:access`.
     #[serde(skip)]
     pub location: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}:access
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}:access`.
     #[serde(skip)]
     pub secret: String,
 
-    /// The
-    /// {version}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}:access
-    /// .
+    /// The `{version}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}/versions/{version}:access`.
     #[serde(skip)]
     pub version: String,
 }
@@ -3289,21 +2771,13 @@ impl AccessSecretVersionByProjectAndLocationAndSecretAndVersionRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct GetIamPolicyRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}:getIamPolicy
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}:getIamPolicy`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/secrets/{secret}:getIamPolicy
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/secrets/{secret}:getIamPolicy`.
     #[serde(skip)]
     pub secret: String,
 
@@ -3319,9 +2793,8 @@ pub struct GetIamPolicyRequest {
     /// 3, but the policy has no conditional role bindings, the response uses
     /// version 1.
     /// To learn which resources support conditions in their IAM policies, see the
-    /// IAM
-    /// documentation
-    /// .
+    /// [IAM
+    /// documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
     #[serde(skip)]
     pub options_requested_policy_version: Option<i32>,
 }
@@ -3352,30 +2825,18 @@ impl GetIamPolicyRequest {
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct GetIamPolicyByProjectAndLocationAndSecretRequest {
-    /// The
-    /// {project}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}:getIamPolicy
-    /// .
+    /// The `{project}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}:getIamPolicy`.
     #[serde(skip)]
     pub project: String,
 
-    /// The
-    /// {location}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}:getIamPolicy
-    /// .
+    /// The `{location}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}:getIamPolicy`.
     #[serde(skip)]
     pub location: String,
 
-    /// The
-    /// {secret}
-    ///  component of the target path.
-    /// The full target path will be in the form
-    /// /v1/projects/{project}/locations/{location}/secrets/{secret}:getIamPolicy
-    /// .
+    /// The `{secret}` component of the target path.
+    /// The full target path will be in the form `/v1/projects/{project}/locations/{location}/secrets/{secret}:getIamPolicy`.
     #[serde(skip)]
     pub secret: String,
 
@@ -3391,9 +2852,8 @@ pub struct GetIamPolicyByProjectAndLocationAndSecretRequest {
     /// 3, but the policy has no conditional role bindings, the response uses
     /// version 1.
     /// To learn which resources support conditions in their IAM policies, see the
-    /// IAM
-    /// documentation
-    /// .
+    /// [IAM
+    /// documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
     #[serde(skip)]
     pub options_requested_policy_version: Option<i32>,
 }

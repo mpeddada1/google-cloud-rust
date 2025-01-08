@@ -29,10 +29,7 @@ use std::sync::Arc;
 ///
 /// An abstract interface that provides location-related information for
 /// a service. Service-specific metadata is provided through the
-/// [
-/// Location.metadata][
-/// google.cloud.location.Location.metadata
-/// ] field.
+/// [Location.metadata][google.cloud.location.Location.metadata] field.
 #[derive(Clone, Debug)]
 pub struct Locations {
     inner: Arc<dyn crate::traits::dyntraits::Locations>,

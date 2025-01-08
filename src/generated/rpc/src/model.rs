@@ -48,12 +48,8 @@ pub struct ErrorInfo {
     /// The reason of the error. This is a constant value that identifies the
     /// proximate cause of the error. Error reasons are unique within a particular
     /// domain of errors. This should be at most 63 characters and match a
-    /// regular expression of
-    /// [A-Z][A-Z0-9_]+[A-Z0-9]
-    /// , which represents
-    /// UPPER_
-    /// SNAKE_
-    /// CASE.
+    /// regular expression of `[A-Z][A-Z0-9_]+[A-Z0-9]`, which represents
+    /// UPPER_SNAKE_CASE.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub reason: String,
 
@@ -67,16 +63,12 @@ pub struct ErrorInfo {
     pub domain: String,
 
     /// Additional structured details about this error.
-    /// Keys must match a regular expression of
-    /// [a-z][a-zA-Z0-9-_]+
-    ///  but should
+    /// Keys must match a regular expression of `[a-z][a-zA-Z0-9-_]+` but should
     /// ideally be lowerCamelCase. Also, they must be limited to 64 characters in
     /// length. When identifying the current value of an exceeded limit, the units
     /// should be contained in the key, not the value.  For example, rather than
-    /// {"instanceLimit": "100/request"}
-    /// , should be returned as,
-    /// {"instanceLimitPerRequest": "100"}
-    /// , if the client exceeds the number of
+    /// `{"instanceLimit": "100/request"}`, should be returned as,
+    /// `{"instanceLimitPerRequest": "100"}`, if the client exceeds the number of
     /// instances that can be created in a single (batch) request.
     #[serde(skip_serializing_if = "std::collections::HashMap::is_empty")]
     pub metadata: std::collections::HashMap<String, String>,
@@ -110,14 +102,10 @@ impl ErrorInfo {
 /// responses.
 /// It's always recommended that clients should use exponential backoff when
 /// retrying.
-/// Clients should wait until
-/// retry_delay
-///  amount of time has passed since
+/// Clients should wait until `retry_delay` amount of time has passed since
 /// receiving the error response before retrying.  If retrying requests also
 /// fail, clients should use an exponential backoff scheme to gradually increase
-/// the delay between retries based on
-/// retry_delay
-/// , until either a maximum
+/// the delay between retries based on `retry_delay`, until either a maximum
 /// number of retries have been reached or a maximum retry delay cap has been
 /// reached.
 #[serde_with::serde_as]
@@ -172,9 +160,7 @@ impl DebugInfo {
 /// a service could respond with a QuotaFailure detail containing the project
 /// id and the description of the quota limit that was exceeded.  If the
 /// calling project hasn't enabled the service in the developer console, then
-/// a service could respond with the project id and set
-/// service_disabled
-///
+/// a service could respond with the project id and set `service_disabled`
 /// to true.
 /// Also see RetryInfo and Help types for other details about handling a
 /// quota failure.
@@ -210,9 +196,8 @@ pub mod quota_failure {
     #[non_exhaustive]
     pub struct Violation {
         /// The subject on which the quota check failed.
-        /// For example, "clientip:
-        /// " or "project:
-        /// ".
+        /// For example, "clientip:<ip address of client>" or "project:<Google
+        /// developer project id>".
         #[serde(skip_serializing_if = "String::is_empty")]
         pub subject: String,
 
@@ -369,46 +354,8 @@ pub mod bad_request {
         ///   repeated EmailAddress email_addresses = 2;
         /// }
         /// ```
-        /// In this example, in proto
-        /// field
-        ///  could take one of the following values:
-        /// full_name
-        ///  for a violation in the
-        /// full_name
-        ///  value
-        /// email_addresses[1].email
-        ///  for a violation in the
-        /// email
-        ///  field of the
-        /// first
-        /// email_addresses
-        ///  message
-        /// email_addresses[3].type[2]
-        ///  for a violation in the second
-        /// type
-        ///
-        /// value in the third
-        /// email_addresses
-        ///  message.
+        /// In this example, in proto `field` could take one of the following values:
         /// In JSON, the same values are represented as:
-        /// fullName
-        ///  for a violation in the
-        /// fullName
-        ///  value
-        /// emailAddresses[1].email
-        ///  for a violation in the
-        /// email
-        ///  field of the
-        /// first
-        /// emailAddresses
-        ///  message
-        /// emailAddresses[3].type[2]
-        ///  for a violation in the second
-        /// type
-        ///
-        /// value in the third
-        /// emailAddresses
-        ///  message.
         #[serde(skip_serializing_if = "String::is_empty")]
         pub field: String,
 
@@ -420,12 +367,8 @@ pub mod bad_request {
         /// identifies the proximate cause of the field-level error. It should
         /// uniquely identify the type of the FieldViolation within the scope of the
         /// google.rpc.ErrorInfo.domain. This should be at most 63
-        /// characters and match a regular expression of
-        /// [A-Z][A-Z0-9_]+[A-Z0-9]
-        /// ,
-        /// which represents UPPER_
-        /// SNAKE_
-        /// CASE.
+        /// characters and match a regular expression of `[A-Z][A-Z0-9_]+[A-Z0-9]`,
+        /// which represents UPPER_SNAKE_CASE.
         #[serde(skip_serializing_if = "String::is_empty")]
         pub reason: String,
 
@@ -510,29 +453,20 @@ pub struct ResourceInfo {
     pub resource_type: String,
 
     /// The name of the resource being accessed.  For example, a shared calendar
-    /// name: "example.com_
-    /// 4fghdhgsrgh@group.calendar.google.com", if the current
+    /// name: "example.com_4fghdhgsrgh@group.calendar.google.com", if the current
     /// error is
-    /// [
-    /// google.rpc.Code.PERMISSION_
-    /// DENIED][
-    /// google.rpc.Code.PERMISSION_
-    /// DENIED
-    /// ].
+    /// [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
     #[serde(skip_serializing_if = "String::is_empty")]
     pub resource_name: String,
 
     /// The owner of the resource (optional).
-    /// For example, "user:
-    /// " or "project:
-    /// ".
+    /// For example, "user:<owner email>" or "project:<Google developer project
+    /// id>".
     #[serde(skip_serializing_if = "String::is_empty")]
     pub owner: String,
 
     /// Describes what error is encountered when accessing this resource.
-    /// For example, updating a cloud project may require the
-    /// writer
-    ///  permission
+    /// For example, updating a cloud project may require the `writer` permission
     /// on the developer console project.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub description: String,
@@ -781,37 +715,24 @@ impl HttpHeader {
     }
 }
 
-/// The
-/// Status
-///  type defines a logical error model that is suitable for
+/// The `Status` type defines a logical error model that is suitable for
 /// different programming environments, including REST APIs and RPC APIs. It is
-/// used by
-/// gRPC
-/// . Each
-/// Status
-///  message contains
+/// used by [gRPC](https://github.com/grpc). Each `Status` message contains
 /// three pieces of data: error code, error message, and error details.
 /// You can find out more about this error model and how to work with it in the
-/// API Design Guide
-/// .
+/// [API Design Guide](https://cloud.google.com/apis/design/errors).
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
 #[non_exhaustive]
 pub struct Status {
     /// The status code, which should be an enum value of
-    /// [
-    /// google.rpc.Code][
-    /// google.rpc.Code
-    /// ].
+    /// [google.rpc.Code][google.rpc.Code].
     pub code: i32,
 
     /// A developer-facing error message, which should be in English. Any
     /// user-facing error message should be localized and sent in the
-    /// [
-    /// google.rpc.Status.details][
-    /// google.rpc.Status.details
-    /// ] field, or localized
+    /// [google.rpc.Status.details][google.rpc.Status.details] field, or localized
     /// by the client.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub message: String,
@@ -845,17 +766,8 @@ impl Status {
 /// The canonical error codes for gRPC APIs.
 /// Sometimes multiple error codes may apply.  Services should return
 /// the most specific error code that applies.  For example, prefer
-/// OUT_OF_RANGE
-///  over
-/// FAILED_PRECONDITION
-///  if both codes apply.
-/// Similarly prefer
-/// NOT_FOUND
-///  or
-/// ALREADY_EXISTS
-///  over
-/// FAILED_PRECONDITION
-/// .
+/// `OUT_OF_RANGE` over `FAILED_PRECONDITION` if both codes apply.
+/// Similarly prefer `NOT_FOUND` or `ALREADY_EXISTS` over `FAILED_PRECONDITION`.
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct Code(String);
 
@@ -884,9 +796,7 @@ pub mod code {
     pub const CANCELLED: &str = "CANCELLED";
 
     /// Unknown error.  For example, this error may be returned when
-    /// a
-    /// Status
-    ///  value received from another address space belongs to
+    /// a `Status` value received from another address space belongs to
     /// an error space that is not known in this address space.  Also
     /// errors raised by APIs that do not return enough error information
     /// may be converted to this error.
@@ -894,11 +804,7 @@ pub mod code {
     pub const UNKNOWN: &str = "UNKNOWN";
 
     /// The client specified an invalid argument.  Note that this differs
-    /// from
-    /// FAILED_PRECONDITION
-    /// .
-    /// INVALID_ARGUMENT
-    ///  indicates arguments
+    /// from `FAILED_PRECONDITION`.  `INVALID_ARGUMENT` indicates arguments
     /// that are problematic regardless of the state of the system
     /// (e.g., a malformed file name).
     /// HTTP Mapping: 400 Bad Request
@@ -915,11 +821,8 @@ pub mod code {
     /// Some requested entity (e.g., file or directory) was not found.
     /// Note to server developers: if a request is denied for an entire class
     /// of users, such as gradual feature rollout or undocumented allowlist,
-    /// NOT_FOUND
-    ///  may be used. If a request is denied for some users within
-    /// a class of users, such as user-based access control,
-    /// PERMISSION_DENIED
-    ///
+    /// `NOT_FOUND` may be used. If a request is denied for some users within
+    /// a class of users, such as user-based access control, `PERMISSION_DENIED`
     /// must be used.
     /// HTTP Mapping: 404 Not Found
     pub const NOT_FOUND: &str = "NOT_FOUND";
@@ -930,18 +833,10 @@ pub mod code {
     pub const ALREADY_EXISTS: &str = "ALREADY_EXISTS";
 
     /// The caller does not have permission to execute the specified
-    /// operation.
-    /// PERMISSION_DENIED
-    ///  must not be used for rejections
-    /// caused by exhausting some resource (use
-    /// RESOURCE_EXHAUSTED
-    ///
-    /// instead for those errors).
-    /// PERMISSION_DENIED
-    ///  must not be
-    /// used if the caller can not be identified (use
-    /// UNAUTHENTICATED
-    ///
+    /// operation. `PERMISSION_DENIED` must not be used for rejections
+    /// caused by exhausting some resource (use `RESOURCE_EXHAUSTED`
+    /// instead for those errors). `PERMISSION_DENIED` must not be
+    /// used if the caller can not be identified (use `UNAUTHENTICATED`
     /// instead for those errors). This error code does not imply the
     /// request is valid or the requested entity exists or satisfies
     /// other pre-conditions.
@@ -963,28 +858,14 @@ pub mod code {
     /// to be deleted is non-empty, an rmdir operation is applied to
     /// a non-directory, etc.
     /// Service implementors can use the following guidelines to decide
-    /// between
-    /// FAILED_PRECONDITION
-    /// ,
-    /// ABORTED
-    /// , and
-    /// UNAVAILABLE
-    /// :
-    /// (a) Use
-    /// UNAVAILABLE
-    ///  if the client can retry just the failing call.
-    /// (b) Use
-    /// ABORTED
-    ///  if the client should retry at a higher level. For
+    /// between `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`:
+    /// (a) Use `UNAVAILABLE` if the client can retry just the failing call.
+    /// (b) Use `ABORTED` if the client should retry at a higher level. For
     /// example, when a client-specified test-and-set fails, indicating the
     /// client should restart a read-modify-write sequence.
-    /// (c) Use
-    /// FAILED_PRECONDITION
-    ///  if the client should not retry until
+    /// (c) Use `FAILED_PRECONDITION` if the client should not retry until
     /// the system state has been explicitly fixed. For example, if an "rmdir"
-    /// fails because the directory is non-empty,
-    /// FAILED_PRECONDITION
-    ///
+    /// fails because the directory is non-empty, `FAILED_PRECONDITION`
     /// should be returned since the client should not retry unless
     /// the files are deleted from the directory.
     /// HTTP Mapping: 400 Bad Request
@@ -992,42 +873,23 @@ pub mod code {
 
     /// The operation was aborted, typically due to a concurrency issue such as
     /// a sequencer check failure or transaction abort.
-    /// See the guidelines above for deciding between
-    /// FAILED_PRECONDITION
-    /// ,
-    /// ABORTED
-    /// , and
-    /// UNAVAILABLE
-    /// .
+    /// See the guidelines above for deciding between `FAILED_PRECONDITION`,
+    /// `ABORTED`, and `UNAVAILABLE`.
     /// HTTP Mapping: 409 Conflict
     pub const ABORTED: &str = "ABORTED";
 
     /// The operation was attempted past the valid range.  E.g., seeking or
     /// reading past end-of-file.
-    /// Unlike
-    /// INVALID_ARGUMENT
-    /// , this error indicates a problem that may
+    /// Unlike `INVALID_ARGUMENT`, this error indicates a problem that may
     /// be fixed if the system state changes. For example, a 32-bit file
-    /// system will generate
-    /// INVALID_ARGUMENT
-    ///  if asked to read at an
-    /// offset that is not in the range [
-    /// 0,2^32-1
-    /// ], but it will generate
-    /// OUT_OF_RANGE
-    ///  if asked to read from an offset past the current
+    /// system will generate `INVALID_ARGUMENT` if asked to read at an
+    /// offset that is not in the range [0,2^32-1], but it will generate
+    /// `OUT_OF_RANGE` if asked to read from an offset past the current
     /// file size.
-    /// There is a fair bit of overlap between
-    /// FAILED_PRECONDITION
-    ///  and
-    /// OUT_OF_RANGE
-    /// .  We recommend using
-    /// OUT_OF_RANGE
-    ///  (the more specific
+    /// There is a fair bit of overlap between `FAILED_PRECONDITION` and
+    /// `OUT_OF_RANGE`.  We recommend using `OUT_OF_RANGE` (the more specific
     /// error) when it applies so that callers who are iterating through
-    /// a space can easily look for an
-    /// OUT_OF_RANGE
-    ///  error to detect when
+    /// a space can easily look for an `OUT_OF_RANGE` error to detect when
     /// they are done.
     /// HTTP Mapping: 400 Bad Request
     pub const OUT_OF_RANGE: &str = "OUT_OF_RANGE";
@@ -1047,13 +909,8 @@ pub mod code {
     /// transient condition, which can be corrected by retrying with
     /// a backoff. Note that it is not always safe to retry
     /// non-idempotent operations.
-    /// See the guidelines above for deciding between
-    /// FAILED_PRECONDITION
-    /// ,
-    /// ABORTED
-    /// , and
-    /// UNAVAILABLE
-    /// .
+    /// See the guidelines above for deciding between `FAILED_PRECONDITION`,
+    /// `ABORTED`, and `UNAVAILABLE`.
     /// HTTP Mapping: 503 Service Unavailable
     pub const UNAVAILABLE: &str = "UNAVAILABLE";
 

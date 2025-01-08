@@ -780,16 +780,14 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 	documentationBytes := []byte(documentation)
 	doc := md.Parser().Parse(text.NewReader(documentationBytes))
 	ast.Walk(doc, func(node ast.Node, entering bool) (ast.WalkStatus, error) {
-
 		switch node.Kind() {
-		case ast.KindFencedCodeBlock:
+		case ast.KindCodeBlock:
 			if entering {
-				fencedCode := node.(*ast.FencedCodeBlock)
+				fencedCode := node.(*ast.CodeBlock)
 				results = append(results, "```norust")
 				for i := 0; i < fencedCode.Lines().Len(); i++ {
 					line := fencedCode.Lines().At(i)
 					results = append(results, string(line.Value(documentationBytes)))
-					// fmt.Printf("Code Block: %s", string(line.Value(documentationBytes)))
 				}
 			} else {
 				results = append(results, "```")
@@ -801,34 +799,68 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 				for i := 0; i < fencedCode.Lines().Len(); i++ {
 					line := fencedCode.Lines().At(i)
 					results = append(results, string(line.Value(documentationBytes)))
-					// fmt.Printf("Code Block: %s", string(line.Value(documentationBytes)))
 				}
 			} else {
 				results = append(results, "```")
 			}
-		case ast.KindCodeBlock:
+		case ast.KindFencedCodeBlock:
 			if entering {
-				fencedCode := node.(*ast.CodeBlock)
+				fencedCode := node.(*ast.FencedCodeBlock)
 				results = append(results, "```norust")
 				for i := 0; i < fencedCode.Lines().Len(); i++ {
 					line := fencedCode.Lines().At(i)
 					results = append(results, string(line.Value(documentationBytes)))
-					// fmt.Printf("Code Block: %s", string(line.Value(documentationBytes)))
 				}
 			} else {
 				results = append(results, "```")
 			}
-		case ast.KindText:
-			if textNode, ok := node.(*ast.Text); ok && entering {
-				textContent := string(textNode.Segment.Value(documentationBytes))
-				lines := strings.Split(textContent, "\n ")
+		case ast.KindParagraph:
+			if entering {
+				lines := node.Lines()
+				isCodeBlock := false
+				if lines.Len() > 0 {
 
-				for _, line := range lines {
-					results = append(results, line)
-					// TODO(mpeddada): Include logic for processing links.
+					for i := 0; i < lines.Len(); i++ {
+						line := lines.At(i)
+						lineString := string(line.Value(documentationBytes))
+						results = append(results, string(line.Value(documentationBytes)))
+						indent := 0
+						for _, j := range lineString {
+							if unicode.IsSpace(j) {
+								indent++
+							} else {
+								break
+							}
+						}
+						if indent > 2 {
+							isCodeBlock = true
+						}
 
+					}
+					if isCodeBlock {
+						results = append(results, "```norust\n")
+						for i := 0; i < lines.Len(); i++ {
+							line := lines.At(i)
+							results = append(results, string(line.Value(documentationBytes)))
+						}
+						results = append(results, "```\n")
+						return ast.WalkSkipChildren, nil
+					}
+					// results = append(results, "```\n")
+					return ast.WalkSkipChildren, nil
 				}
 			}
+			// case ast.KindText:
+			// 	if textNode, ok := node.(*ast.Text); ok && entering {
+			// 		textContent := string(textNode.Segment.Value(documentationBytes))
+			// 		lines := strings.Split(textContent, "\n")
+
+			// 		for _, line := range lines {
+			// 			results = append(results, line)
+			// 			// TODO(mpeddada): Include logic for processing links.
+
+			// 		}
+			// 	}
 		}
 		return ast.WalkContinue, nil
 	})
@@ -858,12 +890,12 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 	// 		case line == "```":
 	// 			results = append(results, "```norust")
 	// 			inBlockquote = true
-	// 		case strings.HasPrefix(line, "    "):
-	// 			inBlockquote = true
-	// 			blockquotePrefix = "    "
-	// 			results = append(results, "```norust")
-	// 			results = append(results, strings.TrimPrefix(line, blockquotePrefix))
-	// 		case strings.HasPrefix(line, "   > "):
+	// case strings.HasPrefix(line, "    "):
+	// 	inBlockquote = true
+	// 	blockquotePrefix = "    "
+	// 	results = append(results, "```norust")
+	// 	results = append(results, strings.TrimPrefix(line, blockquotePrefix))
+	// case strings.HasPrefix(line, "   > "):
 	// 			inBlockquote = true
 	// 			blockquotePrefix = "   > "
 	// 			results = append(results, "```norust")

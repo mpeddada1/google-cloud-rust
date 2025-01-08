@@ -255,8 +255,7 @@ impl SecretManagerService {
     }
 
     /// Gets metadata for a SecretVersion.
-    /// projects/_*_/secrets/_*_/versions/latest
-    ///  is an alias to the most recently
+    /// `projects/_*_/secrets/_*_/versions/latest` is an alias to the most recently
     /// created SecretVersion.
     pub fn get_secret_version(
         &self,
@@ -271,8 +270,7 @@ impl SecretManagerService {
     }
 
     /// Gets metadata for a SecretVersion.
-    /// projects/_*_/secrets/_*_/versions/latest
-    ///  is an alias to the most recently
+    /// `projects/_*_/secrets/_*_/versions/latest` is an alias to the most recently
     /// created SecretVersion.
     pub fn get_secret_version_by_project_and_location_and_secret_and_version(
         &self,
@@ -291,8 +289,7 @@ impl SecretManagerService {
     }
 
     /// Accesses a SecretVersion. This call returns the secret data.
-    /// projects/_*_/secrets/_*_/versions/latest
-    ///  is an alias to the most recently
+    /// `projects/_*_/secrets/_*_/versions/latest` is an alias to the most recently
     /// created SecretVersion.
     pub fn access_secret_version(
         &self,
@@ -307,8 +304,7 @@ impl SecretManagerService {
     }
 
     /// Accesses a SecretVersion. This call returns the secret data.
-    /// projects/_*_/secrets/_*_/versions/latest
-    ///  is an alias to the most recently
+    /// `projects/_*_/secrets/_*_/versions/latest` is an alias to the most recently
     /// created SecretVersion.
     pub fn access_secret_version_by_project_and_location_and_secret_and_version(
         &self,
@@ -488,8 +484,7 @@ impl SecretManagerService {
 
     /// Returns permissions that a caller has for the specified secret.
     /// If the secret does not exist, this call returns an empty set of
-    /// permissions, not a NOT_
-    /// FOUND error.
+    /// permissions, not a NOT_FOUND error.
     /// Note: This operation is designed to be used for building permission-aware
     /// UIs and command-line tools, not for authorization checking. This operation
     /// may "fail open" without warning.
@@ -505,8 +500,7 @@ impl SecretManagerService {
 
     /// Returns permissions that a caller has for the specified secret.
     /// If the secret does not exist, this call returns an empty set of
-    /// permissions, not a NOT_
-    /// FOUND error.
+    /// permissions, not a NOT_FOUND error.
     /// Note: This operation is designed to be used for building permission-aware
     /// UIs and command-line tools, not for authorization checking. This operation
     /// may "fail open" without warning.

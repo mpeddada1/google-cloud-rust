@@ -17,10 +17,7 @@
 #![allow(rustdoc::invalid_html_tags)]
 #![allow(rustdoc::redundant_explicit_links)]
 
-/// The request message for [
-/// Locations.ListLocations][
-/// google.cloud.location.Locations.ListLocations
-/// ].
+/// The request message for [Locations.ListLocations][google.cloud.location.Locations.ListLocations].
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -68,10 +65,7 @@ impl ListLocationsRequest {
     }
 }
 
-/// The response message for [
-/// Locations.ListLocations][
-/// google.cloud.location.Locations.ListLocations
-/// ].
+/// The response message for [Locations.ListLocations][google.cloud.location.Locations.ListLocations].
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -113,10 +107,7 @@ impl gax::paginator::PageableResponse for ListLocationsResponse {
     }
 }
 
-/// The request message for [
-/// Locations.GetLocation][
-/// google.cloud.location.Locations.GetLocation
-/// ].
+/// The request message for [Locations.GetLocation][google.cloud.location.Locations.GetLocation].
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -142,14 +133,11 @@ impl GetLocationRequest {
 #[non_exhaustive]
 pub struct Location {
     /// Resource name for the location, which may vary between implementations.
-    /// For example:
-    /// "projects/example-project/locations/us-east1"
+    /// For example: `"projects/example-project/locations/us-east1"`
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
 
-    /// The canonical id for this location. For example:
-    /// "us-east1"
-    /// .
+    /// The canonical id for this location. For example: `"us-east1"`.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub location_id: String,
 
