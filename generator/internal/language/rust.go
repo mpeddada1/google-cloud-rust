@@ -837,6 +837,9 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 									results = append(results, fmt.Sprintf("  %s", escapedLine))
 								}
 							}
+							if textNode.Kind() == ast.KindParagraph {
+								results = append(results, "\n")
+							}
 						}
 					}
 				}
