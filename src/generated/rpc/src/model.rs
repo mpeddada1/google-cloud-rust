@@ -478,6 +478,8 @@ pub struct ResourceInfo {
     /// name: "example.com_4fghdhgsrgh@group.calendar.google.com", if the current
     /// error is
     /// [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
+    ///
+    /// [google.rpc.Code.PERMISSION_DENIED]: crate::model::code::PERMISSION_DENIED
     #[serde(skip_serializing_if = "String::is_empty")]
     pub resource_name: String,
 
@@ -752,12 +754,16 @@ impl HttpHeader {
 pub struct Status {
     /// The status code, which should be an enum value of
     /// [google.rpc.Code][google.rpc.Code].
+    ///
+    /// [google.rpc.Code]: crate::model::Code
     pub code: i32,
 
     /// A developer-facing error message, which should be in English. Any
     /// user-facing error message should be localized and sent in the
     /// [google.rpc.Status.details][google.rpc.Status.details] field, or localized
     /// by the client.
+    ///
+    /// [google.rpc.Status.details]: crate::model::Status::details
     #[serde(skip_serializing_if = "String::is_empty")]
     pub message: String,
 

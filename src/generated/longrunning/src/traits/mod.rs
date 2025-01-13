@@ -28,6 +28,8 @@ pub(crate) mod dyntraits;
 /// long-running operations should implement the `Operations` interface so
 /// developers can have a consistent client experience.
 ///
+/// [google.longrunning.Operation]: crate::model::Operation
+///
 /// # Mocking
 ///
 /// Application developers may use this trait to mock the longrunning clients.
@@ -85,6 +87,10 @@ pub trait Operations: std::fmt::Debug + Send + Sync {
     /// an [Operation.error][google.longrunning.Operation.error] value with a
     /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
     /// `Code.CANCELLED`.
+    ///
+    /// [google.longrunning.Operation.error]: crate::model::Operation::result
+    /// [google.longrunning.Operations.GetOperation]: crate::traits::Operations::get_operation
+    /// [google.rpc.Status.code]: rpc::model::Status::code
     fn cancel_operation(
         &self,
         _req: crate::model::CancelOperationRequest,

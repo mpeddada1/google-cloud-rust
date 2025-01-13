@@ -368,6 +368,8 @@ pub mod workflow {
 /// Request for the
 /// [ListWorkflows][google.cloud.workflows.v1.Workflows.ListWorkflows]
 /// method.
+///
+/// [google.cloud.workflows.v1.Workflows.ListWorkflows]: crate::traits::Workflows::list_workflows
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -439,6 +441,8 @@ impl ListWorkflowsRequest {
 /// Response for the
 /// [ListWorkflows][google.cloud.workflows.v1.Workflows.ListWorkflows]
 /// method.
+///
+/// [google.cloud.workflows.v1.Workflows.ListWorkflows]: crate::traits::Workflows::list_workflows
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -493,6 +497,8 @@ impl gax::paginator::PageableResponse for ListWorkflowsResponse {
 
 /// Request for the
 /// [GetWorkflow][google.cloud.workflows.v1.Workflows.GetWorkflow] method.
+///
+/// [google.cloud.workflows.v1.Workflows.GetWorkflow]: crate::traits::Workflows::get_workflow
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -529,6 +535,8 @@ impl GetWorkflowRequest {
 /// Request for the
 /// [CreateWorkflow][google.cloud.workflows.v1.Workflows.CreateWorkflow]
 /// method.
+///
+/// [google.cloud.workflows.v1.Workflows.CreateWorkflow]: crate::traits::Workflows::create_workflow
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -578,6 +586,8 @@ impl CreateWorkflowRequest {
 /// Request for the
 /// [DeleteWorkflow][google.cloud.workflows.v1.Workflows.DeleteWorkflow]
 /// method.
+///
+/// [google.cloud.workflows.v1.Workflows.DeleteWorkflow]: crate::traits::Workflows::delete_workflow
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -600,6 +610,8 @@ impl DeleteWorkflowRequest {
 /// Request for the
 /// [UpdateWorkflow][google.cloud.workflows.v1.Workflows.UpdateWorkflow]
 /// method.
+///
+/// [google.cloud.workflows.v1.Workflows.UpdateWorkflow]: crate::traits::Workflows::update_workflow
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]

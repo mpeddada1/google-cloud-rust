@@ -20,9 +20,13 @@
 /// A [Secret][google.cloud.secretmanager.v1.Secret] is a logical secret whose
 /// value and versions can be accessed.
 ///
+/// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
 /// A [Secret][google.cloud.secretmanager.v1.Secret] is made up of zero or more
 /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] that represent
 /// the secret data.
+///
+/// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
+/// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -31,18 +35,23 @@ pub struct Secret {
     /// Output only. The resource name of the
     /// [Secret][google.cloud.secretmanager.v1.Secret] in the format
     /// `projects/*/secrets/*`.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
 
     /// Optional. Immutable. The replication policy of the secret data attached to
     /// the [Secret][google.cloud.secretmanager.v1.Secret].
     ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     /// The replication policy cannot be changed after the Secret has been created.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub replication: Option<crate::model::Replication>,
 
     /// Output only. The time at which the
     /// [Secret][google.cloud.secretmanager.v1.Secret] was created.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde(skip_serializing_if = "Option::is_none")]
     pub create_time: Option<wkt::Timestamp>,
 
@@ -67,12 +76,16 @@ pub struct Secret {
 
     /// Optional. Etag of the currently stored
     /// [Secret][google.cloud.secretmanager.v1.Secret].
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde(skip_serializing_if = "String::is_empty")]
     pub etag: String,
 
     /// Optional. Rotation policy attached to the
     /// [Secret][google.cloud.secretmanager.v1.Secret]. May be excluded if there is
     /// no rotation policy.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde(skip_serializing_if = "Option::is_none")]
     pub rotation: Option<crate::model::Rotation>,
 
@@ -124,6 +137,9 @@ pub struct Secret {
     /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] added
     /// afterwards. They do not apply retroactively to existing
     /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion].
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "Option::is_none")]
     pub customer_managed_encryption: Option<crate::model::CustomerManagedEncryption>,
 
@@ -134,6 +150,8 @@ pub struct Secret {
     /// automatically deleted at expiration. Expired secrets are irreversibly
     /// deleted.
     ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// Expiration is *not* the recommended way to set time-based permissions. [IAM
     /// Conditions](https://cloud.google.com/secret-manager/docs/access-control#conditions)
     /// is recommended for granting time-based permissions because the operation
@@ -240,6 +258,8 @@ pub mod secret {
     /// automatically deleted at expiration. Expired secrets are irreversibly
     /// deleted.
     ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// Expiration is *not* the recommended way to set time-based permissions. [IAM
     /// Conditions](https://cloud.google.com/secret-manager/docs/access-control#conditions)
     /// is recommended for granting time-based permissions because the operation
@@ -251,9 +271,13 @@ pub mod secret {
         /// Optional. Timestamp in UTC when the
         /// [Secret][google.cloud.secretmanager.v1.Secret] is scheduled to expire.
         /// This is always provided on output, regardless of what was sent on input.
+        ///
+        /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         ExpireTime(wkt::Timestamp),
         /// Input only. The TTL for the
         /// [Secret][google.cloud.secretmanager.v1.Secret].
+        ///
+        /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         Ttl(wkt::Duration),
     }
 }
@@ -268,14 +292,20 @@ pub struct SecretVersion {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
     /// `projects/*/secrets/*/versions/*`.
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] IDs in a
     /// [Secret][google.cloud.secretmanager.v1.Secret] start at 1 and are
     /// incremented for each subsequent version of the secret.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
 
     /// Output only. The time at which the
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] was created.
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "Option::is_none")]
     pub create_time: Option<wkt::Timestamp>,
 
@@ -284,20 +314,30 @@ pub struct SecretVersion {
     /// Only present if [state][google.cloud.secretmanager.v1.SecretVersion.state]
     /// is
     /// [DESTROYED][google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED].
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
+    /// [google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]: crate::model::secret_version::state::DESTROYED
+    /// [google.cloud.secretmanager.v1.SecretVersion.state]: crate::model::SecretVersion::state
     #[serde(skip_serializing_if = "Option::is_none")]
     pub destroy_time: Option<wkt::Timestamp>,
 
     /// Output only. The current state of the
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     pub state: crate::model::secret_version::State,
 
     /// The replication status of the
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "Option::is_none")]
     pub replication_status: Option<crate::model::ReplicationStatus>,
 
     /// Output only. Etag of the currently stored
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub etag: String,
 
@@ -307,6 +347,10 @@ pub struct SecretVersion {
     /// [SecretManagerService][google.cloud.secretmanager.v1.SecretManagerService]
     /// on
     /// [SecretManagerService.AddSecretVersion][google.cloud.secretmanager.v1.SecretManagerService.AddSecretVersion].
+    ///
+    /// [google.cloud.secretmanager.v1.SecretManagerService]: crate::traits::SecretManagerService
+    /// [google.cloud.secretmanager.v1.SecretManagerService.AddSecretVersion]: crate::traits::SecretManagerService::add_secret_version
+    /// [google.cloud.secretmanager.v1.SecretPayload]: crate::model::SecretPayload
     pub client_specified_payload_checksum: bool,
 
     /// Optional. Output only. Scheduled destroy time for secret version.
@@ -322,6 +366,9 @@ pub struct SecretVersion {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]. Only
     /// populated if customer-managed encryption is used and
     /// [Secret][google.cloud.secretmanager.v1.Secret] is a Regionalised Secret.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "Option::is_none")]
     pub customer_managed_encryption: Option<crate::model::CustomerManagedEncryptionStatus>,
 }
@@ -396,6 +443,8 @@ pub mod secret_version {
     /// The state of a
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion], indicating if
     /// it can be accessed.
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
     pub struct State(String);
 
@@ -420,6 +469,8 @@ pub mod secret_version {
 
         /// The [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] may be
         /// accessed.
+        ///
+        /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
         pub const ENABLED: &str = "ENABLED";
 
         /// The [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] may not
@@ -427,11 +478,16 @@ pub mod secret_version {
         /// back into the
         /// [ENABLED][google.cloud.secretmanager.v1.SecretVersion.State.ENABLED]
         /// state.
+        ///
+        /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
+        /// [google.cloud.secretmanager.v1.SecretVersion.State.ENABLED]: crate::model::secret_version::state::ENABLED
         pub const DISABLED: &str = "DISABLED";
 
         /// The [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] is
         /// destroyed and the secret data is no longer stored. A version may not
         /// leave this state once entered.
+        ///
+        /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
         pub const DESTROYED: &str = "DESTROYED";
     }
 }
@@ -464,6 +520,8 @@ pub mod replication {
     /// A replication policy that replicates the
     /// [Secret][google.cloud.secretmanager.v1.Secret] payload without any
     /// restrictions.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde_with::serde_as]
     #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
     #[serde(default, rename_all = "camelCase")]
@@ -473,11 +531,15 @@ pub mod replication {
         /// [Secret][google.cloud.secretmanager.v1.Secret]. If no configuration is
         /// provided, Google-managed default encryption is used.
         ///
+        /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         /// Updates to the [Secret][google.cloud.secretmanager.v1.Secret] encryption
         /// configuration only apply to
         /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] added
         /// afterwards. They do not apply retroactively to existing
         /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion].
+        ///
+        /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
+        /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
         #[serde(skip_serializing_if = "Option::is_none")]
         pub customer_managed_encryption: Option<crate::model::CustomerManagedEncryption>,
     }
@@ -498,6 +560,8 @@ pub mod replication {
     /// A replication policy that replicates the
     /// [Secret][google.cloud.secretmanager.v1.Secret] payload into the locations
     /// specified in [Secret.replication.user_managed.replicas][]
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde_with::serde_as]
     #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
     #[serde(default, rename_all = "camelCase")]
@@ -506,6 +570,7 @@ pub mod replication {
         /// Required. The list of Replicas for this
         /// [Secret][google.cloud.secretmanager.v1.Secret].
         ///
+        /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         /// Cannot be empty.
         #[serde(skip_serializing_if = "Vec::is_empty")]
         pub replicas: Vec<crate::model::replication::user_managed::Replica>,
@@ -527,6 +592,8 @@ pub mod replication {
 
         /// Represents a Replica for this
         /// [Secret][google.cloud.secretmanager.v1.Secret].
+        ///
+        /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         #[serde_with::serde_as]
         #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
         #[serde(default, rename_all = "camelCase")]
@@ -546,6 +613,9 @@ pub mod replication {
             /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] added
             /// afterwards. They do not apply retroactively to existing
             /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion].
+            ///
+            /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
+            /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
             #[serde(skip_serializing_if = "Option::is_none")]
             pub customer_managed_encryption: Option<crate::model::CustomerManagedEncryption>,
         }
@@ -577,9 +647,13 @@ pub mod replication {
     pub enum Replication {
         /// The [Secret][google.cloud.secretmanager.v1.Secret] will automatically be
         /// replicated without any restrictions.
+        ///
+        /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         Automatic(crate::model::replication::Automatic),
         /// The [Secret][google.cloud.secretmanager.v1.Secret] will only be
         /// replicated into the locations specified.
+        ///
+        /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         UserManaged(crate::model::replication::UserManaged),
     }
 }
@@ -599,10 +673,12 @@ pub struct CustomerManagedEncryption {
     /// replication policy type, Cloud KMS CryptoKeys must reside in the same
     /// location as the [replica location][Secret.UserManaged.Replica.location].
     ///
+    /// [google.cloud.secretmanager.v1.Replication.UserManaged]: crate::model::replication::UserManaged
     /// For secrets using the
     /// [Automatic][google.cloud.secretmanager.v1.Replication.Automatic]
     /// replication policy type, Cloud KMS CryptoKeys must reside in `global`.
     ///
+    /// [google.cloud.secretmanager.v1.Replication.Automatic]: crate::model::replication::Automatic
     /// The expected format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub kms_key_name: String,
@@ -618,6 +694,8 @@ impl CustomerManagedEncryption {
 
 /// The replication status of a
 /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+///
+/// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -625,6 +703,8 @@ impl CustomerManagedEncryption {
 pub struct ReplicationStatus {
     /// The replication status of the
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(flatten)]
     pub replication_status: Option<crate::model::replication_status::ReplicationStatus>,
 }
@@ -649,8 +729,11 @@ pub mod replication_status {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] using
     /// automatic replication.
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// Only populated if the parent [Secret][google.cloud.secretmanager.v1.Secret]
     /// has an automatic replication policy.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde_with::serde_as]
     #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
     #[serde(default, rename_all = "camelCase")]
@@ -659,6 +742,8 @@ pub mod replication_status {
         /// Output only. The customer-managed encryption status of the
         /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]. Only
         /// populated if customer-managed encryption is used.
+        ///
+        /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
         #[serde(skip_serializing_if = "Option::is_none")]
         pub customer_managed_encryption: Option<crate::model::CustomerManagedEncryptionStatus>,
     }
@@ -680,8 +765,11 @@ pub mod replication_status {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] using
     /// user-managed replication.
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// Only populated if the parent [Secret][google.cloud.secretmanager.v1.Secret]
     /// has a user-managed replication policy.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde_with::serde_as]
     #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
     #[serde(default, rename_all = "camelCase")]
@@ -689,6 +777,8 @@ pub mod replication_status {
     pub struct UserManagedStatus {
         /// Output only. The list of replica statuses for the
         /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+        ///
+        /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
         #[serde(skip_serializing_if = "Vec::is_empty")]
         pub replicas: Vec<crate::model::replication_status::user_managed_status::ReplicaStatus>,
     }
@@ -711,6 +801,8 @@ pub mod replication_status {
 
         /// Describes the status of a user-managed replica for the
         /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+        ///
+        /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
         #[serde_with::serde_as]
         #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
         #[serde(default, rename_all = "camelCase")]
@@ -724,6 +816,8 @@ pub mod replication_status {
             /// Output only. The customer-managed encryption status of the
             /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]. Only
             /// populated if customer-managed encryption is used.
+            ///
+            /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
             #[serde(skip_serializing_if = "Option::is_none")]
             pub customer_managed_encryption: Option<crate::model::CustomerManagedEncryptionStatus>,
         }
@@ -750,6 +844,8 @@ pub mod replication_status {
 
     /// The replication status of the
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[derive(Clone, Debug, PartialEq, serde::Deserialize, serde::Serialize)]
     #[serde(rename_all = "camelCase")]
     #[non_exhaustive]
@@ -758,17 +854,23 @@ pub mod replication_status {
         /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] with
         /// automatic replication.
         ///
+        /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
         /// Only populated if the parent
         /// [Secret][google.cloud.secretmanager.v1.Secret] has an automatic
         /// replication policy.
+        ///
+        /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         Automatic(crate::model::replication_status::AutomaticStatus),
         /// Describes the replication status of a
         /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] with
         /// user-managed replication.
         ///
+        /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
         /// Only populated if the parent
         /// [Secret][google.cloud.secretmanager.v1.Secret] has a user-managed
         /// replication policy.
+        ///
+        /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         UserManaged(crate::model::replication_status::UserManagedStatus),
     }
 }
@@ -823,6 +925,9 @@ impl Topic {
 /// Manager will send a Pub/Sub notification to the topics configured on the
 /// Secret. [Secret.topics][google.cloud.secretmanager.v1.Secret.topics] must be
 /// set to configure rotation.
+///
+/// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
+/// [google.cloud.secretmanager.v1.Secret.topics]: crate::model::Secret::topics
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -833,10 +938,14 @@ pub struct Rotation {
     /// Cannot be set to less than 300s (5 min) in the future and at most
     /// 3153600000s (100 years).
     ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     /// [next_rotation_time][google.cloud.secretmanager.v1.Rotation.next_rotation_time]
     /// MUST  be set if
     /// [rotation_period][google.cloud.secretmanager.v1.Rotation.rotation_period]
     /// is set.
+    ///
+    /// [google.cloud.secretmanager.v1.Rotation.next_rotation_time]: crate::model::Rotation::next_rotation_time
+    /// [google.cloud.secretmanager.v1.Rotation.rotation_period]: crate::model::Rotation::rotation_period
     #[serde(skip_serializing_if = "Option::is_none")]
     pub next_rotation_time: Option<wkt::Timestamp>,
 
@@ -851,6 +960,9 @@ pub struct Rotation {
     /// [next_rotation_time][google.cloud.secretmanager.v1.Rotation.next_rotation_time]
     /// will be advanced by this period when the service automatically sends
     /// rotation notifications.
+    ///
+    /// [google.cloud.secretmanager.v1.Rotation.next_rotation_time]: crate::model::Rotation::next_rotation_time
+    /// [google.cloud.secretmanager.v1.Rotation.rotation_period]: crate::model::Rotation::rotation_period
     #[serde(skip_serializing_if = "Option::is_none")]
     pub rotation_period: Option<wkt::Duration>,
 }
@@ -872,6 +984,8 @@ impl Rotation {
 /// A secret payload resource in the Secret Manager API. This contains the
 /// sensitive secret payload that is associated with a
 /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+///
+/// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -895,6 +1009,10 @@ pub struct SecretPayload {
     /// [SecretManagerService][google.cloud.secretmanager.v1.SecretManagerService]
     /// will generate and store one for you.
     ///
+    /// [google.cloud.secretmanager.v1.SecretManagerService]: crate::traits::SecretManagerService
+    /// [google.cloud.secretmanager.v1.SecretManagerService.AccessSecretVersion]: crate::traits::SecretManagerService::access_secret_version
+    /// [google.cloud.secretmanager.v1.SecretManagerService.AddSecretVersion]: crate::traits::SecretManagerService::add_secret_version
+    /// [google.cloud.secretmanager.v1.SecretPayload.data]: crate::model::SecretPayload::data
     /// The CRC32C value is encoded as a Int64 for compatibility, and can be
     /// safely downconverted to uint32 in languages that support this type.
     /// https://cloud.google.com/apis/design/design_patterns#integer_types
@@ -920,6 +1038,8 @@ impl SecretPayload {
 
 /// Request message for
 /// [SecretManagerService.ListSecrets][google.cloud.secretmanager.v1.SecretManagerService.ListSecrets].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.ListSecrets]: crate::traits::SecretManagerService::list_secrets
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -928,6 +1048,8 @@ pub struct ListSecretsRequest {
     /// Required. The resource name of the project associated with the
     /// [Secrets][google.cloud.secretmanager.v1.Secret], in the format `projects/*`
     /// or `projects/*/locations/*`
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde(skip_serializing_if = "String::is_empty")]
     pub parent: String,
 
@@ -938,6 +1060,8 @@ pub struct ListSecretsRequest {
 
     /// Optional. Pagination token, returned earlier via
     /// [ListSecretsResponse.next_page_token][google.cloud.secretmanager.v1.ListSecretsResponse.next_page_token].
+    ///
+    /// [google.cloud.secretmanager.v1.ListSecretsResponse.next_page_token]: crate::model::ListSecretsResponse::next_page_token
     #[serde(skip_serializing_if = "String::is_empty")]
     pub page_token: String,
 
@@ -978,6 +1102,8 @@ impl ListSecretsRequest {
 
 /// Response message for
 /// [SecretManagerService.ListSecrets][google.cloud.secretmanager.v1.SecretManagerService.ListSecrets].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.ListSecrets]: crate::traits::SecretManagerService::list_secrets
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -985,12 +1111,16 @@ impl ListSecretsRequest {
 pub struct ListSecretsResponse {
     /// The list of [Secrets][google.cloud.secretmanager.v1.Secret] sorted in
     /// reverse by create_time (newest first).
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub secrets: Vec<crate::model::Secret>,
 
     /// A token to retrieve the next page of results. Pass this value in
     /// [ListSecretsRequest.page_token][google.cloud.secretmanager.v1.ListSecretsRequest.page_token]
     /// to retrieve the next page.
+    ///
+    /// [google.cloud.secretmanager.v1.ListSecretsRequest.page_token]: crate::model::ListSecretsRequest::page_token
     #[serde(skip_serializing_if = "String::is_empty")]
     pub next_page_token: String,
 
@@ -998,6 +1128,9 @@ pub struct ListSecretsResponse {
     /// when the
     /// [ListSecretsRequest.filter][google.cloud.secretmanager.v1.ListSecretsRequest.filter]
     /// field is set.
+    ///
+    /// [google.cloud.secretmanager.v1.ListSecretsRequest.filter]: crate::model::ListSecretsRequest::filter
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     pub total_size: i32,
 }
 
@@ -1036,6 +1169,8 @@ impl gax::paginator::PageableResponse for ListSecretsResponse {
 
 /// Request message for
 /// [SecretManagerService.CreateSecret][google.cloud.secretmanager.v1.SecretManagerService.CreateSecret].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.CreateSecret]: crate::traits::SecretManagerService::create_secret
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -1044,6 +1179,8 @@ pub struct CreateSecretRequest {
     /// Required. The resource name of the project to associate with the
     /// [Secret][google.cloud.secretmanager.v1.Secret], in the format `projects/*`
     /// or `projects/*/locations/*`.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde(skip_serializing_if = "String::is_empty")]
     pub parent: String,
 
@@ -1057,6 +1194,8 @@ pub struct CreateSecretRequest {
 
     /// Required. A [Secret][google.cloud.secretmanager.v1.Secret] with initial
     /// field values.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde(skip_serializing_if = "Option::is_none")]
     pub secret: Option<crate::model::Secret>,
 }
@@ -1083,6 +1222,8 @@ impl CreateSecretRequest {
 
 /// Request message for
 /// [SecretManagerService.AddSecretVersion][google.cloud.secretmanager.v1.SecretManagerService.AddSecretVersion].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.AddSecretVersion]: crate::traits::SecretManagerService::add_secret_version
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -1092,11 +1233,16 @@ pub struct AddSecretVersionRequest {
     /// [Secret][google.cloud.secretmanager.v1.Secret] to associate with the
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
     /// `projects/*/secrets/*` or `projects/*/locations/*/secrets/*`.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub parent: String,
 
     /// Required. The secret payload of the
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "Option::is_none")]
     pub payload: Option<crate::model::SecretPayload>,
 }
@@ -1117,6 +1263,8 @@ impl AddSecretVersionRequest {
 
 /// Request message for
 /// [SecretManagerService.GetSecret][google.cloud.secretmanager.v1.SecretManagerService.GetSecret].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.GetSecret]: crate::traits::SecretManagerService::get_secret
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -1125,6 +1273,8 @@ pub struct GetSecretRequest {
     /// Required. The resource name of the
     /// [Secret][google.cloud.secretmanager.v1.Secret], in the format
     /// `projects/*/secrets/*` or `projects/*/locations/*/secrets/*`.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
 }
@@ -1139,6 +1289,8 @@ impl GetSecretRequest {
 
 /// Request message for
 /// [SecretManagerService.ListSecretVersions][google.cloud.secretmanager.v1.SecretManagerService.ListSecretVersions].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.ListSecretVersions]: crate::traits::SecretManagerService::list_secret_versions
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -1148,6 +1300,9 @@ pub struct ListSecretVersionsRequest {
     /// [Secret][google.cloud.secretmanager.v1.Secret] associated with the
     /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] to list, in
     /// the format `projects/*/secrets/*` or `projects/*/locations/*/secrets/*`.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub parent: String,
 
@@ -1198,6 +1353,8 @@ impl ListSecretVersionsRequest {
 
 /// Response message for
 /// [SecretManagerService.ListSecretVersions][google.cloud.secretmanager.v1.SecretManagerService.ListSecretVersions].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.ListSecretVersions]: crate::traits::SecretManagerService::list_secret_versions
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -1205,12 +1362,16 @@ impl ListSecretVersionsRequest {
 pub struct ListSecretVersionsResponse {
     /// The list of [SecretVersions][google.cloud.secretmanager.v1.SecretVersion]
     /// sorted in reverse by create_time (newest first).
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub versions: Vec<crate::model::SecretVersion>,
 
     /// A token to retrieve the next page of results. Pass this value in
     /// [ListSecretVersionsRequest.page_token][google.cloud.secretmanager.v1.ListSecretVersionsRequest.page_token]
     /// to retrieve the next page.
+    ///
+    /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest.page_token]: crate::model::ListSecretVersionsRequest::page_token
     #[serde(skip_serializing_if = "String::is_empty")]
     pub next_page_token: String,
 
@@ -1219,6 +1380,9 @@ pub struct ListSecretVersionsResponse {
     /// the
     /// [ListSecretsRequest.filter][google.cloud.secretmanager.v1.ListSecretsRequest.filter]
     /// field is set.
+    ///
+    /// [google.cloud.secretmanager.v1.ListSecretsRequest.filter]: crate::model::ListSecretsRequest::filter
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     pub total_size: i32,
 }
 
@@ -1257,6 +1421,8 @@ impl gax::paginator::PageableResponse for ListSecretVersionsResponse {
 
 /// Request message for
 /// [SecretManagerService.GetSecretVersion][google.cloud.secretmanager.v1.SecretManagerService.GetSecretVersion].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.GetSecretVersion]: crate::traits::SecretManagerService::get_secret_version
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -1267,10 +1433,13 @@ pub struct GetSecretVersionRequest {
     /// `projects/*/secrets/*/versions/*` or
     /// `projects/*/locations/*/secrets/*/versions/*`.
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// `projects/*/secrets/*/versions/latest` or
     /// `projects/*/locations/*/secrets/*/versions/latest` is an alias to the most
     /// recently created
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
 }
@@ -1285,6 +1454,8 @@ impl GetSecretVersionRequest {
 
 /// Request message for
 /// [SecretManagerService.UpdateSecret][google.cloud.secretmanager.v1.SecretManagerService.UpdateSecret].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.UpdateSecret]: crate::traits::SecretManagerService::update_secret
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -1292,6 +1463,8 @@ impl GetSecretVersionRequest {
 pub struct UpdateSecretRequest {
     /// Required. [Secret][google.cloud.secretmanager.v1.Secret] with updated field
     /// values.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde(skip_serializing_if = "Option::is_none")]
     pub secret: Option<crate::model::Secret>,
 
@@ -1316,6 +1489,8 @@ impl UpdateSecretRequest {
 
 /// Request message for
 /// [SecretManagerService.AccessSecretVersion][google.cloud.secretmanager.v1.SecretManagerService.AccessSecretVersion].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.AccessSecretVersion]: crate::traits::SecretManagerService::access_secret_version
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -1326,10 +1501,13 @@ pub struct AccessSecretVersionRequest {
     /// `projects/*/secrets/*/versions/*` or
     /// `projects/*/locations/*/secrets/*/versions/*`.
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// `projects/*/secrets/*/versions/latest` or
     /// `projects/*/locations/*/secrets/*/versions/latest` is an alias to the most
     /// recently created
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
 }
@@ -1344,6 +1522,8 @@ impl AccessSecretVersionRequest {
 
 /// Response message for
 /// [SecretManagerService.AccessSecretVersion][google.cloud.secretmanager.v1.SecretManagerService.AccessSecretVersion].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.AccessSecretVersion]: crate::traits::SecretManagerService::access_secret_version
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -1353,6 +1533,8 @@ pub struct AccessSecretVersionResponse {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
     /// `projects/*/secrets/*/versions/*` or
     /// `projects/*/locations/*/secrets/*/versions/*`.
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
 
@@ -1377,6 +1559,8 @@ impl AccessSecretVersionResponse {
 
 /// Request message for
 /// [SecretManagerService.DeleteSecret][google.cloud.secretmanager.v1.SecretManagerService.DeleteSecret].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.DeleteSecret]: crate::traits::SecretManagerService::delete_secret
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -1385,12 +1569,16 @@ pub struct DeleteSecretRequest {
     /// Required. The resource name of the
     /// [Secret][google.cloud.secretmanager.v1.Secret] to delete in the format
     /// `projects/*/secrets/*`.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
 
     /// Optional. Etag of the [Secret][google.cloud.secretmanager.v1.Secret]. The
     /// request succeeds if it matches the etag of the currently stored secret
     /// object. If the etag is omitted, the request succeeds.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde(skip_serializing_if = "String::is_empty")]
     pub etag: String,
 }
@@ -1411,6 +1599,8 @@ impl DeleteSecretRequest {
 
 /// Request message for
 /// [SecretManagerService.DisableSecretVersion][google.cloud.secretmanager.v1.SecretManagerService.DisableSecretVersion].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.DisableSecretVersion]: crate::traits::SecretManagerService::disable_secret_version
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -1420,6 +1610,8 @@ pub struct DisableSecretVersionRequest {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to disable in
     /// the format `projects/*/secrets/*/versions/*` or
     /// `projects/*/locations/*/secrets/*/versions/*`.
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
 
@@ -1427,6 +1619,8 @@ pub struct DisableSecretVersionRequest {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]. The request
     /// succeeds if it matches the etag of the currently stored secret version
     /// object. If the etag is omitted, the request succeeds.
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub etag: String,
 }
@@ -1447,6 +1641,8 @@ impl DisableSecretVersionRequest {
 
 /// Request message for
 /// [SecretManagerService.EnableSecretVersion][google.cloud.secretmanager.v1.SecretManagerService.EnableSecretVersion].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.EnableSecretVersion]: crate::traits::SecretManagerService::enable_secret_version
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -1456,6 +1652,8 @@ pub struct EnableSecretVersionRequest {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to enable in
     /// the format `projects/*/secrets/*/versions/*` or
     /// `projects/*/locations/*/secrets/*/versions/*`.
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
 
@@ -1463,6 +1661,8 @@ pub struct EnableSecretVersionRequest {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]. The request
     /// succeeds if it matches the etag of the currently stored secret version
     /// object. If the etag is omitted, the request succeeds.
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub etag: String,
 }
@@ -1483,6 +1683,8 @@ impl EnableSecretVersionRequest {
 
 /// Request message for
 /// [SecretManagerService.DestroySecretVersion][google.cloud.secretmanager.v1.SecretManagerService.DestroySecretVersion].
+///
+/// [google.cloud.secretmanager.v1.SecretManagerService.DestroySecretVersion]: crate::traits::SecretManagerService::destroy_secret_version
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -1492,6 +1694,8 @@ pub struct DestroySecretVersionRequest {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to destroy in
     /// the format `projects/*/secrets/*/versions/*` or
     /// `projects/*/locations/*/secrets/*/versions/*`.
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
 
@@ -1499,6 +1703,8 @@ pub struct DestroySecretVersionRequest {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]. The request
     /// succeeds if it matches the etag of the currently stored secret version
     /// object. If the etag is omitted, the request succeeds.
+    ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub etag: String,
 }

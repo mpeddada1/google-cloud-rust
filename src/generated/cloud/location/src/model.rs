@@ -18,6 +18,8 @@
 #![allow(rustdoc::redundant_explicit_links)]
 
 /// The request message for [Locations.ListLocations][google.cloud.location.Locations.ListLocations].
+///
+/// [google.cloud.location.Locations.ListLocations]: crate::traits::Locations::list_locations
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -66,6 +68,8 @@ impl ListLocationsRequest {
 }
 
 /// The response message for [Locations.ListLocations][google.cloud.location.Locations.ListLocations].
+///
+/// [google.cloud.location.Locations.ListLocations]: crate::traits::Locations::list_locations
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -108,6 +112,8 @@ impl gax::paginator::PageableResponse for ListLocationsResponse {
 }
 
 /// The request message for [Locations.GetLocation][google.cloud.location.Locations.GetLocation].
+///
+/// [google.cloud.location.Locations.GetLocation]: crate::traits::Locations::get_location
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]

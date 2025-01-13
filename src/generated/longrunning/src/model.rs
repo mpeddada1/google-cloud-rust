@@ -103,6 +103,8 @@ pub mod operation {
 
 /// The request message for
 /// [Operations.GetOperation][google.longrunning.Operations.GetOperation].
+///
+/// [google.longrunning.Operations.GetOperation]: crate::traits::Operations::get_operation
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -123,6 +125,8 @@ impl GetOperationRequest {
 
 /// The request message for
 /// [Operations.ListOperations][google.longrunning.Operations.ListOperations].
+///
+/// [google.longrunning.Operations.ListOperations]: crate::traits::Operations::list_operations
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -172,6 +176,8 @@ impl ListOperationsRequest {
 
 /// The response message for
 /// [Operations.ListOperations][google.longrunning.Operations.ListOperations].
+///
+/// [google.longrunning.Operations.ListOperations]: crate::traits::Operations::list_operations
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -215,6 +221,8 @@ impl gax::paginator::PageableResponse for ListOperationsResponse {
 
 /// The request message for
 /// [Operations.CancelOperation][google.longrunning.Operations.CancelOperation].
+///
+/// [google.longrunning.Operations.CancelOperation]: crate::traits::Operations::cancel_operation
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -235,6 +243,8 @@ impl CancelOperationRequest {
 
 /// The request message for
 /// [Operations.DeleteOperation][google.longrunning.Operations.DeleteOperation].
+///
+/// [google.longrunning.Operations.DeleteOperation]: crate::traits::Operations::delete_operation
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
