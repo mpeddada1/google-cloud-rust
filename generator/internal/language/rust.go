@@ -824,18 +824,38 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 						if textNode != nil {
 							if textNode.Kind() == ast.KindParagraph {
 								firstLine := textNode.Lines().At(0)
+								// fmt.Println(string(firstLine.Value(documentationBytes)))
 								results = append(results, fmt.Sprintf("%s %s\n", listMarker, string(firstLine.Value(documentationBytes))))
 								for i := 1; i < textNode.Lines().Len(); i++ {
 									line := textNode.Lines().At(i)
+									fmt.Println(string(line.Value(documentationBytes)))
 									results = append(results, fmt.Sprintf("   %s", string(line.Value(documentationBytes))))
 								}
 								results = append(results, "\n")
 							} else if textNode.Kind() == ast.KindTextBlock {
+								links := map[string]bool{}
 								for i := 0; i < textNode.Lines().Len(); i++ {
 									line := textNode.Lines().At(i)
+									lineString := string(line.Value(documentationBytes))
+									fmt.Println(lineString)
+									for _, match := range commentLinkRegex.FindAllString(lineString, -1) {
+										match = strings.TrimSuffix(strings.TrimPrefix(match, "]["), "]")
+										links[match] = true
+									}
 									results = append(results, fmt.Sprintf("%s %s\n", listMarker, string(line.Value(documentationBytes))))
 								}
-								// results = append(results, fmt.Sprintf("%s %s\n", listMarker, string(textNode.Text(documentationBytes))))
+								var sortedLinks []string
+								for link := range links {
+									sortedLinks = append(sortedLinks, link)
+								}
+								sort.Strings(sortedLinks)
+								for _, link := range sortedLinks {
+									rusty := c.rustdocLink(link, state)
+									if rusty == "" {
+										continue
+									}
+									results = append(results, fmt.Sprintf("[%s]: %s", link, rusty))
+								}
 							}
 						}
 					}
@@ -899,8 +919,9 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 
 			}
 		default:
-			fmt.Println(node.Kind())
-			fmt.Println(string(node.Text(documentationBytes)))
+			// Add logic for html tags.
+			// fmt.Println(node.Kind())
+			// fmt.Println(string(node.Text(documentationBytes)))
 		}
 		return ast.WalkContinue, nil
 	})

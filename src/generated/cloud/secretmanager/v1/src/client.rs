@@ -33,7 +33,9 @@ use std::sync::Arc;
 /// model with the following objects:
 ///
 /// * [Secret][google.cloud.secretmanager.v1.Secret]
+/// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
 /// * [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]
+/// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
 #[derive(Clone, Debug)]
 pub struct SecretManagerService {
     inner: Arc<dyn crate::traits::dyntraits::SecretManagerService>,
