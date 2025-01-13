@@ -34,6 +34,8 @@ use std::sync::Arc;
 /// Any implementation of an API that offers access control features
 /// implements the google.iam.v1.IAMPolicy interface.
 ///
+/// ## Data model
+///
 /// Access control is applied when a principal (user or service account), takes
 /// some action on a resource exposed by a service. Resources, identified by
 /// URI-like names, are the unit of access control specification. Service
@@ -42,6 +44,8 @@ use std::sync::Arc;
 /// For example one database service may allow access control to be
 /// specified only at the Table level, whereas another might allow access control
 /// to also be specified at the Column level.
+///
+/// ## Policy Structure
 ///
 /// See google.iam.v1.Policy
 ///

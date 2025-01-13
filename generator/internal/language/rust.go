@@ -777,6 +777,7 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 		),
 		goldmark.WithExtensions(),
 	)
+
 	documentationBytes := []byte(documentation)
 	doc := md.Parser().Parse(text.NewReader(documentationBytes))
 	ast.Walk(doc, func(node ast.Node, entering bool) (ast.WalkStatus, error) {
@@ -823,10 +824,10 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 						if textNode != nil {
 							if textNode.Kind() == ast.KindParagraph {
 								firstLine := textNode.Lines().At(0)
-								results = append(results, fmt.Sprintf("%s %s", listMarker, firstLine.Value(documentationBytes)))
+								results = append(results, fmt.Sprintf("%s %s\n", listMarker, string(firstLine.Value(documentationBytes))))
 								for i := 1; i < textNode.Lines().Len(); i++ {
 									line := textNode.Lines().At(i)
-									results = append(results, fmt.Sprintf("   %s", line.Value(documentationBytes)))
+									results = append(results, fmt.Sprintf("   %s", string(line.Value(documentationBytes))))
 								}
 								results = append(results, "\n")
 							} else if textNode.Kind() == ast.KindTextBlock {
@@ -850,6 +851,16 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 
 				results = append(results, "\n")
 				return ast.WalkSkipChildren, nil
+
+			}
+		case ast.KindHeading:
+			if entering {
+				heading := node.(*ast.Heading)
+				if heading.FirstChild() != nil && heading.FirstChild().Kind() == ast.KindText {
+					headingPrefix := strings.Repeat("#", heading.Level)
+					results = append(results, fmt.Sprintf("%s %s", headingPrefix, string(heading.FirstChild().Text(documentationBytes))))
+				}
+				results = append(results, "\n")
 
 			}
 		}
