@@ -372,14 +372,18 @@ pub mod bad_request {
         ///
         /// In this example, in proto `field` could take one of the following values:
         ///
-        /// * full_name for a violation in the full_name value
-        /// * email_addresses[1].email for a violation in the email field of thefirst email_addresses message
-        /// * email_addresses[3].type[2] for a violation in the second typevalue in the third email_addresses message.
+        /// * `full_name` for a violation in the `full_name` value
+        /// * `email_addresses[1].email` for a violation in the `email` field of the
+        /// * first `email_addresses` message
+        /// * `email_addresses[3].type[2]` for a violation in the second `type`
+        /// * value in the third `email_addresses` message.
         /// In JSON, the same values are represented as:
         ///
-        /// * fullName for a violation in the fullName value
-        /// * emailAddresses[1].email for a violation in the email field of thefirst emailAddresses message
-        /// * emailAddresses[3].type[2] for a violation in the second typevalue in the third emailAddresses message.
+        /// * `fullName` for a violation in the `fullName` value
+        /// * `emailAddresses[1].email` for a violation in the `email` field of the
+        /// * first `emailAddresses` message
+        /// * `emailAddresses[3].type[2]` for a violation in the second `type`
+        /// * value in the third `emailAddresses` message.
         #[serde(skip_serializing_if = "String::is_empty")]
         pub field: String,
 

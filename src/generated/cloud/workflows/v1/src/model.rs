@@ -41,7 +41,8 @@ pub struct Workflow {
     /// following properties of a workflow:
     ///
     /// - [Service account][google.cloud.workflows.v1.Workflow.service_account]
-    /// - [Workflow code to beexecuted][google.cloud.workflows.v1.Workflow.source_contents]
+    /// - [Workflow code to be
+    /// - executed][google.cloud.workflows.v1.Workflow.source_contents]
     /// The format is "000001-a4d", where the first six characters define
     /// the zero-padded revision ordinal number. They are followed by a hyphen and
     /// three hexadecimal random characters.

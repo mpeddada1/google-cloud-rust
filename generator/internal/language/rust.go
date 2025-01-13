@@ -30,7 +30,6 @@ import (
 	"github.com/iancoleman/strcase"
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/ast"
-	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
 	"github.com/yuin/goldmark/text"
 )
@@ -773,9 +772,7 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 		goldmark.WithParserOptions(
 			parser.WithAutoHeadingID(),
 		),
-		goldmark.WithExtensions(
-			extension.DefinitionList,
-		),
+		goldmark.WithExtensions(),
 	)
 
 	documentationBytes := []byte(documentation)
@@ -834,7 +831,11 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 								}
 								results = append(results, "\n")
 							} else if textNode.Kind() == ast.KindTextBlock {
-								results = append(results, fmt.Sprintf("%s %s\n", listMarker, string(textNode.Text(documentationBytes))))
+								for i := 0; i < textNode.Lines().Len(); i++ {
+									line := textNode.Lines().At(i)
+									results = append(results, fmt.Sprintf("%s %s\n", listMarker, string(line.Value(documentationBytes))))
+								}
+								// results = append(results, fmt.Sprintf("%s %s\n", listMarker, string(textNode.Text(documentationBytes))))
 							}
 						}
 					}
@@ -847,6 +848,7 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 				if node.Parent() != nil && node.Parent().Kind() == ast.KindListItem {
 					return ast.WalkContinue, nil
 				}
+
 				lines := node.Lines()
 				for i := 0; i < lines.Len(); i++ {
 					line := lines.At(i)
@@ -896,6 +898,9 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 				results = append(results, linkContent)
 
 			}
+		default:
+			fmt.Println(node.Kind())
+			fmt.Println(string(node.Text(documentationBytes)))
 		}
 		return ast.WalkContinue, nil
 	})
