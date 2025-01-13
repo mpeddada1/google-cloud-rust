@@ -814,13 +814,42 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 			} else {
 				results = append(results, "```")
 			}
+		case ast.KindList:
+			if entering {
+				listMarker := string(node.(*ast.List).Marker)
+				for child := node.FirstChild(); child != nil; child = child.NextSibling() {
+					if child.Kind() == ast.KindListItem {
+						textNode := child.FirstChild()
+						if textNode != nil {
+							if textNode.Kind() == ast.KindParagraph {
+								firstLine := textNode.Lines().At(0)
+								results = append(results, fmt.Sprintf("%s %s", listMarker, firstLine.Value(documentationBytes)))
+
+								// Add the remaining lines of the paragraph (without the marker)
+								for i := 1; i < textNode.Lines().Len(); i++ { // Start from the second line (index 1)
+									line := textNode.Lines().At(i)
+									results = append(results, string(line.Value(documentationBytes)))
+								}
+							} else if textNode.Kind() == ast.KindText {
+								results = append(results, fmt.Sprintf(" %s ", listMarker))
+								results = append(results, string(textNode.Text(documentationBytes)))
+							}
+						}
+					}
+				}
+			}
 		case ast.KindParagraph:
 			if entering {
+				if node.Parent() != nil && node.Parent().Kind() == ast.KindListItem {
+					// It's a list item, so skip processing it as a regular paragraph
+					return ast.WalkContinue, nil
+				}
 				lines := node.Lines()
 				for i := 0; i < lines.Len(); i++ {
 					line := lines.At(i)
 					results = append(results, string(line.Value(documentationBytes)))
 				}
+
 				results = append(results, "\n")
 				return ast.WalkSkipChildren, nil
 
