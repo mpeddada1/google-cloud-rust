@@ -40,8 +40,8 @@ pub struct Workflow {
     /// A new revision of a workflow is created as a result of updating the
     /// following properties of a workflow:
     ///
-    ///  - [Service account][google.cloud.workflows.v1.Workflow.service_account]
-    ///  - [Workflow code to beexecuted][google.cloud.workflows.v1.Workflow.source_contents]
+    /// - [Service account][google.cloud.workflows.v1.Workflow.service_account]
+    /// - [Workflow code to beexecuted][google.cloud.workflows.v1.Workflow.source_contents]
     /// The format is "000001-a4d", where the first six characters define
     /// the zero-padded revision ordinal number. They are followed by a hyphen and
     /// three hexadecimal random characters.
@@ -546,11 +546,11 @@ pub struct CreateWorkflowRequest {
     /// Required. The ID of the workflow to be created. It has to fulfill the
     /// following requirements:
     ///
-    ///  * Must contain only letters, numbers, underscores and hyphens.
-    ///  * Must start with a letter.
-    ///  * Must be between 1-64 characters.
-    ///  * Must end with a number or a letter.
-    ///  * Must be unique within the customer project and location.
+    /// * Must contain only letters, numbers, underscores and hyphens.
+    /// * Must start with a letter.
+    /// * Must be between 1-64 characters.
+    /// * Must end with a number or a letter.
+    /// * Must be unique within the customer project and location.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub workflow_id: String,
 }

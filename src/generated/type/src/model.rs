@@ -205,10 +205,10 @@ impl Color {
 /// date is relative to the Gregorian Calendar. This can represent one of the
 /// following:
 ///
-///  * A full date, with non-zero year, month, and day values
-///  * A month and day value, with a zero year, such as an anniversary
-///  * A year on its own, with zero month and day values
-///  * A year and month value, with a zero day, such as a credit card expirationdate
+/// * A full date, with non-zero year, month, and day values
+/// * A month and day value, with a zero year, such as an anniversary
+/// * A year on its own, with zero month and day values
+/// * A year and month value, with a zero day, such as a credit card expirationdate
 /// Related types are [google.type.TimeOfDay][google.type.TimeOfDay] and
 /// `google.protobuf.Timestamp`.
 #[serde_with::serde_as]
@@ -254,9 +254,9 @@ impl Date {
 ///
 /// This type can represent a civil time in one of a few possible ways:
 ///
-///  * When utc_offset is set and time_zone is unset: a civil time on a calendarday with a particular offset from UTC.
-///  * When time_zone is set and utc_offset is unset: a civil time on a calendarday in a particular time zone.
-///  * When neither time_zone nor utc_offset is set: a civil time on a calendarday in local time.
+/// * When utc_offset is set and time_zone is unset: a civil time on a calendarday with a particular offset from UTC.
+/// * When time_zone is set and utc_offset is unset: a civil time on a calendarday in a particular time zone.
+/// * When neither time_zone nor utc_offset is set: a civil time on a calendarday in local time.
 /// The date is relative to the Proleptic Gregorian Calendar.
 ///
 /// If year is 0, the DateTime is considered not to have a specific year. month
@@ -440,10 +440,10 @@ pub struct Decimal {
     ///
     /// Services **should** normalize decimal values before storing them by:
     ///
-    ///  - Removing an explicitly-provided + sign (+2.5 -> 2.5).
-    ///  - Replacing a zero-length integer value with 0 (.5 -> 0.5).
-    ///  - Coercing the exponent character to lower-case (2.5E8 -> 2.5e8).
-    ///  - Removing an explicitly-provided zero exponent (2.5e0 -> 2.5).
+    /// - Removing an explicitly-provided + sign (+2.5 -> 2.5).
+    /// - Replacing a zero-length integer value with 0 (.5 -> 0.5).
+    /// - Coercing the exponent character to lower-case (2.5E8 -> 2.5e8).
+    /// - Removing an explicitly-provided zero exponent (2.5e0 -> 2.5).
     /// Services **may** perform additional normalization based on its own needs
     /// and the internal decimal implementation selected, such as shifting the
     /// decimal point and exponent value together (example: `2.5e-1` <-> `0.25`).
@@ -787,7 +787,7 @@ impl Money {
 ///
 /// Reference(s):
 ///
-///  - https://github.com/google/libphonenumber
+/// - https://github.com/google/libphonenumber
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -848,7 +848,7 @@ pub mod phone_number {
         ///
         /// Reference(s):
         ///
-        ///  - http://www.unicode.org/reports/tr35/#unicode_region_subtag
+        /// - http://www.unicode.org/reports/tr35/#unicode_region_subtag
         #[serde(skip_serializing_if = "String::is_empty")]
         pub region_code: String,
 
@@ -884,23 +884,23 @@ pub mod phone_number {
         /// country calling code (1 to 3 digits) and the subscriber number, with no
         /// additional spaces or formatting, e.g.:
         ///
-        ///  - correct: "+15552220123"
-        ///  - incorrect: "+1 (555) 222-01234 x123".
+        /// - correct: "+15552220123"
+        /// - incorrect: "+1 (555) 222-01234 x123".
         /// The ITU E.164 format limits the latter to 12 digits, but in practice not
         /// all countries respect that, so we relax that restriction here.
         /// National-only numbers are not allowed.
         ///
         /// References:
         ///
-        ///  - https://www.itu.int/rec/T-REC-E.164-201011-I
-        ///  - https://en.wikipedia.org/wiki/E.164.
-        ///  - https://en.wikipedia.org/wiki/List_of_country_calling_codes
+        /// - https://www.itu.int/rec/T-REC-E.164-201011-I
+        /// - https://en.wikipedia.org/wiki/E.164.
+        /// - https://en.wikipedia.org/wiki/List_of_country_calling_codes
         E164Number { e164_number: String },
         /// A short code.
         ///
         /// Reference(s):
         ///
-        ///  - https://en.wikipedia.org/wiki/Short_code
+        /// - https://en.wikipedia.org/wiki/Short_code
         ShortCode(crate::model::phone_number::ShortCode),
     }
 }
@@ -916,8 +916,8 @@ pub mod phone_number {
 ///
 /// Advice on address input / editing:
 ///
-///  - Use an i18n-ready address widget such ashttps://github.com/google/libaddressinput)
-///  - Users should not be presented with UI elements for input or editing offields outside countries where that field is used.
+/// - Use an i18n-ready address widget such ashttps://github.com/google/libaddressinput)
+/// - Users should not be presented with UI elements for input or editing offields outside countries where that field is used.
 /// For more guidance on how to use this schema, please see:
 /// https://support.google.com/business/answer/6397478
 #[serde_with::serde_as]
@@ -1135,11 +1135,11 @@ impl PostalAddress {
 ///
 /// Definitions:
 ///
-///  - Quaternion norm (or magnitude): sqrt(x^2 + y^2 + z^2 + w^2).
-///  - Unit (or normalized) quaternion: a quaternion whose norm is 1.
-///  - Pure quaternion: a quaternion whose scalar component (w) is 0.
-///  - Rotation quaternion: a unit quaternion used to represent rotation.
-///  - Orientation quaternion: a unit quaternion used to represent orientation.
+/// - Quaternion norm (or magnitude): sqrt(x^2 + y^2 + z^2 + w^2).
+/// - Unit (or normalized) quaternion: a quaternion whose norm is 1.
+/// - Pure quaternion: a quaternion whose scalar component (w) is 0.
+/// - Rotation quaternion: a unit quaternion used to represent rotation.
+/// - Orientation quaternion: a unit quaternion used to represent orientation.
 /// A quaternion can be normalized by dividing it by its norm. The resulting
 /// quaternion maintains the same direction, but has a norm of 1, i.e. it moves
 /// on the unit sphere. This is generally necessary for rotation and orientation

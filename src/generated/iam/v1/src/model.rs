@@ -266,10 +266,10 @@ pub struct Policy {
     /// Any operation that affects conditional role bindings must specify version
     /// `3`. This requirement applies to the following operations:
     ///
-    ///  * Getting a policy that includes a conditional role binding
-    ///  * Adding a conditional role binding to a policy
-    ///  * Changing a conditional role binding in a policy
-    ///  * Removing any role binding, with or without a condition, from a policythat includes conditions
+    /// * Getting a policy that includes a conditional role binding
+    /// * Adding a conditional role binding to a policy
+    /// * Changing a conditional role binding in a policy
+    /// * Removing any role binding, with or without a condition, from a policythat includes conditions
     /// **Important:** If you use IAM Conditions, you must include the `etag` field
     /// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
     /// you to overwrite a version `3` policy with a version `1` policy, and all of
