@@ -877,19 +877,6 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 				results = append(results, "\n")
 
 			}
-		case ast.KindLink:
-			if entering {
-				link := node.(*ast.Link)
-
-				var linkText string
-				if link.FirstChild() != nil {
-					linkText = string(link.FirstChild().Text(documentationBytes))
-				}
-				linkContent := fmt.Sprintf("[%s](%s)", linkText, string(link.Destination))
-
-				results = append(results, linkContent)
-
-			}
 		}
 		return ast.WalkContinue, nil
 	})

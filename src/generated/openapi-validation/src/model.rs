@@ -1599,8 +1599,6 @@ pub struct Binding {
     /// * `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`:
     ///    Deleted single identity in a workforce identity pool. For example,
     ///    `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-pool-id/subject/my-subject-attribute-value`.
-    ///
-    /// [Kubernetes service](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts)
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub members: Vec<String>,
 
