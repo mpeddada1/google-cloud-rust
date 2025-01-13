@@ -76,6 +76,7 @@
 ///  }
 ///  // ...
 /// ```
+///
 /// Example (iOS / Obj-C):
 ///
 /// ```norust
@@ -109,6 +110,7 @@
 /// }
 /// // ...
 /// ```
+///
 /// Example (JavaScript):
 ///
 /// ```norust
@@ -472,6 +474,7 @@ pub struct Decimal {
     ///
     /// Digits = { '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' };
     /// ```
+    ///
     /// Services **should** clearly document the range of supported values, the
     /// maximum supported precision (total number of digits), and, if applicable,
     /// the scale (number of digits after the decimal point), as well as how it
@@ -508,6 +511,7 @@ impl Decimal {
 /// description: "Determines if a summary is less than 100 chars"
 /// expression: "document.summary.size() < 100"
 /// ```
+///
 /// Example (Equality):
 ///
 /// ```norust
@@ -515,6 +519,7 @@ impl Decimal {
 /// description: "Determines if requestor is the document owner"
 /// expression: "document.owner == request.auth.claims.email"
 /// ```
+///
 /// Example (Logic):
 ///
 /// ```norust
@@ -522,6 +527,7 @@ impl Decimal {
 /// description: "Determine whether the document should be publicly visible"
 /// expression: "document.type != 'private' && document.type != 'internal'"
 /// ```
+///
 /// Example (Data Manipulation):
 ///
 /// ```norust
@@ -529,6 +535,7 @@ impl Decimal {
 /// description: "Create a notification string with a timestamp."
 /// expression: "'New message received at ' + string(document.create_time)"
 /// ```
+///
 /// The exact variables and functions that may be referenced within an expression
 /// are determined by the service that evaluates it. See the service
 /// documentation for additional information.
@@ -1112,6 +1119,7 @@ impl PostalAddress {
 /// ```norust
 /// w + xi + yj + zk
 /// ```
+///
 /// where x, y, z, and w are real numbers, and i, j, and k are three imaginary
 /// numbers.
 ///
@@ -1132,6 +1140,7 @@ impl PostalAddress {
 /// jk = −kj = i
 /// ki = −ik = j
 /// ```
+///
 /// Please DO NOT use this to represent quaternions that follow the JPL
 /// convention, or any of the other quaternion flavors out there.
 ///

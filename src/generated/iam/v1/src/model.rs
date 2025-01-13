@@ -231,6 +231,7 @@ impl GetPolicyOptions {
 ///       "version": 3
 ///     }
 /// ```
+///
 /// **YAML example:**
 ///
 /// ```norust
@@ -251,6 +252,7 @@ impl GetPolicyOptions {
 ///     etag: BwWWja0YfJA=
 ///     version: 3
 /// ```
+///
 /// For a description of IAM and its features, see the
 /// [IAM documentation](https://cloud.google.com/iam/docs/).
 #[serde_with::serde_as]
@@ -482,6 +484,7 @@ impl Binding {
 ///   ]
 /// }
 /// ```
+///
 /// For sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ
 /// logging. It also exempts `jose@example.com` from DATA_READ logging, and
 /// `aliya@example.com` from DATA_WRITE logging.
@@ -536,6 +539,7 @@ impl AuditConfig {
 ///   ]
 /// }
 /// ```
+///
 /// This enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting
 /// jose@example.com from DATA_READ logging.
 #[serde_with::serde_as]

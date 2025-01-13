@@ -791,7 +791,8 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 					results = append(results, string(line.Value(documentationBytes)))
 				}
 			} else {
-				results = append(results, "```\n")
+				results = append(results, "```")
+				results = append(results, "\n")
 			}
 		case ast.KindBlockquote:
 			if entering {
@@ -802,7 +803,8 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 					results = append(results, string(line.Value(documentationBytes)))
 				}
 			} else {
-				results = append(results, "```\n")
+				results = append(results, "```")
+				results = append(results, "\n")
 			}
 		case ast.KindFencedCodeBlock:
 			if entering {
@@ -813,7 +815,8 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 					results = append(results, string(line.Value(documentationBytes)))
 				}
 			} else {
-				results = append(results, "```\n")
+				results = append(results, "```")
+				results = append(results, "\n")
 			}
 		case ast.KindList:
 			if entering {

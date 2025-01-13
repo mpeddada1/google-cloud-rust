@@ -31,6 +31,7 @@
 ///   }
 /// }
 /// ```
+///
 /// This response indicates that the pubsub.googleapis.com API is not enabled.
 ///
 /// Example of an error that is returned when attempting to create a Spanner
@@ -368,6 +369,7 @@ pub mod bad_request {
         ///   repeated EmailAddress email_addresses = 2;
         /// }
         /// ```
+        ///
         /// In this example, in proto `field` could take one of the following values:
         ///
         /// * full_name for a violation in the full_name value
