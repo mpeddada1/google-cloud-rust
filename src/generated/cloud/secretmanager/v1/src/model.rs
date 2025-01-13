@@ -20,11 +20,11 @@
 /// A [Secret][google.cloud.secretmanager.v1.Secret] is a logical secret whose
 /// value and versions can be accessed.
 ///
-/// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
 /// A [Secret][google.cloud.secretmanager.v1.Secret] is made up of zero or more
 /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] that represent
 /// the secret data.
 ///
+/// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
 /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
 /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
 #[serde_with::serde_as]
@@ -43,8 +43,9 @@ pub struct Secret {
     /// Optional. Immutable. The replication policy of the secret data attached to
     /// the [Secret][google.cloud.secretmanager.v1.Secret].
     ///
-    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     /// The replication policy cannot be changed after the Secret has been created.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde(skip_serializing_if = "Option::is_none")]
     pub replication: Option<crate::model::Replication>,
 
@@ -150,12 +151,13 @@ pub struct Secret {
     /// automatically deleted at expiration. Expired secrets are irreversibly
     /// deleted.
     ///
-    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// Expiration is *not* the recommended way to set time-based permissions. [IAM
     /// Conditions](https://cloud.google.com/secret-manager/docs/access-control#conditions)
     /// is recommended for granting time-based permissions because the operation
     /// can be reversed.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(flatten)]
     pub expiration: Option<crate::model::secret::Expiration>,
 }
@@ -258,12 +260,13 @@ pub mod secret {
     /// automatically deleted at expiration. Expired secrets are irreversibly
     /// deleted.
     ///
-    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// Expiration is *not* the recommended way to set time-based permissions. [IAM
     /// Conditions](https://cloud.google.com/secret-manager/docs/access-control#conditions)
     /// is recommended for granting time-based permissions because the operation
     /// can be reversed.
+    ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[derive(Clone, Debug, PartialEq, serde::Deserialize, serde::Serialize)]
     #[serde(rename_all = "camelCase")]
     #[non_exhaustive]
@@ -292,11 +295,11 @@ pub struct SecretVersion {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
     /// `projects/*/secrets/*/versions/*`.
     ///
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] IDs in a
     /// [Secret][google.cloud.secretmanager.v1.Secret] start at 1 and are
     /// incremented for each subsequent version of the secret.
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
@@ -531,13 +534,13 @@ pub mod replication {
         /// [Secret][google.cloud.secretmanager.v1.Secret]. If no configuration is
         /// provided, Google-managed default encryption is used.
         ///
-        /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         /// Updates to the [Secret][google.cloud.secretmanager.v1.Secret] encryption
         /// configuration only apply to
         /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] added
         /// afterwards. They do not apply retroactively to existing
         /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion].
         ///
+        /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
         #[serde(skip_serializing_if = "Option::is_none")]
@@ -570,8 +573,9 @@ pub mod replication {
         /// Required. The list of Replicas for this
         /// [Secret][google.cloud.secretmanager.v1.Secret].
         ///
-        /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         /// Cannot be empty.
+        ///
+        /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         #[serde(skip_serializing_if = "Vec::is_empty")]
         pub replicas: Vec<crate::model::replication::user_managed::Replica>,
     }
@@ -673,13 +677,14 @@ pub struct CustomerManagedEncryption {
     /// replication policy type, Cloud KMS CryptoKeys must reside in the same
     /// location as the [replica location][Secret.UserManaged.Replica.location].
     ///
-    /// [google.cloud.secretmanager.v1.Replication.UserManaged]: crate::model::replication::UserManaged
     /// For secrets using the
     /// [Automatic][google.cloud.secretmanager.v1.Replication.Automatic]
     /// replication policy type, Cloud KMS CryptoKeys must reside in `global`.
     ///
-    /// [google.cloud.secretmanager.v1.Replication.Automatic]: crate::model::replication::Automatic
     /// The expected format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+    ///
+    /// [google.cloud.secretmanager.v1.Replication.UserManaged]: crate::model::replication::UserManaged
+    /// [google.cloud.secretmanager.v1.Replication.Automatic]: crate::model::replication::Automatic
     #[serde(skip_serializing_if = "String::is_empty")]
     pub kms_key_name: String,
 }
@@ -729,10 +734,10 @@ pub mod replication_status {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] using
     /// automatic replication.
     ///
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// Only populated if the parent [Secret][google.cloud.secretmanager.v1.Secret]
     /// has an automatic replication policy.
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde_with::serde_as]
     #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
@@ -765,10 +770,10 @@ pub mod replication_status {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] using
     /// user-managed replication.
     ///
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// Only populated if the parent [Secret][google.cloud.secretmanager.v1.Secret]
     /// has a user-managed replication policy.
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     #[serde_with::serde_as]
     #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
@@ -854,22 +859,22 @@ pub mod replication_status {
         /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] with
         /// automatic replication.
         ///
-        /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
         /// Only populated if the parent
         /// [Secret][google.cloud.secretmanager.v1.Secret] has an automatic
         /// replication policy.
         ///
+        /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
         /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         Automatic(crate::model::replication_status::AutomaticStatus),
         /// Describes the replication status of a
         /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] with
         /// user-managed replication.
         ///
-        /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
         /// Only populated if the parent
         /// [Secret][google.cloud.secretmanager.v1.Secret] has a user-managed
         /// replication policy.
         ///
+        /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
         /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
         UserManaged(crate::model::replication_status::UserManagedStatus),
     }
@@ -938,12 +943,12 @@ pub struct Rotation {
     /// Cannot be set to less than 300s (5 min) in the future and at most
     /// 3153600000s (100 years).
     ///
-    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     /// [next_rotation_time][google.cloud.secretmanager.v1.Rotation.next_rotation_time]
     /// MUST  be set if
     /// [rotation_period][google.cloud.secretmanager.v1.Rotation.rotation_period]
     /// is set.
     ///
+    /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
     /// [google.cloud.secretmanager.v1.Rotation.next_rotation_time]: crate::model::Rotation::next_rotation_time
     /// [google.cloud.secretmanager.v1.Rotation.rotation_period]: crate::model::Rotation::rotation_period
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1009,13 +1014,14 @@ pub struct SecretPayload {
     /// [SecretManagerService][google.cloud.secretmanager.v1.SecretManagerService]
     /// will generate and store one for you.
     ///
+    /// The CRC32C value is encoded as a Int64 for compatibility, and can be
+    /// safely downconverted to uint32 in languages that support this type.
+    /// https://cloud.google.com/apis/design/design_patterns#integer_types
+    ///
     /// [google.cloud.secretmanager.v1.SecretManagerService]: crate::traits::SecretManagerService
     /// [google.cloud.secretmanager.v1.SecretManagerService.AccessSecretVersion]: crate::traits::SecretManagerService::access_secret_version
     /// [google.cloud.secretmanager.v1.SecretManagerService.AddSecretVersion]: crate::traits::SecretManagerService::add_secret_version
     /// [google.cloud.secretmanager.v1.SecretPayload.data]: crate::model::SecretPayload::data
-    /// The CRC32C value is encoded as a Int64 for compatibility, and can be
-    /// safely downconverted to uint32 in languages that support this type.
-    /// https://cloud.google.com/apis/design/design_patterns#integer_types
     #[serde(rename = "dataCrc32c")]
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde_as(as = "Option<serde_with::DisplayFromStr>")]
@@ -1433,12 +1439,12 @@ pub struct GetSecretVersionRequest {
     /// `projects/*/secrets/*/versions/*` or
     /// `projects/*/locations/*/secrets/*/versions/*`.
     ///
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// `projects/*/secrets/*/versions/latest` or
     /// `projects/*/locations/*/secrets/*/versions/latest` is an alias to the most
     /// recently created
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,
@@ -1501,12 +1507,12 @@ pub struct AccessSecretVersionRequest {
     /// `projects/*/secrets/*/versions/*` or
     /// `projects/*/locations/*/secrets/*/versions/*`.
     ///
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// `projects/*/secrets/*/versions/latest` or
     /// `projects/*/locations/*/secrets/*/versions/latest` is an alias to the most
     /// recently created
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     #[serde(skip_serializing_if = "String::is_empty")]
     pub name: String,

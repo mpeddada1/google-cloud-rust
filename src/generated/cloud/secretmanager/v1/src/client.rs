@@ -33,8 +33,8 @@ use std::sync::Arc;
 /// model with the following objects:
 ///
 /// * [Secret][google.cloud.secretmanager.v1.Secret]
-/// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
 /// * [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]
+/// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
 /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
 #[derive(Clone, Debug)]
 pub struct SecretManagerService {
@@ -157,10 +157,10 @@ impl SecretManagerService {
     /// Gets metadata for a
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
     ///
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// `projects/*/secrets/*/versions/latest` is an alias to the most recently
     /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     pub fn get_secret_version(&self, name: impl Into<String>) -> crate::builders::GetSecretVersion {
         crate::builders::GetSecretVersion::new(self.inner.clone()).set_name(name.into())
@@ -169,10 +169,10 @@ impl SecretManagerService {
     /// Accesses a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
     /// This call returns the secret data.
     ///
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// `projects/*/secrets/*/versions/latest` is an alias to the most recently
     /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     pub fn access_secret_version(
         &self,
@@ -183,11 +183,11 @@ impl SecretManagerService {
 
     /// Disables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
     ///
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
     /// [DISABLED][google.cloud.secretmanager.v1.SecretVersion.State.DISABLED].
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion.State.DISABLED]: crate::model::secret_version::state::DISABLED
     /// [google.cloud.secretmanager.v1.SecretVersion.state]: crate::model::SecretVersion::state
@@ -200,11 +200,11 @@ impl SecretManagerService {
 
     /// Enables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
     ///
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
     /// [ENABLED][google.cloud.secretmanager.v1.SecretVersion.State.ENABLED].
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion.State.ENABLED]: crate::model::secret_version::state::ENABLED
     /// [google.cloud.secretmanager.v1.SecretVersion.state]: crate::model::SecretVersion::state
@@ -217,12 +217,12 @@ impl SecretManagerService {
 
     /// Destroys a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
     ///
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
     /// [DESTROYED][google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]
     /// and irrevocably destroys the secret data.
     ///
+    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]: crate::model::secret_version::state::DESTROYED
     /// [google.cloud.secretmanager.v1.SecretVersion.state]: crate::model::SecretVersion::state

@@ -768,6 +768,7 @@ func (*RustCodec) ToCamel(symbol string) string {
 // [spec]: https://spec.commonmark.org/0.13/#block-quotes
 func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState) []string {
 	var results []string
+	var rustyLinks []string
 	md := goldmark.New(
 		goldmark.WithParserOptions(
 			parser.WithAutoHeadingID(),
@@ -824,7 +825,6 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 						if textNode != nil {
 							if textNode.Kind() == ast.KindParagraph {
 								firstLine := textNode.Lines().At(0)
-								// fmt.Println(string(firstLine.Value(documentationBytes)))
 								results = append(results, fmt.Sprintf("%s %s\n", listMarker, string(firstLine.Value(documentationBytes))))
 								for i := 1; i < textNode.Lines().Len(); i++ {
 									line := textNode.Lines().At(i)
@@ -837,13 +837,14 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 								for i := 0; i < textNode.Lines().Len(); i++ {
 									line := textNode.Lines().At(i)
 									lineString := string(line.Value(documentationBytes))
-									fmt.Println(lineString)
 									for _, match := range commentLinkRegex.FindAllString(lineString, -1) {
 										match = strings.TrimSuffix(strings.TrimPrefix(match, "]["), "]")
 										links[match] = true
 									}
 									results = append(results, fmt.Sprintf("%s %s\n", listMarker, string(line.Value(documentationBytes))))
 								}
+
+								// Append rusty links for list items if found.
 								var sortedLinks []string
 								for link := range links {
 									sortedLinks = append(sortedLinks, link)
@@ -854,7 +855,7 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 									if rusty == "" {
 										continue
 									}
-									results = append(results, fmt.Sprintf("[%s]: %s", link, rusty))
+									rustyLinks = append(rustyLinks, fmt.Sprintf("[%s]: %s", link, rusty))
 								}
 							}
 						}
@@ -890,7 +891,7 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 					if rusty == "" {
 						continue
 					}
-					results = append(results, fmt.Sprintf("[%s]: %s", link, rusty))
+					rustyLinks = append(rustyLinks, fmt.Sprintf("[%s]: %s", link, rusty))
 				}
 				return ast.WalkSkipChildren, nil
 
@@ -918,14 +919,10 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 				results = append(results, linkContent)
 
 			}
-		default:
-			// Add logic for html tags.
-			// fmt.Println(node.Kind())
-			// fmt.Println(string(node.Text(documentationBytes)))
 		}
 		return ast.WalkContinue, nil
 	})
-
+	results = append(results, rustyLinks...)
 	if len(results) > 0 && results[len(results)-1] == "\n" {
 		results = results[:len(results)-1] // Remove the last newline
 	}
