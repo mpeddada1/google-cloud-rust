@@ -824,11 +824,9 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 							if textNode.Kind() == ast.KindParagraph {
 								firstLine := textNode.Lines().At(0)
 								results = append(results, fmt.Sprintf("%s %s", listMarker, firstLine.Value(documentationBytes)))
-
-								// Add the remaining lines of the paragraph (without the marker)
-								for i := 1; i < textNode.Lines().Len(); i++ { // Start from the second line (index 1)
+								for i := 1; i < textNode.Lines().Len(); i++ {
 									line := textNode.Lines().At(i)
-									results = append(results, string(line.Value(documentationBytes)))
+									results = append(results, fmt.Sprintf("  %s", line.Value(documentationBytes)))
 								}
 							} else if textNode.Kind() == ast.KindText {
 								results = append(results, fmt.Sprintf(" %s ", listMarker))
@@ -840,8 +838,8 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 			}
 		case ast.KindParagraph:
 			if entering {
+				// Skip add list items as they are being taken care of separately.
 				if node.Parent() != nil && node.Parent().Kind() == ast.KindListItem {
-					// It's a list item, so skip processing it as a regular paragraph
 					return ast.WalkContinue, nil
 				}
 				lines := node.Lines()

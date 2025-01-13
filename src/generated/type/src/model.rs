@@ -754,10 +754,10 @@ impl Money {
 /// This representation:
 ///
 /// - should not be used for locale-specific formatting of a phone number, such
-/// as "+1 (650) 253-0000 ext. 123"
+///   as "+1 (650) 253-0000 ext. 123"
 /// - is not designed for efficient storage
 /// - may not be suitable for dialing - specialized libraries (see references)
-/// should be used to parse the number for that purpose
+///   should be used to parse the number for that purpose
 /// To do something meaningful with this number, such as format it for various
 /// use-cases, convert it to an `i18n.phonenumbers.PhoneNumber` object first.
 ///
