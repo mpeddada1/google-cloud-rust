@@ -23,6 +23,9 @@ pub(crate) mod dyntraits;
 /// Manages secrets and operations using those secrets. Implements a REST
 /// model with the following objects:
 ///
+///  * [Secret][google.cloud.secretmanager.v1.Secret]
+///  * [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]
+///
 /// # Mocking
 ///
 /// Application developers may use this trait to mock the secretmanager clients.

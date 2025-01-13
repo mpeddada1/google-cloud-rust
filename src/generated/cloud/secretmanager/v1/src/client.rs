@@ -31,6 +31,9 @@ use std::sync::Arc;
 ///
 /// Manages secrets and operations using those secrets. Implements a REST
 /// model with the following objects:
+///
+///  * [Secret][google.cloud.secretmanager.v1.Secret]
+///  * [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]
 #[derive(Clone, Debug)]
 pub struct SecretManagerService {
     inner: Arc<dyn crate::traits::dyntraits::SecretManagerService>,

@@ -829,7 +829,7 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 									results = append(results, fmt.Sprintf("   %s", line.Value(documentationBytes)))
 								}
 								results = append(results, "\n")
-							} else if textNode.Kind() == ast.KindText {
+							} else if textNode.Kind() == ast.KindTextBlock {
 								results = append(results, fmt.Sprintf(" %s %s", listMarker, string(textNode.Text(documentationBytes))))
 							}
 						}
