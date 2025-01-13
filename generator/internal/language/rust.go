@@ -826,19 +826,15 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 							if textNode.Kind() == ast.KindParagraph || textNode.Kind() == ast.KindTextBlock {
 								firstLine := textNode.Lines().At(0)
 								firstLineString := string(firstLine.Value(documentationBytes))
-								for _, match := range commentLinkRegex.FindAllString(firstLineString, -1) {
-									match = strings.TrimSuffix(strings.TrimPrefix(match, "]["), "]")
-									links[match] = true
-								}
-								results = append(results, fmt.Sprintf("%s %s\n", listMarker, string(firstLine.Value(documentationBytes))))
+								extractProtoLinks(firstLineString, links)
+								escapedFirstLine := escapeUrls(firstLineString)
+								results = append(results, fmt.Sprintf("%s %s\n", listMarker, escapedFirstLine))
 								for i := 1; i < textNode.Lines().Len(); i++ {
 									line := textNode.Lines().At(i)
 									lineString := string(line.Value(documentationBytes))
-									for _, match := range commentLinkRegex.FindAllString(lineString, -1) {
-										match = strings.TrimSuffix(strings.TrimPrefix(match, "]["), "]")
-										links[match] = true
-									}
-									results = append(results, fmt.Sprintf("   %s", string(line.Value(documentationBytes))))
+									extractProtoLinks(lineString, links)
+									escapedLine := escapeUrls(lineString)
+									results = append(results, fmt.Sprintf("  %s", escapedLine))
 								}
 							}
 						}
@@ -848,7 +844,7 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 			}
 		case ast.KindParagraph:
 			if entering {
-				// Skip add list items as they are being taken care of separately.
+				// Skip adding list items as they are being taken care of separately.
 				if node.Parent() != nil && node.Parent().Kind() == ast.KindListItem {
 					return ast.WalkContinue, nil
 				}
@@ -857,11 +853,9 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 				for i := 0; i < lines.Len(); i++ {
 					line := lines.At(i)
 					lineString := string(line.Value(documentationBytes))
-					results = append(results, lineString)
-					for _, match := range commentLinkRegex.FindAllString(lineString, -1) {
-						match = strings.TrimSuffix(strings.TrimPrefix(match, "]["), "]")
-						links[match] = true
-					}
+					extractProtoLinks(lineString, links)
+					escapedLine := escapeUrls(lineString)
+					results = append(results, escapedLine)
 				}
 				results = append(results, "\n")
 				return ast.WalkSkipChildren, nil
@@ -880,6 +874,8 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 		}
 		return ast.WalkContinue, nil
 	})
+
+	// Convert protobuf links to rusty links.
 	var sortedLinks []string
 	for link := range links {
 		sortedLinks = append(sortedLinks, link)
@@ -892,13 +888,50 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 		}
 		results = append(results, fmt.Sprintf("[%s]: %s", link, rusty))
 	}
+
 	if len(results) > 0 && results[len(results)-1] == "\n" {
-		results = results[:len(results)-1] // Remove the last newline
+		results = results[:len(results)-1]
 	}
 	for i, line := range results {
 		results[i] = strings.TrimRightFunc(fmt.Sprintf("/// %s", line), unicode.IsSpace)
 	}
 	return results
+}
+
+func extractProtoLinks(line string, links map[string]bool) {
+	for _, match := range commentLinkRegex.FindAllString(line, -1) {
+		match = strings.TrimSuffix(strings.TrimPrefix(match, "]["), "]")
+		links[match] = true
+	}
+}
+
+// Encloses standalone URLs with angled brackets .
+func escapeUrls(line string) string {
+	var escapedLine strings.Builder
+	lastIndex := 0
+
+	for _, match := range commentUrlRegex.FindAllStringIndex(line, -1) {
+		if isLinkDestination(line, match[0], match[1]) {
+			escapedLine.WriteString(line[lastIndex:match[1]])
+			lastIndex = match[1]
+			continue
+		}
+		url := line[match[0]:match[1]]
+		escapedLine.WriteString(line[lastIndex:match[0]])
+		if strings.HasSuffix(url, ".") {
+			escapedLine.WriteString(fmt.Sprintf("<%s>.", strings.TrimSuffix(url, ".")))
+		} else {
+			escapedLine.WriteString(fmt.Sprintf("<%s>", url))
+		}
+		lastIndex = match[1]
+	}
+	escapedLine.WriteString(line[lastIndex:])
+	return escapedLine.String()
+}
+
+// Verifies whether the url is part of a link destination.
+func isLinkDestination(line string, matchStart, matchEnd int) bool {
+	return strings.HasSuffix(line[:matchStart], "](") && line[matchEnd] == ')'
 }
 
 func (c *RustCodec) rustdocLink(link string, state *api.APIState) string {

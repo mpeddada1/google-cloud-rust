@@ -509,7 +509,7 @@ impl Decimal {
 
 /// Represents a textual expression in the Common Expression Language (CEL)
 /// syntax. CEL is a C-like expression language. The syntax and semantics of CEL
-/// are documented at https://github.com/google/cel-spec.
+/// are documented at <https://github.com/google/cel-spec>.
 ///
 /// Example (Comparison):
 ///
@@ -672,7 +672,7 @@ impl Interval {
 /// An object that represents a latitude/longitude pair. This is expressed as a
 /// pair of doubles to represent degrees latitude and degrees longitude. Unless
 /// specified otherwise, this must conform to the
-/// <a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
+/// <a href="<http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf>">WGS84
 /// standard</a>. Values must be within normalized ranges.
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
@@ -713,7 +713,7 @@ pub struct LocalizedText {
     /// The text's BCP-47 language code, such as "en-US" or "sr-Latn".
     ///
     /// For more information, see
-    /// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+    /// <http://www.unicode.org/reports/tr35/#Unicode_locale_identifier>.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub language_code: String,
 }
@@ -801,7 +801,7 @@ impl Money {
 ///
 /// Reference(s):
 ///
-/// - https://github.com/google/libphonenumber
+/// - <https://github.com/google/libphonenumber>
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -862,7 +862,7 @@ pub mod phone_number {
         ///
         /// Reference(s):
         ///
-        /// - http://www.unicode.org/reports/tr35/#unicode_region_subtag
+        /// - <http://www.unicode.org/reports/tr35/#unicode_region_subtag>
         #[serde(skip_serializing_if = "String::is_empty")]
         pub region_code: String,
 
@@ -907,15 +907,15 @@ pub mod phone_number {
         ///
         /// References:
         ///
-        /// - https://www.itu.int/rec/T-REC-E.164-201011-I
-        /// - https://en.wikipedia.org/wiki/E.164.
-        /// - https://en.wikipedia.org/wiki/List_of_country_calling_codes
+        /// - <https://www.itu.int/rec/T-REC-E.164-201011-I>
+        /// - <https://en.wikipedia.org/wiki/E.164>.
+        /// - <https://en.wikipedia.org/wiki/List_of_country_calling_codes>
         E164Number { e164_number: String },
         /// A short code.
         ///
         /// Reference(s):
         ///
-        /// - https://en.wikipedia.org/wiki/Short_code
+        /// - <https://en.wikipedia.org/wiki/Short_code>
         ShortCode(crate::model::phone_number::ShortCode),
     }
 }
@@ -932,12 +932,12 @@ pub mod phone_number {
 /// Advice on address input / editing:
 ///
 /// - Use an i18n-ready address widget such as
-///   https://github.com/google/libaddressinput)
+///   <https://github.com/google/libaddressinput>)
 /// - Users should not be presented with UI elements for input or editing of
 ///   fields outside countries where that field is used.
 ///
 /// For more guidance on how to use this schema, please see:
-/// https://support.google.com/business/answer/6397478
+/// <https://support.google.com/business/answer/6397478>
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -951,8 +951,8 @@ pub struct PostalAddress {
 
     /// Required. CLDR region code of the country/region of the address. This
     /// is never inferred and it is up to the user to ensure the value is
-    /// correct. See http://cldr.unicode.org/ and
-    /// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+    /// correct. See <http://cldr.unicode.org/> and
+    /// <http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html>
     /// for details. Example: "CH" for Switzerland.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub region_code: String,
@@ -1115,13 +1115,13 @@ impl PostalAddress {
 
 /// A quaternion is defined as the quotient of two directed lines in a
 /// three-dimensional space or equivalently as the quotient of two Euclidean
-/// vectors (https://en.wikipedia.org/wiki/Quaternion).
+/// vectors (<https://en.wikipedia.org/wiki/Quaternion>).
 ///
 /// Quaternions are often used in calculations involving three-dimensional
-/// rotations (https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation),
+/// rotations (<https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation>),
 /// as they provide greater mathematical robustness by avoiding the gimbal lock
 /// problems that can be encountered when using Euler angles
-/// (https://en.wikipedia.org/wiki/Gimbal_lock).
+/// (<https://en.wikipedia.org/wiki/Gimbal_lock>).
 ///
 /// Quaternions are generally represented in this form:
 ///
@@ -1165,7 +1165,7 @@ impl PostalAddress {
 /// quaternion maintains the same direction, but has a norm of 1, i.e. it moves
 /// on the unit sphere. This is generally necessary for rotation and orientation
 /// quaternions, to avoid rounding errors:
-/// https://en.wikipedia.org/wiki/Rotation_formalisms_in_three_dimensions
+/// <https://en.wikipedia.org/wiki/Rotation_formalisms_in_three_dimensions>
 ///
 /// Note that `(x, y, z, w)` and `(-x, -y, -z, -w)` represent the same rotation,
 /// but normalization would be even more useful, e.g. for comparison purposes, if
