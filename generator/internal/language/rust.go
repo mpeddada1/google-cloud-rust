@@ -768,7 +768,7 @@ func (*RustCodec) ToCamel(symbol string) string {
 // [spec]: https://spec.commonmark.org/0.13/#block-quotes
 func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState) []string {
 	var results []string
-	var rustyLinks []string
+	links := map[string]bool{}
 	md := goldmark.New(
 		goldmark.WithParserOptions(
 			parser.WithAutoHeadingID(),
@@ -828,12 +828,10 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 								results = append(results, fmt.Sprintf("%s %s\n", listMarker, string(firstLine.Value(documentationBytes))))
 								for i := 1; i < textNode.Lines().Len(); i++ {
 									line := textNode.Lines().At(i)
-									fmt.Println(string(line.Value(documentationBytes)))
 									results = append(results, fmt.Sprintf("   %s", string(line.Value(documentationBytes))))
 								}
 								results = append(results, "\n")
 							} else if textNode.Kind() == ast.KindTextBlock {
-								links := map[string]bool{}
 								for i := 0; i < textNode.Lines().Len(); i++ {
 									line := textNode.Lines().At(i)
 									lineString := string(line.Value(documentationBytes))
@@ -843,20 +841,6 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 									}
 									results = append(results, fmt.Sprintf("%s %s\n", listMarker, string(line.Value(documentationBytes))))
 								}
-
-								// Append rusty links for list items if found.
-								var sortedLinks []string
-								for link := range links {
-									sortedLinks = append(sortedLinks, link)
-								}
-								sort.Strings(sortedLinks)
-								for _, link := range sortedLinks {
-									rusty := c.rustdocLink(link, state)
-									if rusty == "" {
-										continue
-									}
-									rustyLinks = append(rustyLinks, fmt.Sprintf("[%s]: %s", link, rusty))
-								}
 							}
 						}
 					}
@@ -864,7 +848,6 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 			}
 		case ast.KindParagraph:
 			if entering {
-				links := map[string]bool{}
 				// Skip add list items as they are being taken care of separately.
 				if node.Parent() != nil && node.Parent().Kind() == ast.KindListItem {
 					return ast.WalkContinue, nil
@@ -881,18 +864,6 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 					}
 				}
 				results = append(results, "\n")
-				var sortedLinks []string
-				for link := range links {
-					sortedLinks = append(sortedLinks, link)
-				}
-				sort.Strings(sortedLinks)
-				for _, link := range sortedLinks {
-					rusty := c.rustdocLink(link, state)
-					if rusty == "" {
-						continue
-					}
-					rustyLinks = append(rustyLinks, fmt.Sprintf("[%s]: %s", link, rusty))
-				}
 				return ast.WalkSkipChildren, nil
 
 			}
@@ -922,7 +893,18 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 		}
 		return ast.WalkContinue, nil
 	})
-	results = append(results, rustyLinks...)
+	var sortedLinks []string
+	for link := range links {
+		sortedLinks = append(sortedLinks, link)
+	}
+	sort.Strings(sortedLinks)
+	for _, link := range sortedLinks {
+		rusty := c.rustdocLink(link, state)
+		if rusty == "" {
+			continue
+		}
+		results = append(results, fmt.Sprintf("[%s]: %s", link, rusty))
+	}
 	if len(results) > 0 && results[len(results)-1] == "\n" {
 		results = results[:len(results)-1] // Remove the last newline
 	}

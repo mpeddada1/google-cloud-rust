@@ -161,7 +161,6 @@ impl SecretManagerService {
     /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
     ///
     /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     pub fn get_secret_version(&self, name: impl Into<String>) -> crate::builders::GetSecretVersion {
         crate::builders::GetSecretVersion::new(self.inner.clone()).set_name(name.into())
     }
@@ -172,7 +171,6 @@ impl SecretManagerService {
     /// `projects/*/secrets/*/versions/latest` is an alias to the most recently
     /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
     ///
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     pub fn access_secret_version(
         &self,
@@ -187,7 +185,6 @@ impl SecretManagerService {
     /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
     /// [DISABLED][google.cloud.secretmanager.v1.SecretVersion.State.DISABLED].
     ///
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion.State.DISABLED]: crate::model::secret_version::state::DISABLED
     /// [google.cloud.secretmanager.v1.SecretVersion.state]: crate::model::SecretVersion::state
@@ -205,7 +202,6 @@ impl SecretManagerService {
     /// [ENABLED][google.cloud.secretmanager.v1.SecretVersion.State.ENABLED].
     ///
     /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion.State.ENABLED]: crate::model::secret_version::state::ENABLED
     /// [google.cloud.secretmanager.v1.SecretVersion.state]: crate::model::SecretVersion::state
     pub fn enable_secret_version(
@@ -222,7 +218,6 @@ impl SecretManagerService {
     /// [DESTROYED][google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]
     /// and irrevocably destroys the secret data.
     ///
-    /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
     /// [google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]: crate::model::secret_version::state::DESTROYED
     /// [google.cloud.secretmanager.v1.SecretVersion.state]: crate::model::SecretVersion::state
