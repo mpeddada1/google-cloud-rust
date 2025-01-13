@@ -823,28 +823,28 @@ func (c *RustCodec) FormatDocComments(documentation string, state *api.APIState)
 					if child.Kind() == ast.KindListItem {
 						textNode := child.FirstChild()
 						if textNode != nil {
-							if textNode.Kind() == ast.KindParagraph {
+							if textNode.Kind() == ast.KindParagraph || textNode.Kind() == ast.KindTextBlock {
 								firstLine := textNode.Lines().At(0)
+								firstLineString := string(firstLine.Value(documentationBytes))
+								for _, match := range commentLinkRegex.FindAllString(firstLineString, -1) {
+									match = strings.TrimSuffix(strings.TrimPrefix(match, "]["), "]")
+									links[match] = true
+								}
 								results = append(results, fmt.Sprintf("%s %s\n", listMarker, string(firstLine.Value(documentationBytes))))
 								for i := 1; i < textNode.Lines().Len(); i++ {
-									line := textNode.Lines().At(i)
-									results = append(results, fmt.Sprintf("   %s", string(line.Value(documentationBytes))))
-								}
-								results = append(results, "\n")
-							} else if textNode.Kind() == ast.KindTextBlock {
-								for i := 0; i < textNode.Lines().Len(); i++ {
 									line := textNode.Lines().At(i)
 									lineString := string(line.Value(documentationBytes))
 									for _, match := range commentLinkRegex.FindAllString(lineString, -1) {
 										match = strings.TrimSuffix(strings.TrimPrefix(match, "]["), "]")
 										links[match] = true
 									}
-									results = append(results, fmt.Sprintf("%s %s\n", listMarker, string(line.Value(documentationBytes))))
+									results = append(results, fmt.Sprintf("   %s", string(line.Value(documentationBytes))))
 								}
 							}
 						}
 					}
 				}
+				results = append(results, "\n")
 			}
 		case ast.KindParagraph:
 			if entering {

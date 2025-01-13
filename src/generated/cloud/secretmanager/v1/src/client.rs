@@ -34,6 +34,7 @@ use std::sync::Arc;
 ///
 /// * [Secret][google.cloud.secretmanager.v1.Secret]
 /// * [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]
+///
 /// [google.cloud.secretmanager.v1.Secret]: crate::model::Secret
 /// [google.cloud.secretmanager.v1.SecretVersion]: crate::model::SecretVersion
 #[derive(Clone, Debug)]
