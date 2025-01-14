@@ -25,9 +25,7 @@
 //! Most applications will use the structs defined in the [client] module.
 //! More specifically:
 //!
-//! * [Workflows](https://docs.rs/gcp-sdk-workflows-v1/latest/gcp-sdk-workflows-v1/client/struct.Workflows.html)
-//! * [Locations](https://docs.rs/gcp-sdk-workflows-v1/latest/gcp-sdk-workflows-v1/client/struct.Locations.html)
-//! * [Operations](https://docs.rs/gcp-sdk-workflows-v1/latest/gcp-sdk-workflows-v1/client/struct.Operations.html)
+//! * [Workflows](https://docs.rs/gcp-sdk-workflows-v1/latest/gcp_sdk_workflows_v1/client/struct.Workflows.html)
 
 /// The messages and enums that are part of this client library.
 pub mod model;
