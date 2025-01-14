@@ -202,6 +202,12 @@ impl Color {
     }
 }
 
+impl wkt::message::Message for Color {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.Color"
+    }
+}
+
 /// Represents a whole or partial calendar date, such as a birthday. The time of
 /// day and time zone are either specified elsewhere or are insignificant. The
 /// date is relative to the Gregorian Calendar. This can represent one of the
@@ -253,6 +259,12 @@ impl Date {
     pub fn set_day<T: Into<i32>>(mut self, v: T) -> Self {
         self.day = v.into();
         self
+    }
+}
+
+impl wkt::message::Message for Date {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.Date"
     }
 }
 
@@ -317,7 +329,7 @@ pub struct DateTime {
     /// in the future (for example, a country modifies their DST start/end dates,
     /// and future DateTimes in the affected range had already been stored).
     /// If omitted, the DateTime is considered to be in local time.
-    #[serde(flatten)]
+    #[serde(flatten, skip_serializing_if = "Option::is_none")]
     pub time_offset: Option<crate::model::date_time::TimeOffset>,
 }
 
@@ -374,6 +386,12 @@ impl DateTime {
     }
 }
 
+impl wkt::message::Message for DateTime {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.DateTime"
+    }
+}
+
 /// Defines additional types related to DateTime
 pub mod date_time {
 
@@ -422,6 +440,12 @@ impl TimeZone {
     pub fn set_version<T: Into<String>>(mut self, v: T) -> Self {
         self.version = v.into();
         self
+    }
+}
+
+impl wkt::message::Message for TimeZone {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.TimeZone"
     }
 }
 
@@ -504,6 +528,12 @@ impl Decimal {
     pub fn set_value<T: Into<String>>(mut self, v: T) -> Self {
         self.value = v.into();
         self
+    }
+}
+
+impl wkt::message::Message for Decimal {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.Decimal"
     }
 }
 
@@ -599,6 +629,12 @@ impl Expr {
     }
 }
 
+impl wkt::message::Message for Expr {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.Expr"
+    }
+}
+
 /// Represents a fraction in terms of a numerator divided by a denominator.
 #[serde_with::serde_as]
 #[derive(Clone, Debug, Default, PartialEq, serde::Deserialize, serde::Serialize)]
@@ -626,6 +662,12 @@ impl Fraction {
     pub fn set_denominator<T: Into<i64>>(mut self, v: T) -> Self {
         self.denominator = v.into();
         self
+    }
+}
+
+impl wkt::message::Message for Fraction {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.Fraction"
     }
 }
 
@@ -669,6 +711,12 @@ impl Interval {
     }
 }
 
+impl wkt::message::Message for Interval {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.Interval"
+    }
+}
+
 /// An object that represents a latitude/longitude pair. This is expressed as a
 /// pair of doubles to represent degrees latitude and degrees longitude. Unless
 /// specified otherwise, this must conform to the
@@ -697,6 +745,12 @@ impl LatLng {
     pub fn set_longitude<T: Into<f64>>(mut self, v: T) -> Self {
         self.longitude = v.into();
         self
+    }
+}
+
+impl wkt::message::Message for LatLng {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.LatLng"
     }
 }
 
@@ -729,6 +783,12 @@ impl LocalizedText {
     pub fn set_language_code<T: Into<String>>(mut self, v: T) -> Self {
         self.language_code = v.into();
         self
+    }
+}
+
+impl wkt::message::Message for LocalizedText {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.LocalizedText"
     }
 }
 
@@ -773,6 +833,12 @@ impl Money {
     pub fn set_nanos<T: Into<i32>>(mut self, v: T) -> Self {
         self.nanos = v.into();
         self
+    }
+}
+
+impl wkt::message::Message for Money {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.Money"
     }
 }
 
@@ -825,7 +891,7 @@ pub struct PhoneNumber {
     /// Required.  Either a regular number, or a short code.  New fields may be
     /// added to the oneof below in the future, so clients should ignore phone
     /// numbers for which none of the fields they coded against are set.
-    #[serde(flatten)]
+    #[serde(flatten, skip_serializing_if = "Option::is_none")]
     pub kind: Option<crate::model::phone_number::Kind>,
 }
 
@@ -840,6 +906,12 @@ impl PhoneNumber {
     pub fn set_kind<T: Into<Option<crate::model::phone_number::Kind>>>(mut self, v: T) -> Self {
         self.kind = v.into();
         self
+    }
+}
+
+impl wkt::message::Message for PhoneNumber {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.PhoneNumber"
     }
 }
 
@@ -889,6 +961,12 @@ pub mod phone_number {
         }
     }
 
+    impl wkt::message::Message for ShortCode {
+        fn typename() -> &'static str {
+            "type.googleapis.com/google.type.PhoneNumber.ShortCode"
+        }
+    }
+
     /// Required.  Either a regular number, or a short code.  New fields may be
     /// added to the oneof below in the future, so clients should ignore phone
     /// numbers for which none of the fields they coded against are set.
@@ -909,11 +987,10 @@ pub mod phone_number {
         /// National-only numbers are not allowed.
         ///
         /// References:
-        ///
-        /// - <https://www.itu.int/rec/T-REC-E.164-201011-I>
-        /// - <https://en.wikipedia.org/wiki/E.164>.
-        /// - <https://en.wikipedia.org/wiki/List_of_country_calling_codes>
-        E164Number { e164_number: String },
+        ///  - <https://www.itu.int/rec/T-REC-E.164-201011-I>
+        ///  - <https://en.wikipedia.org/wiki/E.164>.
+        ///  - <https://en.wikipedia.org/wiki/List_of_country_calling_codes>
+        E164Number(String),
         /// A short code.
         ///
         /// Reference(s):
@@ -1116,6 +1193,12 @@ impl PostalAddress {
     }
 }
 
+impl wkt::message::Message for PostalAddress {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.PostalAddress"
+    }
+}
+
 /// A quaternion is defined as the quotient of two directed lines in a
 /// three-dimensional space or equivalently as the quotient of two Euclidean
 /// vectors (<https://en.wikipedia.org/wiki/Quaternion>).
@@ -1219,6 +1302,12 @@ impl Quaternion {
     }
 }
 
+impl wkt::message::Message for Quaternion {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.Quaternion"
+    }
+}
+
 /// Represents a time of day. The date and time zone are either not significant
 /// or are specified elsewhere. An API may choose to allow leap seconds. Related
 /// types are [google.type.Date][google.type.Date] and
@@ -1268,6 +1357,12 @@ impl TimeOfDay {
     pub fn set_nanos<T: Into<i32>>(mut self, v: T) -> Self {
         self.nanos = v.into();
         self
+    }
+}
+
+impl wkt::message::Message for TimeOfDay {
+    fn typename() -> &'static str {
+        "type.googleapis.com/google.type.TimeOfDay"
     }
 }
 

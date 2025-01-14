@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package sidekick
+package language
 
 import (
 	"errors"
@@ -22,26 +22,7 @@ import (
 
 	"github.com/cbroglie/mustache"
 	"github.com/googleapis/google-cloud-rust/generator/internal/api"
-	"github.com/googleapis/google-cloud-rust/generator/internal/language"
 )
-
-// generateClientRequest used to generate clients.
-type generateClientRequest struct {
-	// The in memory representation of a parsed input.
-	API *api.API
-	// An adapter to transform values into language idiomatic representations.
-	Codec language.Codec
-	// OutDir is the path to the output directory.
-	OutDir string
-}
-
-func (r *generateClientRequest) outDir() string {
-	if r.OutDir == "" {
-		wd, _ := os.Getwd()
-		return wd
-	}
-	return r.OutDir
-}
 
 type mustacheProvider struct {
 	impl    func(string) (string, error)
@@ -52,31 +33,54 @@ func (p *mustacheProvider) Get(name string) (string, error) {
 	return p.impl(filepath.Join(p.dirname, name) + ".mustache")
 }
 
-// generateClient takes some state and applies it to a template to create a client
-// library.
-func generateClient(req *generateClientRequest) error {
-	data := newTemplateData(req.API, req.Codec)
-	var context []any
-	context = append(context, data)
-	if languageContext := req.Codec.AdditionalContext(req.API); languageContext != nil {
-		context = append(context, languageContext)
+func GenerateClient(model *api.API, language, outdir string, options map[string]string) error {
+	var (
+		data           any
+		provider       templateProvider
+		generatedFiles []GeneratedFile
+	)
+	switch language {
+	case "rust":
+		codec, err := newRustCodec(outdir, options)
+		if err != nil {
+			return err
+		}
+		if err := codec.validate(model); err != nil {
+			return err
+		}
+		data = newRustTemplateData(model, codec)
+		provider = rustTemplatesProvider()
+		generatedFiles = codec.generatedFiles()
+	case "go":
+		var err error
+		data, err = newGoTemplateData(model, options)
+		if err != nil {
+			return err
+		}
+		provider = goTemplatesProvider()
+		generatedFiles = walkTemplatesDir(goTemplates, "templates/go")
+	default:
+		return fmt.Errorf("unknown language: %s", language)
 	}
 
-	provider := req.Codec.TemplatesProvider()
 	var errs []error
-	for _, gen := range req.Codec.GeneratedFiles() {
+	for _, gen := range generatedFiles {
 		templateContents, err := provider(gen.TemplatePath)
 		if err != nil {
 			errs = append(errs, err)
 			continue
 		}
-		destination := filepath.Join(req.outDir(), gen.OutputPath)
+		if outdir == "" {
+			wd, _ := os.Getwd()
+			outdir = wd
+		}
+		destination := filepath.Join(outdir, gen.OutputPath)
 		os.MkdirAll(filepath.Dir(destination), 0777) // Ignore errors
 		nestedProvider := mustacheProvider{
 			impl:    provider,
 			dirname: filepath.Dir(gen.TemplatePath),
 		}
-		s, err := mustache.RenderPartials(templateContents, &nestedProvider, context...)
+		s, err := mustache.RenderPartials(templateContents, &nestedProvider, data)
 		if err != nil {
 			errs = append(errs, err)
 			continue
